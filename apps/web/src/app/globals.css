@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "@municipio/ui/theme.css";
+
+/* Tailwind only auto-scans the app directory; the design system lives one
+   workspace up, so its classes must be registered explicitly. */
+@source "../../../../packages/ui/src";

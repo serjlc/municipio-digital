@@ -1,0 +1,24 @@
+# --- Notas locales (no se publican) ---
+PLAN.md
+*.local.md
+
+# --- Dependencias ---
+node_modules/
+.pnpm-store/
+
+# --- Builds ---
+.next/
+out/
+dist/
+.turbo/
+.vercel/
+
+# --- Entorno y credenciales ---
+.env
+.env.*
+!.env.example
+
+# --- Sistema / editor ---
+.DS_Store
+*.log
+.idea/
