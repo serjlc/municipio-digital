@@ -66,6 +66,9 @@ importers:
 
   packages/datos:
     dependencies:
+      '@municipio/config':
+        specifier: workspace:*
+        version: link:../municipio
       zod:
         specifier: ^3.24.0
         version: 3.25.76

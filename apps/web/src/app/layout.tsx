@@ -56,7 +56,7 @@ const jsonLd = {
 
 const navItems = [
   { href: "/", label: "Inicio" },
-  { href: "/#datos", label: "Datos" },
+  { href: "/demografia", label: "Demografía" },
   { href: "/#proyectos", label: "Proyectos" },
   { href: "/diseno", label: "Diseño" },
 ];

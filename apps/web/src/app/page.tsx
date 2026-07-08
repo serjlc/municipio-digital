@@ -12,10 +12,6 @@ import {
 
 const upcomingData = [
   {
-    title: "Demografía",
-    text: "Cuántos somos, cómo cambia la población y cómo se reparte por el municipio, con datos del INE, del SIMA y del padrón municipal.",
-  },
-  {
     title: "Clima y costa",
     text: "Temperaturas, avisos y estado del tiempo con datos oficiales de AEMET, pensado para consultarse en dos segundos.",
   },
@@ -71,6 +67,18 @@ export default function Home() {
         description="Cada sección consume APIs públicas (municipales, andaluzas y estatales), cita su fuente y se actualiza sola. Empezamos por demografía y seguimos con el resto."
       >
         <ul className="grid gap-5 sm:grid-cols-2" role="list">
+          <li>
+            <Card className="h-full" interactive>
+              <Badge tone="sand">Ya disponible</Badge>
+              <CardTitle>
+                <CardLink href="/demografia">Demografía</CardLink>
+              </CardTitle>
+              <CardText>
+                Cuántos somos, cómo ha crecido la población desde 1996 y cómo se reparte, con las
+                cifras oficiales del INE y el padrón municipal.
+              </CardText>
+            </Card>
+          </li>
           {upcomingData.map((item) => (
             <li key={item.title}>
               <Card className="h-full">

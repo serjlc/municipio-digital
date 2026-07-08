@@ -9,5 +9,6 @@ export { Stat, StatGroup } from "./stat";
 export { Alert } from "./alert";
 export { SourceNote, type DataSource } from "./source-note";
 export { Section } from "./section";
+export { TrendChart, type TrendPoint } from "./trend-chart";
 export { Header, type NavItem } from "./header";
 export { Footer, type FooterGroup, type FooterLink } from "./footer";

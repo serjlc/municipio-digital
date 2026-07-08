@@ -14,4 +14,7 @@ export const chiclana: Municipality = {
     ckan: "https://datosabiertos.chiclana.es",
     townHall: "https://www.chiclana.es",
   },
+  datasets: {
+    padron: "padron-municipal-de-habitantes",
+  },
 };

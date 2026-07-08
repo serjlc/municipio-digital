@@ -27,4 +27,8 @@ export interface Municipality {
     /** Reference AEMET weather station id */
     aemetStation?: string;
   };
+  /** Ids of known datasets in the local CKAN portal */
+  datasets?: {
+    padron?: string;
+  };
 }
