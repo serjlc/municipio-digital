@@ -303,9 +303,9 @@ export default async function DemografiaPage() {
               </a>
             </Card>
             <Card>
-              <CardTitle>Recursos destacados</CardTitle>
+              <CardTitle>Archivos del dataset</CardTitle>
               <ul className="flex flex-col gap-2" role="list">
-                {padron.resources.slice(0, 5).map((resource) => (
+                {padron.resources.map((resource) => (
                   <li key={resource.url}>
                     <a
                       href={resource.url}

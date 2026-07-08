@@ -26,7 +26,6 @@ export function AgePyramid({
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Clear timeout on unmount
   useEffect(() => {
     return () => {
       if (hoverTimeoutRef.current) {
@@ -37,17 +36,19 @@ export function AgePyramid({
 
   if (!data || data.length === 0) return null;
 
-  // Calculate totals and percentages
   const totalMen = data.reduce((sum, d) => sum + d.men, 0);
   const totalWomen = data.reduce((sum, d) => sum + d.women, 0);
-  const totalPop = totalMen + totalWomen;
 
   // Maximum value for scaling the bars (either men or women in any bracket)
   const maxVal = Math.max(...data.map((d) => Math.max(d.men, d.women)));
 
   const hasActive = activeIdx !== null;
   const activeItem = hasActive ? data[activeIdx!] : null;
-  const activeTotal = activeItem ? activeItem.men + activeItem.women : 0;
+  const shownMen = activeItem ? activeItem.men : totalMen;
+  const shownWomen = activeItem ? activeItem.women : totalWomen;
+  const shownTotal = shownMen + shownWomen;
+  const percentOf = (value: number) =>
+    shownTotal > 0 ? percentFormat.format((value / shownTotal) * 100) : "0";
 
   const handleMouseEnter = (idx: number) => {
     if (hoverTimeoutRef.current) {
@@ -66,96 +67,65 @@ export function AgePyramid({
     setActiveIdx(null);
   };
 
+  /* Bars render oldest at the top, so ArrowUp moves towards older groups */
+  const onKeyDown = (event: React.KeyboardEvent) => {
+    const move = (next: number) => {
+      event.preventDefault();
+      setActiveIdx(Math.min(data.length - 1, Math.max(0, next)));
+    };
+    if (event.key === "ArrowUp") move((activeIdx ?? -1) + 1);
+    else if (event.key === "ArrowDown") move((activeIdx ?? data.length) - 1);
+    else if (event.key === "Home") move(data.length - 1);
+    else if (event.key === "End") move(0);
+    else if (event.key === "Escape") setActiveIdx(null);
+  };
+
   return (
     <figure className={cn("flex flex-col gap-6", className)}>
       <div className="rounded-card border border-line bg-surface-raised p-6 shadow-card">
-        {/* Dynamic Summary Panel (Overall Stats vs Hovered Age Stats) */}
-        <div
-          className={cn(
-            "mb-8 p-5 rounded-field text-center transition-colors duration-300 max-w-xl mx-auto min-h-28 flex flex-col justify-center",
-            hasActive ? "bg-brand-soft" : "bg-surface-sunken",
-          )}
-        >
-          {activeItem ? (
-            <div>
-              <span className="inline-block px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider rounded-full bg-brand text-on-brand mb-2 shadow-sm">
-                Rango: {activeItem.label} años
-              </span>
-              <p className="text-lg font-bold text-ink mb-2">
-                Población: {numberFormat.format(activeTotal)} hab.
-              </p>
-              <div className="grid grid-cols-2 gap-4 text-sm mt-2 pt-2 border-t border-brand/10">
-                <div>
-                  <span className="text-ink-muted block text-xs flex items-center justify-center gap-1.5">
-                    <span className="inline-block w-2 h-2 rounded-full bg-brand" />
-                    Hombres
-                  </span>
-                  <span className="font-semibold text-ink">
-                    {numberFormat.format(activeItem.men)}{" "}
-                    <span className="text-xs text-ink-muted">
-                      ({percentFormat.format((activeItem.men / activeTotal) * 100)}%)
-                    </span>
-                  </span>
-                </div>
-                <div>
-                  <span className="text-ink-muted block text-xs flex items-center justify-center gap-1.5">
-                    <span className="inline-block w-2 h-2 rounded-full bg-accent" />
-                    Mujeres
-                  </span>
-                  <span className="font-semibold text-ink">
-                    {numberFormat.format(activeItem.women)}{" "}
-                    <span className="text-xs text-ink-muted">
-                      ({percentFormat.format((activeItem.women / activeTotal) * 100)}%)
-                    </span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div>
-              <span className="inline-block px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider rounded-full bg-line text-ink-muted mb-2">
-                Población total empadronada
-              </span>
-              <p className="text-lg font-bold text-ink mb-2">
-                Total padrón: {numberFormat.format(totalPop)} hab.
-              </p>
-              <div className="grid grid-cols-2 gap-4 text-sm mt-2 pt-2 border-t border-line/40">
-                <div>
-                  <span className="text-ink-muted block text-xs flex items-center justify-center gap-1.5">
-                    <span className="inline-block w-2 h-2 rounded-full bg-brand" />
-                    Hombres
-                  </span>
-                  <span className="font-semibold text-ink">
-                    {numberFormat.format(totalMen)}{" "}
-                    <span className="text-xs text-ink-muted">
-                      ({percentFormat.format((totalMen / totalPop) * 100)}%)
-                    </span>
-                  </span>
-                </div>
-                <div>
-                  <span className="text-ink-muted block text-xs flex items-center justify-center gap-1.5">
-                    <span className="inline-block w-2 h-2 rounded-full bg-accent" />
-                    Mujeres
-                  </span>
-                  <span className="font-semibold text-ink">
-                    {numberFormat.format(totalWomen)}{" "}
-                    <span className="text-xs text-ink-muted">
-                      ({percentFormat.format((totalWomen / totalPop) * 100)}%)
-                    </span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          )}
+        {/* Summary header: one fixed layout, only the values change on hover */}
+        <div className="mb-6 max-w-xl mx-auto border-b border-line pb-5 text-center">
+          <p
+            className={cn(
+              "text-xs font-semibold uppercase tracking-widest",
+              hasActive ? "text-brand" : "text-ink-muted",
+            )}
+          >
+            {activeItem ? `Tramo de ${activeItem.label} años` : "Población total empadronada"}
+          </p>
+          <p className="mt-1.5 text-2xl font-bold text-ink tabular-nums">
+            {numberFormat.format(shownTotal)}
+            <span className="ml-1.5 text-sm font-medium text-ink-muted">habitantes</span>
+          </p>
+          <div className="mt-2 flex flex-wrap items-center justify-center gap-x-8 gap-y-1 text-sm tabular-nums">
+            <span className="flex items-center gap-1.5">
+              <span className="inline-block w-2 h-2 rounded-full bg-brand" aria-hidden="true" />
+              <span className="text-ink-muted">Hombres</span>
+              <span className="font-semibold text-ink">{numberFormat.format(shownMen)}</span>
+              <span className="text-xs text-ink-muted">({percentOf(shownMen)}%)</span>
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="inline-block w-2 h-2 rounded-full bg-accent" aria-hidden="true" />
+              <span className="text-ink-muted">Mujeres</span>
+              <span className="font-semibold text-ink">{numberFormat.format(shownWomen)}</span>
+              <span className="text-xs text-ink-muted">({percentOf(shownWomen)}%)</span>
+            </span>
+          </div>
         </div>
 
-        {/* Info label for interactions */}
         <p className="text-xs text-center text-ink-faint mb-4">
-          Pasa el cursor (o toca) sobre las barras de población para ver el detalle de cada edad.
+          Pasa el cursor, toca una barra o usa las flechas del teclado para ver el detalle de
+          cada tramo de edad.
         </p>
 
-        {/* The Pyramid */}
-        <div className="flex flex-col gap-1.5 select-none relative max-w-2xl mx-auto">
+        <div
+          className="flex flex-col gap-1.5 select-none relative max-w-2xl mx-auto"
+          tabIndex={0}
+          role="img"
+          aria-label={`${title}. Gráfico interactivo: usa las flechas arriba y abajo para recorrer los tramos de edad.`}
+          onKeyDown={onKeyDown}
+          onBlur={() => setActiveIdx(null)}
+        >
           {data
             .map((item, idx) => {
               const menWidth = (item.men / maxVal) * 100;
@@ -166,7 +136,7 @@ export function AgePyramid({
                 <div
                   key={item.label}
                   className={cn(
-                    "flex items-center gap-2 group transition-colors rounded-sm px-1 py-0.5 cursor-pointer",
+                    "flex items-center gap-2 group transition-colors rounded-sm px-1 py-0.5 pointer-coarse:py-2.5 cursor-pointer",
                     isActive ? "bg-surface-sunken" : "hover:bg-surface-sunken/45",
                   )}
                   onMouseEnter={() => handleMouseEnter(idx)}
@@ -215,6 +185,12 @@ export function AgePyramid({
             .reverse() /* Oldest at the top */}
         </div>
       </div>
+
+      <p className="sr-only" aria-live="polite">
+        {activeItem
+          ? `${activeItem.label} años: ${numberFormat.format(activeItem.men)} hombres, ${numberFormat.format(activeItem.women)} mujeres`
+          : ""}
+      </p>
 
       {/* Screen Reader Table */}
       <div className="sr-only">
