@@ -49,7 +49,8 @@ export function ThemeToggle() {
     freeze.textContent = "*,*::before,*::after{transition:none!important}";
     document.head.appendChild(freeze);
     document.documentElement.dataset.theme = next;
-    window.getComputedStyle(document.documentElement).colorScheme;
+    /* Force a style flush so the new theme applies while transitions are off */
+    void window.getComputedStyle(document.documentElement).colorScheme;
     requestAnimationFrame(() => freeze.remove());
   };
 

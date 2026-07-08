@@ -14,8 +14,10 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
+    "eslint": "^9",
     "prettier": "^3.6.0",
     "turbo": "^2.5.0",
-    "typescript": "^5.8.0"
+    "typescript": "^5.8.0",
+    "typescript-eslint": "^8"
   }
 }
