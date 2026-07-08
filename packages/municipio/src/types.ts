@@ -30,5 +30,12 @@ export interface Municipality {
   /** Ids of known datasets in the local CKAN portal */
   datasets?: {
     padron?: string;
+    /**
+     * Name of the adapter in `padronParsers` (@municipio/datos) that
+     * understands this town's padron files. Padron files have no standard
+     * format, so each municipality contributes its own adapter. Omit it and
+     * the portal still works: demographics falls back to the INE series.
+     */
+    padronFormat?: string;
   };
 }

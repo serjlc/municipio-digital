@@ -2,6 +2,8 @@ export { fetchPopulation, type PopulationSeries, type PopulationYear } from "./i
 export { fetchCkanDataset, type CkanDataset, type CkanResource } from "./ckan";
 export {
   fetchPadronData,
+  padronParsers,
+  type PadronParser,
   type PadronData,
   type AgeGroup,
   type DistrictPopulation,

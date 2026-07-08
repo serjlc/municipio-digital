@@ -91,7 +91,9 @@ Sobre el código:
   Excepción: las carpetas de rutas en `apps/web/src/app` van en español y sin tildes
   (`demografia/`, `diseno/`)
 - Los conectores de `packages/datos` son genéricos: reciben la configuración del municipio y
-  no contienen valores de Chiclana.
+  no contienen valores de Chiclana. La única excepción son los adaptadores de formatos
+  locales (`padron-chiclana.ts`), que llevan el municipio en el nombre y se eligen desde la
+  configuración, nunca desde el conector.
 - Mejor páginas estáticas o con ISR que peticiones en vivo: la web va más rápida y no
   machacamos las APIs públicas.
 - Comentarios solo cuando expliquen algo que el código no puede decir por sí mismo.
@@ -142,8 +144,13 @@ para cualquier portal municipal basado en CKAN, que es el estándar de facto en 
 
 Para adaptarlo: haz un fork, crea tu archivo en `packages/municipio/src/` y despliega.
 
-> [!NOTE]
-> **Procesamiento de datos del padrón:** El portal busca de forma dinámica (con caché de 24h) en el dataset de padrón de tu portal CKAN y parsea archivos XLSB (pirámide de población de ~90k microdatos) y XLSX (distritos, nacimientos y defunciones) usando `xlsx`. Si tu portal no publica estos recursos o el parseo de su estructura específica falla, la página se degrada de forma elegante ocultando esos gráficos interactivos y mostrando únicamente el histórico oficial del INE (que funciona por defecto en cualquier municipio español).
+El padrón merece una mención aparte. Los ayuntamientos publican esos archivos cada uno a su
+manera, sin formato estándar, así que el repo los trata como adaptadores: el de Chiclana
+vive en `packages/datos/src/padron-chiclana.ts` y traduce sus excels a los tipos comunes
+(`PadronData`). Para usar los del tuyo, escribe un adaptador al lado, regístralo en
+`padronParsers` y decláralo en tu archivo de municipio con `datasets.padronFormat`. Y si no
+lo haces (o tu portal no publica el padrón), no se rompe nada: la página de demografía
+muestra la serie histórica del INE, que funciona para cualquier municipio español.
 
 ## Glosario
 

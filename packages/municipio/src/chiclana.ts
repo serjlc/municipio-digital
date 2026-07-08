@@ -16,5 +16,6 @@ export const chiclana: Municipality = {
   },
   datasets: {
     padron: "padron-municipal-de-habitantes",
+    padronFormat: "chiclana",
   },
 };
