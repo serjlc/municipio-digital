@@ -49,33 +49,34 @@ docs/                   Arquitectura, metodologías, guías
 
 ## Stack
 
-| Herramienta | Papel | Documentación |
-|---|---|---|
-| [TypeScript](https://www.typescriptlang.org/docs/) | Lenguaje único de todo el repositorio | typescriptlang.org |
-| [pnpm](https://pnpm.io/es/) | Gestor de paquetes y workspaces del monorepo | pnpm.io |
-| [Turborepo](https://turborepo.com/docs) | Orquestador del monorepo | turborepo.com |
-| [Next.js](https://nextjs.org/docs) (App Router) | Framework web del portal | nextjs.org |
-| [React](https://es.react.dev/) | Librería de UI | es.react.dev |
-| [Tailwind CSS](https://tailwindcss.com/docs) | Estilos del design system | tailwindcss.com |
-| [Zod](https://zod.dev/) | Validación de las respuestas de APIs públicas | zod.dev |
-| [Observable Plot](https://observablehq.com/plot/) | Gráficas | observablehq.com/plot |
-| [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/) | Mapas, sin servicios de pago | maplibre.org |
-| [Drizzle ORM](https://orm.drizzle.team/docs/overview) | Esquemas y migraciones de base de datos | orm.drizzle.team |
-| [PostgreSQL](https://www.postgresql.org/docs/) en [Neon](https://neon.com/docs/introduction) | Base de datos, solo si un proyecto la necesita | postgresql.org |
-| [Vitest](https://vitest.dev/guide/) | Tests | vitest.dev |
-| [ESLint](https://eslint.org/docs/latest/) y [Prettier](https://prettier.io/docs/) | Linting y formato | eslint.org |
-| [GitHub Actions](https://docs.github.com/es/actions) | Integración continua | docs.github.com |
-| [Vercel](https://vercel.com/docs) | Hosting, previews por PR, variables de entorno | vercel.com/docs |
+| Herramienta                                                                                  | Papel                                          | Documentación         |
+| -------------------------------------------------------------------------------------------- | ---------------------------------------------- | --------------------- |
+| [TypeScript](https://www.typescriptlang.org/docs/)                                           | Lenguaje único de todo el repositorio          | typescriptlang.org    |
+| [pnpm](https://pnpm.io/es/)                                                                  | Gestor de paquetes y workspaces del monorepo   | pnpm.io               |
+| [Turborepo](https://turborepo.com/docs)                                                      | Orquestador del monorepo                       | turborepo.com         |
+| [Next.js](https://nextjs.org/docs) (App Router)                                              | Framework web del portal                       | nextjs.org            |
+| [React](https://es.react.dev/)                                                               | Librería de UI                                 | es.react.dev          |
+| [Tailwind CSS](https://tailwindcss.com/docs)                                                 | Estilos del design system                      | tailwindcss.com       |
+| [Zod](https://zod.dev/)                                                                      | Validación de las respuestas de APIs públicas  | zod.dev               |
+| [SheetJS (xlsx)](https://sheetjs.com/)                                                       | Lectura y parseo de excels (XLSX, XLSB)        | sheetjs.com           |
+| [Observable Plot](https://observablehq.com/plot/)                                            | Gráficas                                       | observablehq.com/plot |
+| [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/)                                  | Mapas, sin servicios de pago                   | maplibre.org          |
+| [Drizzle ORM](https://orm.drizzle.team/docs/overview)                                        | Esquemas y migraciones de base de datos        | orm.drizzle.team      |
+| [PostgreSQL](https://www.postgresql.org/docs/) en [Neon](https://neon.com/docs/introduction) | Base de datos, solo si un proyecto la necesita | postgresql.org        |
+| [Vitest](https://vitest.dev/guide/)                                                          | Tests                                          | vitest.dev            |
+| [ESLint](https://eslint.org/docs/latest/) y [Prettier](https://prettier.io/docs/)            | Linting y formato                              | eslint.org            |
+| [GitHub Actions](https://docs.github.com/es/actions)                                         | Integración continua                           | docs.github.com       |
+| [Vercel](https://vercel.com/docs)                                                            | Hosting, previews por PR, variables de entorno | vercel.com/docs       |
 
 ## Fuentes de datos
 
-| Nivel | Fuente | Acceso |
-|---|---|---|
-| Municipal | [Datos abiertos de Chiclana](https://datosabiertos.chiclana.es) | API CKAN |
+| Nivel      | Fuente                                                                                           | Acceso                       |
+| ---------- | ------------------------------------------------------------------------------------------------ | ---------------------------- |
+| Municipal  | [Datos abiertos de Chiclana](https://datosabiertos.chiclana.es)                                  | API CKAN                     |
 | Autonómico | [Datos abiertos de la Junta de Andalucía](https://www.juntadeandalucia.es/datosabiertos/portal/) | CKAN y APIs REST con OpenAPI |
-| Autonómico | [SIMA, del IECA](https://www.juntadeandalucia.es/institutodeestadisticaycartografia/sima/) | Estadística multiterritorial |
-| Estatal | [datos.gob.es](https://datos.gob.es), INE, AEMET OpenData, Catastro | APIs públicas |
-| Otros | OpenStreetMap, Copernicus/Sentinel | APIs públicas |
+| Autonómico | [SIMA, del IECA](https://www.juntadeandalucia.es/institutodeestadisticaycartografia/sima/)       | Estadística multiterritorial |
+| Estatal    | [datos.gob.es](https://datos.gob.es), INE, AEMET OpenData, Catastro                              | APIs públicas                |
+| Otros      | OpenStreetMap, Copernicus/Sentinel                                                               | APIs públicas                |
 
 Casi todos estos datasets se publican con licencia CC BY o equivalente: se pueden reutilizar
 citando la procedencia. Por eso cada página que muestra datos lleva su atribución, y por eso
@@ -87,6 +88,8 @@ Sobre el código:
 
 - TypeScript en todo el repositorio.
 - Código, commits y nombres de archivo en inglés. Documentación, UI y contenido en español.
+  Excepción: las carpetas de rutas en `apps/web/src/app` van en español y sin tildes
+  (`demografia/`, `diseno/`)
 - Los conectores de `packages/datos` son genéricos: reciben la configuración del municipio y
   no contienen valores de Chiclana.
 - Mejor páginas estáticas o con ISR que peticiones en vivo: la web va más rápida y no
@@ -122,6 +125,14 @@ Sobre la base de datos:
    deploy, así que se puede revisar funcionando antes de publicar.
 4. Al publicarse aparece en el índice de proyectos y, si genera datos, el dataset se libera.
 
+## Contribuir
+
+El flujo es el clásico de rama corta y pull request: `main` siempre desplegable, ramas con
+prefijo (`feature/`, `fix/`, `docs/`, `chore/`), commits en inglés e imperativo, CI en verde
+y un preview de Vercel por PR para probar el cambio funcionando antes de mergear. Está
+explicado con detalle en [CONTRIBUTING.md](CONTRIBUTING.md), incluido cómo montar el entorno
+(spoiler: `pnpm install` y ya).
+
 ## Usarlo en otro municipio
 
 Toda la especificidad local vive en `packages/municipio`: nombre, código INE, coordenadas y
@@ -130,6 +141,9 @@ Catastro), los conectores autonómicos se activan según la comunidad, y el cone
 para cualquier portal municipal basado en CKAN, que es el estándar de facto en España.
 
 Para adaptarlo: haz un fork, crea tu archivo en `packages/municipio/src/` y despliega.
+
+> [!NOTE]
+> **Procesamiento de datos del padrón:** El portal busca de forma dinámica (con caché de 24h) en el dataset de padrón de tu portal CKAN y parsea archivos XLSB (pirámide de población de ~90k microdatos) y XLSX (distritos, nacimientos y defunciones) usando `xlsx`. Si tu portal no publica estos recursos o el parseo de su estructura específica falla, la página se degrada de forma elegante ocultando esos gráficos interactivos y mostrando únicamente el histórico oficial del INE (que funciona por defecto en cualquier municipio español).
 
 ## Glosario
 
