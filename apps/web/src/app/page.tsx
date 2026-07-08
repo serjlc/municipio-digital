@@ -1,91 +1,144 @@
 import { municipality } from "@municipio/config";
+import { fetchPopulation } from "@municipio/datos";
 import {
-  Badge,
   ButtonLink,
   Card,
-  CardLink,
   CardText,
   CardTitle,
   Container,
   Section,
+  SourceNote,
+  Stat,
+  StatGroup,
 } from "@municipio/ui";
+import Link from "next/link";
 
-const upcomingData = [
+export const revalidate = 86400;
+
+const numberFormat = new Intl.NumberFormat("es-ES");
+
+const sections = [
+  {
+    title: "Demografía",
+    href: "/demografia",
+    state: "Disponible",
+    text: "Cuántos somos, cómo ha crecido la población desde 1996 y cómo se reparte, con las cifras oficiales del INE y el padrón municipal.",
+  },
   {
     title: "Clima y costa",
-    text: "Temperaturas, avisos y estado del tiempo con datos oficiales de AEMET, pensado para consultarse en dos segundos.",
+    state: "En preparación",
+    text: "Temperaturas, avisos y estado del tiempo con datos oficiales de AEMET, para consultar en dos segundos.",
   },
   {
     title: "Presupuestos",
+    state: "En preparación",
     text: "En qué se gasta el dinero del municipio, explicado sin necesidad de saber contabilidad pública.",
   },
   {
     title: "Agenda y BOJA",
-    text: "Lo que publica la Junta de Andalucía que afecta al municipio: subvenciones, normativa y eventos.",
+    state: "En preparación",
+    text: "Lo que publica la Junta de Andalucía y afecta al municipio: subvenciones, normativa y eventos.",
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const population = await fetchPopulation(municipality);
+  const latest = population?.latest;
+  const first = population?.years[0];
+  const previous = population?.years[population.years.length - 2];
+
   return (
     <>
-      <div className="relative overflow-hidden">
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-[radial-gradient(60rem_30rem_at_85%_-10%,var(--color-brand-soft),transparent),radial-gradient(40rem_20rem_at_0%_110%,var(--color-accent-soft),transparent)]"
-        />
-        <Container className="py-20 sm:py-28">
-          <Badge tone="sand">Proyecto ciudadano · software libre</Badge>
-          <h1 className="mt-6 max-w-3xl text-display font-semibold text-ink text-balance">
-            Los datos de {municipality.shortName},{" "}
-            <em className="font-display font-normal italic text-brand">claros y a mano</em>
-          </h1>
-          <p className="mt-6 max-w-2xl text-lead text-ink-muted">
-            Este sitio recoge datos públicos sobre {municipality.name} desde fuentes oficiales y
-            los presenta para que cualquiera los entienda. Lo hacemos vecinos, en abierto, sin
-            esperar a nadie. Y el código sirve para cualquier otro municipio.
-          </p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <ButtonLink href="/#datos" size="lg">
-              Ver qué estamos preparando
-            </ButtonLink>
-            <ButtonLink
-              href="https://github.com/serjlc/municipio-digital"
-              variant="secondary"
-              size="lg"
-              external
-            >
-              Código en GitHub
-            </ButtonLink>
-          </div>
-        </Container>
-      </div>
+      <Container className="pt-16 pb-10 sm:pt-24 sm:pb-14">
+        <p className="text-sm font-semibold uppercase tracking-widest text-brand">
+          Un proyecto de vecinos de {municipality.name}
+        </p>
+        <h1 className="mt-5 max-w-4xl text-display font-bold text-ink text-balance">
+          Los datos públicos de {municipality.shortName}, reunidos y explicados
+        </h1>
+        <p className="mt-6 max-w-2xl text-lead text-ink-muted">
+          Lo que las administraciones ya publican sobre {municipality.shortName}, reunido y
+          explicado para que cualquiera lo entienda. Sin esperar a nadie, con el código abierto y
+          cada dato con su fuente.
+        </p>
+      </Container>
+
+      {latest ? (
+        <div className="border-y border-line bg-surface-sunken">
+          <Container className="py-10 sm:py-12">
+            <StatGroup>
+              <Stat
+                label="Habitantes"
+                value={numberFormat.format(latest.total)}
+                context={`INE, ${latest.year}`}
+              />
+              {previous ? (
+                <Stat
+                  label="Más que hace un año"
+                  value={numberFormat.format(latest.total - previous.total)}
+                />
+              ) : null}
+              {first ? (
+                <Stat
+                  label={`Crecimiento desde ${first.year}`}
+                  value={`${numberFormat.format(Math.round(((latest.total - first.total) / first.total) * 100))} %`}
+                />
+              ) : null}
+            </StatGroup>
+            <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
+              <Link
+                href="/demografia"
+                className="font-medium text-brand underline decoration-brand/40 underline-offset-4 hover:decoration-brand"
+              >
+                Ver la demografía completa
+              </Link>
+              <SourceNote
+                sources={[
+                  {
+                    name: "INE, cifras oficiales de población municipal",
+                    href: population?.tableUrl,
+                    license: "CC BY 4.0",
+                  },
+                ]}
+              />
+            </div>
+          </Container>
+        </div>
+      ) : null}
 
       <Section
         id="datos"
-        eyebrow="Datos del municipio"
-        title="Qué encontrarás aquí"
-        description="Cada sección consume APIs públicas (municipales, andaluzas y estatales), cita su fuente y se actualiza sola. Empezamos por demografía y seguimos con el resto."
+        title="Las secciones"
+        description="Cada una consume APIs públicas (municipales, andaluzas y estatales), cita su fuente y se actualiza sola."
       >
-        <ul className="grid gap-5 sm:grid-cols-2" role="list">
-          <li>
-            <Card className="h-full" interactive>
-              <Badge tone="sand">Ya disponible</Badge>
-              <CardTitle>
-                <CardLink href="/demografia">Demografía</CardLink>
-              </CardTitle>
-              <CardText>
-                Cuántos somos, cómo ha crecido la población desde 1996 y cómo se reparte, con las
-                cifras oficiales del INE y el padrón municipal.
-              </CardText>
-            </Card>
-          </li>
-          {upcomingData.map((item) => (
-            <li key={item.title}>
-              <Card className="h-full">
-                <Badge tone="brand">En camino</Badge>
-                <CardTitle>{item.title}</CardTitle>
-                <CardText>{item.text}</CardText>
-              </Card>
+        <ul className="border-y border-line" role="list">
+          {sections.map((section) => (
+            <li
+              key={section.title}
+              className="grid gap-2 border-b border-line py-6 last:border-b-0 sm:grid-cols-[14rem_1fr_auto] sm:gap-6"
+            >
+              <h3 className="text-subtitle font-semibold text-ink">
+                {section.href ? (
+                  <Link
+                    href={section.href}
+                    className="underline decoration-line underline-offset-4 hover:text-brand hover:decoration-brand"
+                  >
+                    {section.title}
+                  </Link>
+                ) : (
+                  section.title
+                )}
+              </h3>
+              <p className="max-w-xl text-ink-muted">{section.text}</p>
+              <p
+                className={
+                  section.href
+                    ? "text-sm font-semibold text-accent-strong"
+                    : "text-sm text-ink-faint"
+                }
+              >
+                {section.state}
+              </p>
             </li>
           ))}
         </ul>
@@ -99,11 +152,11 @@ export default function Home() {
         className="bg-surface-sunken"
       >
         <div className="grid gap-5 lg:grid-cols-[1.2fr_1fr]">
-          <Card interactive>
-            <Badge tone="sand">Piloto</Badge>
-            <CardTitle>
-              <CardLink href="/#proyectos">Termografía de fachadas</CardLink>
-            </CardTitle>
+          <Card>
+            <p className="text-sm font-semibold uppercase tracking-widest text-accent-strong">
+              Piloto
+            </p>
+            <CardTitle>Termografía de fachadas</CardTitle>
             <CardText>
               Medir con cámara térmica el calor que alcanzan las fachadas del municipio en verano,
               cruzarlo con la temperatura oficial de AEMET y el año de construcción del Catastro, y
@@ -133,7 +186,7 @@ export default function Home() {
       <Section
         id="reutilizar"
         eyebrow="Para otros municipios"
-        title="Llévatelo a tu pueblo"
+        title="Llévalo a tu municipio"
         description={`Nada de ${municipality.shortName} está incrustado en el código. Con un archivo de configuración (código INE, coordenadas y portal de datos local) el mismo proyecto funciona para cualquier municipio español. Las fuentes estatales funcionan solas y las autonómicas se activan por comunidad.`}
       >
         <ButtonLink href="https://github.com/serjlc/municipio-digital" external>

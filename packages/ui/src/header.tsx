@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 import { cn } from "./cn";
 import { Container } from "./container";
+import { ThemeToggle } from "./theme-toggle";
 import { VisuallyHidden } from "./visually-hidden";
 
 export interface NavItem {
@@ -55,8 +56,8 @@ export function Header({ siteName, items }: { siteName: string; items: NavItem[]
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-surface/85 backdrop-blur-md">
-      <Container className="flex min-h-16 items-center justify-between gap-6">
+    <header className="sticky top-0 z-40 border-b border-line border-t-[3px] border-t-brand bg-surface/85 backdrop-blur-md">
+      <Container className="flex min-h-16 items-center justify-between gap-4">
         <Link
           href="/"
           className="rounded-md text-lg font-semibold tracking-tight text-ink no-underline"
@@ -67,41 +68,45 @@ export function Header({ siteName, items }: { siteName: string; items: NavItem[]
           </span>
         </Link>
 
-        <nav aria-label="Principal" className="hidden md:block">
-          <ul className="flex items-center gap-1">
-            {items.map((item) => (
-              <li key={item.href}>
-                <NavLink item={item} active={isActive(pathname, item.href)} />
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="flex items-center gap-2">
+          <nav aria-label="Principal" className="hidden md:block">
+            <ul className="flex items-center gap-1">
+              {items.map((item) => (
+                <li key={item.href}>
+                  <NavLink item={item} active={isActive(pathname, item.href)} />
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        <button
-          type="button"
-          onClick={() => setOpen((value) => !value)}
-          aria-expanded={open}
-          aria-controls={menuId}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-colors hover:bg-surface-sunken md:hidden"
-        >
-          <VisuallyHidden>{open ? "Cerrar menú" : "Abrir menú"}</VisuallyHidden>
-          <svg
-            aria-hidden="true"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
+          <ThemeToggle />
+
+          <button
+            type="button"
+            onClick={() => setOpen((value) => !value)}
+            aria-expanded={open}
+            aria-controls={menuId}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-colors hover:bg-surface-sunken md:hidden"
           >
-            {open ? (
-              <path d="M5 5l10 10M15 5L5 15" />
-            ) : (
-              <path d="M3 6h14M3 10h14M3 14h14" />
-            )}
-          </svg>
-        </button>
+            <VisuallyHidden>{open ? "Cerrar menú" : "Abrir menú"}</VisuallyHidden>
+            <svg
+              aria-hidden="true"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
+              {open ? (
+                <path d="M5 5l10 10M15 5L5 15" />
+              ) : (
+                <path d="M3 6h14M3 10h14M3 14h14" />
+              )}
+            </svg>
+          </button>
+        </div>
       </Container>
 
       <div id={menuId} hidden={!open} className="border-t border-line md:hidden">

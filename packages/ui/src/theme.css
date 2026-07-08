@@ -1,11 +1,13 @@
 /*
  * Municipio Digital design tokens.
  *
- * Aesthetic: Andalusian Atlantic light. Whitewashed warm surfaces, a deep
- * Atlantic blue as the brand color and warm sand as the accent.
+ * Identity: Andalusian. Whitewashed lime (cal) surfaces, the deep green of
+ * the Andalusian flag as brand color and albero (the golden earth tone of
+ * southern Spain) as accent.
  *
- * Every semantic token resolves through light-dark(), so dark mode follows
- * the visitor's system preference with no extra classes. Components must use
+ * Semantic tokens resolve through light-dark(). The default follows the
+ * system preference; an explicit choice from the theme toggle sets
+ * data-theme on the root element and forces one scheme. Components must use
  * the semantic tokens (surface, ink, brand, ...) and never the raw scales,
  * so a municipality can retheme by overriding a handful of variables.
  */
@@ -14,12 +16,11 @@
   /* Typography (font files are loaded by the app via next/font) */
   --font-sans:
     var(--font-instrument-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
 
   /* Fluid type scale */
-  --text-display: clamp(2.5rem, 1.55rem + 4.2vw, 4.375rem);
-  --text-display--line-height: 1.04;
-  --text-display--letter-spacing: -0.02em;
+  --text-display: clamp(2.5rem, 1.55rem + 4.2vw, 4.25rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.025em;
   --text-title: clamp(1.875rem, 1.45rem + 1.9vw, 2.75rem);
   --text-title--line-height: 1.12;
   --text-title--letter-spacing: -0.015em;
@@ -28,50 +29,50 @@
   --text-lead: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
   --text-lead--line-height: 1.55;
 
-  /* Raw scale: Atlantic ocean blue */
-  --color-ocean-50: oklch(97.2% 0.012 230);
-  --color-ocean-100: oklch(94.2% 0.024 231);
-  --color-ocean-200: oklch(88.5% 0.048 232);
-  --color-ocean-300: oklch(79.5% 0.079 233);
-  --color-ocean-400: oklch(68.5% 0.104 235);
-  --color-ocean-500: oklch(58.5% 0.114 237);
-  --color-ocean-600: oklch(50% 0.11 239);
-  --color-ocean-700: oklch(43% 0.095 240);
-  --color-ocean-800: oklch(37% 0.078 241);
-  --color-ocean-900: oklch(32% 0.06 242);
-  --color-ocean-950: oklch(24.5% 0.048 243);
+  /* Raw scale: Andalusian flag green */
+  --color-verde-50: oklch(96.8% 0.02 155);
+  --color-verde-100: oklch(93.5% 0.04 154);
+  --color-verde-200: oklch(87.5% 0.07 153);
+  --color-verde-300: oklch(79% 0.1 152);
+  --color-verde-400: oklch(68% 0.125 151);
+  --color-verde-500: oklch(58% 0.135 150);
+  --color-verde-600: oklch(50% 0.13 149);
+  --color-verde-700: oklch(43% 0.11 148);
+  --color-verde-800: oklch(37% 0.09 148);
+  --color-verde-900: oklch(31.5% 0.07 148);
+  --color-verde-950: oklch(24% 0.055 148);
 
-  /* Raw scale: warm sand */
-  --color-sand-50: oklch(97.5% 0.018 85);
-  --color-sand-100: oklch(94.8% 0.036 84);
-  --color-sand-200: oklch(90.5% 0.058 83);
-  --color-sand-300: oklch(86.5% 0.074 81);
-  --color-sand-400: oklch(81.5% 0.09 78);
-  --color-sand-500: oklch(74.5% 0.104 73);
-  --color-sand-600: oklch(65.5% 0.114 64);
-  --color-sand-700: oklch(54.5% 0.108 55);
-  --color-sand-800: oklch(45% 0.09 50);
-  --color-sand-900: oklch(38% 0.072 48);
+  /* Raw scale: albero */
+  --color-albero-50: oklch(97.3% 0.02 90);
+  --color-albero-100: oklch(94.5% 0.045 88);
+  --color-albero-200: oklch(90% 0.075 86);
+  --color-albero-300: oklch(85% 0.1 84);
+  --color-albero-400: oklch(79.5% 0.115 80);
+  --color-albero-500: oklch(72% 0.125 75);
+  --color-albero-600: oklch(63% 0.128 66);
+  --color-albero-700: oklch(52.5% 0.115 58);
+  --color-albero-800: oklch(44% 0.095 52);
+  --color-albero-900: oklch(37.5% 0.075 50);
 
   /* Semantic tokens (use these in components) */
-  --color-surface: light-dark(oklch(98.6% 0.004 85), oklch(17.5% 0.02 245));
-  --color-surface-raised: light-dark(oklch(100% 0 0), oklch(21.5% 0.022 245));
-  --color-surface-sunken: light-dark(oklch(96.4% 0.006 85), oklch(15.5% 0.018 245));
-  --color-ink: light-dark(oklch(25% 0.025 245), oklch(93% 0.008 240));
-  --color-ink-muted: light-dark(oklch(44% 0.022 245), oklch(74.5% 0.015 240));
-  --color-ink-faint: light-dark(oklch(55% 0.018 245), oklch(63% 0.012 240));
-  --color-line: light-dark(oklch(89.5% 0.009 240), oklch(30% 0.02 245));
-  --color-brand: light-dark(var(--color-ocean-600), var(--color-ocean-300));
-  --color-brand-strong: light-dark(var(--color-ocean-700), var(--color-ocean-200));
-  --color-brand-soft: light-dark(var(--color-ocean-50), oklch(28% 0.045 240));
-  --color-on-brand: light-dark(oklch(100% 0 0), oklch(22% 0.048 243));
-  --color-accent: light-dark(var(--color-sand-500), var(--color-sand-400));
-  --color-accent-strong: light-dark(var(--color-sand-700), var(--color-sand-300));
-  --color-accent-soft: light-dark(var(--color-sand-100), oklch(29% 0.04 70));
+  --color-surface: light-dark(oklch(98.4% 0.005 90), oklch(17.5% 0.014 152));
+  --color-surface-raised: light-dark(oklch(100% 0 0), oklch(21.5% 0.016 152));
+  --color-surface-sunken: light-dark(oklch(96.2% 0.008 92), oklch(15.5% 0.013 152));
+  --color-ink: light-dark(oklch(25% 0.02 150), oklch(93% 0.006 145));
+  --color-ink-muted: light-dark(oklch(44% 0.018 150), oklch(74.5% 0.012 148));
+  --color-ink-faint: light-dark(oklch(55% 0.015 150), oklch(63% 0.01 148));
+  --color-line: light-dark(oklch(89.5% 0.012 120), oklch(30% 0.018 150));
+  --color-brand: light-dark(var(--color-verde-600), var(--color-verde-300));
+  --color-brand-strong: light-dark(var(--color-verde-700), var(--color-verde-200));
+  --color-brand-soft: light-dark(var(--color-verde-50), oklch(26% 0.045 150));
+  --color-on-brand: light-dark(oklch(100% 0 0), oklch(21% 0.05 149));
+  --color-accent: light-dark(var(--color-albero-500), var(--color-albero-400));
+  --color-accent-strong: light-dark(var(--color-albero-700), var(--color-albero-300));
+  --color-accent-soft: light-dark(var(--color-albero-100), oklch(28% 0.04 70));
 
   /* Shape and elevation */
-  --radius-card: 1.25rem;
-  --radius-field: 0.75rem;
+  --radius-card: 1rem;
+  --radius-field: 0.625rem;
   --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.05), 0 2px 10px oklch(0% 0 0 / 0.04);
   --shadow-card-hover: 0 2px 4px oklch(0% 0 0 / 0.06), 0 10px 28px oklch(0% 0 0 / 0.09);
 }
@@ -79,6 +80,14 @@
 @layer base {
   :root {
     color-scheme: light dark;
+  }
+
+  /* Explicit choice from the theme toggle overrides the system preference */
+  :root[data-theme="light"] {
+    color-scheme: light;
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
   }
 
   html {
@@ -93,8 +102,8 @@
   }
 
   ::selection {
-    background-color: var(--color-ocean-200);
-    color: var(--color-ocean-950);
+    background-color: var(--color-albero-200);
+    color: var(--color-albero-900);
   }
 
   :focus-visible {

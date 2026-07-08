@@ -29,10 +29,10 @@ const semanticColors = [
   ["ink-muted", "Texto secundario"],
   ["ink-faint", "Texto terciario y notas"],
   ["line", "Bordes y separadores"],
-  ["brand", "Color de marca (azul Atlántico)"],
+  ["brand", "Color de marca (verde de Andalucía)"],
   ["brand-strong", "Marca reforzada, hovers"],
   ["brand-soft", "Fondos suaves de marca"],
-  ["accent", "Acento (arena cálida)"],
+  ["accent", "Acento (albero)"],
   ["accent-strong", "Acento sobre fondos claros"],
   ["accent-soft", "Fondos suaves de acento"],
 ] as const;
@@ -56,8 +56,8 @@ function Swatch({ token, usage }: { token: string; usage: string }) {
 export default function DesignPage() {
   return (
     <>
-      <Container className="py-16 sm:py-20">
-        <h1 className="text-display font-semibold text-ink text-balance">Sistema de diseño</h1>
+      <Container className="pt-16 pb-6 sm:pt-20 sm:pb-8">
+        <h1 className="text-display font-bold text-ink text-balance">Sistema de diseño</h1>
         <p className="mt-5 max-w-2xl text-lead text-ink-muted">
           Guía viva de los tokens y componentes de @municipio/ui. Todo lo que se publica en este
           sitio, incluidos los proyectos ciudadanos, se construye con estas piezas. Los colores se
@@ -68,7 +68,7 @@ export default function DesignPage() {
       <Section
         id="colores"
         title="Color"
-        description="Los componentes usan solo tokens semánticos. Las escalas de base (océano y arena) quedan por debajo, así otro municipio puede cambiar la paleta entera tocando unas pocas variables."
+        description="Los componentes usan solo tokens semánticos. Las escalas de base (verde de la bandera andaluza y albero, sobre blanco cal) quedan por debajo, así otro municipio puede cambiar la paleta entera tocando unas pocas variables. El selector de la cabecera fuerza tema claro u oscuro; por defecto se sigue el del sistema."
       >
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3" role="list">
           {semanticColors.map(([token, usage]) => (
@@ -80,12 +80,12 @@ export default function DesignPage() {
       <Section
         id="tipografia"
         title="Tipografía"
-        description="Instrument Sans para todo, con Instrument Serif en cursiva como voz propia para acentos puntuales. Los tamaños grandes son fluidos: crecen con la pantalla sin saltos."
+        description="Instrument Sans para todo: los titulares usan peso alto y tracking apretado, el texto corrido queda en peso normal. Los tamaños grandes son fluidos: crecen con la pantalla sin saltos."
         className="bg-surface-sunken"
       >
         <div className="flex flex-col gap-8">
-          <p className="text-display font-semibold text-ink">
-            Datos <em className="font-display font-normal italic text-brand">claros</em>
+          <p className="text-display font-bold text-ink">
+            Titular grande, <span className="text-brand">con énfasis</span>
           </p>
           <p className="text-title font-semibold text-ink">Título de sección</p>
           <p className="text-subtitle font-semibold text-ink">Subtítulo o título de tarjeta</p>
