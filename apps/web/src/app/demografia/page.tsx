@@ -1,5 +1,5 @@
 import { municipality } from "@municipio/config";
-import { fetchCkanDataset, fetchPopulation } from "@municipio/datos";
+import { fetchCkanDataset, fetchPopulation, fetchPadronData } from "@municipio/datos";
 import {
   Alert,
   Badge,
@@ -12,6 +12,8 @@ import {
   Stat,
   StatGroup,
   TrendChart,
+  AgePyramid,
+  DistrictStats,
 } from "@municipio/ui";
 import type { Metadata } from "next";
 
@@ -40,7 +42,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function DemografiaPage() {
-  const [population, padron] = await Promise.all([fetchPopulation(municipality), getPadron()]);
+  const [population, padron, padronData] = await Promise.all([
+    fetchPopulation(municipality),
+    getPadron(),
+    fetchPadronData(municipality),
+  ]);
 
   const latest = population?.latest;
   const first = population?.years[0];
@@ -72,9 +78,9 @@ export default async function DemografiaPage() {
         />
       ) : null}
 
-      <Container className="py-16 sm:py-20">
+      <Container className="pt-16 pb-6 sm:pt-20 sm:pb-8">
         <p className="text-sm font-semibold uppercase tracking-widest text-brand">Demografía</p>
-        <h1 className="mt-3 max-w-3xl text-display font-semibold text-ink text-balance">
+        <h1 className="mt-3 max-w-3xl text-display font-bold text-ink text-balance">
           ¿Cuántos habitantes tiene {municipality.shortName}?
         </h1>
         {latest ? (
@@ -178,10 +184,102 @@ export default async function DemografiaPage() {
         </Section>
       ) : null}
 
+      {padronData ? (
+        <>
+          <Section
+            id="piramide"
+            title="Pirámide de población"
+            description={`Distribución de los vecinos empadronados por sexo y tramos de edad. Datos del padrón municipal de ${padronData.year}.`}
+          >
+            <div className="max-w-3xl mx-auto">
+              <AgePyramid
+                data={padronData.agePyramid}
+                title="Pirámide de población"
+              />
+            </div>
+            <SourceNote
+              className="mt-8"
+              sources={[
+                {
+                  name: `Portal de datos abiertos del Ayuntamiento de ${municipality.name}`,
+                  href: municipality.sources.ckan,
+                  license: padron?.license,
+                },
+              ]}
+            />
+          </Section>
+
+          <Section
+            id="distritos"
+            title="Distribución por distritos y secciones"
+            description={`Detalle de la población empadronada en cada distrito y sección electoral. Datos de ${padronData.year}.`}
+            className="bg-surface-sunken"
+          >
+            <DistrictStats districts={padronData.districts} />
+            <SourceNote
+              className="mt-8"
+              sources={[
+                {
+                  name: `Portal de datos abiertos del Ayuntamiento de ${municipality.name}`,
+                  href: municipality.sources.ckan,
+                  license: padron?.license,
+                },
+              ]}
+            />
+          </Section>
+
+          {padronData.yearlySeries && padronData.yearlySeries.length > 0 ? (
+            <Section
+              id="movimientos"
+              title="Natalidad y mortalidad"
+              description="Evolución de los nacimientos y defunciones anuales registrados en el padrón municipal."
+            >
+              <div className="grid gap-8 xl:grid-cols-2">
+                <div>
+                  <h4 className="text-sm font-semibold text-ink-muted mb-4 text-center">Nacimientos por año</h4>
+                  <TrendChart
+                    points={padronData.yearlySeries.map((s) => ({
+                      label: String(s.year),
+                      value: s.births,
+                    }))}
+                    title="Nacimientos registrados"
+                    labelHeader="Año"
+                    valueHeader="Nacimientos"
+                  />
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-ink-muted mb-4 text-center">Defunciones por año</h4>
+                  <TrendChart
+                    points={padronData.yearlySeries.map((s) => ({
+                      label: String(s.year),
+                      value: s.deaths,
+                    }))}
+                    title="Defunciones registradas"
+                    labelHeader="Año"
+                    valueHeader="Defunciones"
+                  />
+                </div>
+              </div>
+              <SourceNote
+                className="mt-8"
+                sources={[
+                  {
+                    name: `Portal de datos abiertos del Ayuntamiento de ${municipality.name}`,
+                    href: municipality.sources.ckan,
+                    license: padron?.license,
+                  },
+                ]}
+              />
+            </Section>
+          ) : null}
+        </>
+      ) : null}
+
       <Section
-        id="padron"
-        title="Más detalle en el padrón municipal"
-        description="El Ayuntamiento publica el padrón en su portal de datos abiertos: población por distritos y secciones, pirámide de edades, nacimientos y defunciones."
+        id="datos-abiertos"
+        title="Descarga de datos en bruto"
+        description="Si prefieres trabajar con los archivos originales del padrón municipal o automatizar tus propios análisis, puedes descargarlos directamente."
+        className={padronData ? "bg-surface-sunken" : undefined}
       >
         {padron ? (
           <div className="grid gap-5 lg:grid-cols-2">
