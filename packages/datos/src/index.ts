@@ -20,6 +20,14 @@ export {
 } from "./ine-migrations";
 export { fetchCkanDataset, type CkanDataset, type CkanResource } from "./ckan";
 export {
+  fetchMinorContracts,
+  contractsParsers,
+  type ContractsParser,
+  type ContractsQuarter,
+  type MinorContract,
+  type MinorContractsData,
+} from "./contracts";
+export {
   fetchPadronData,
   padronParsers,
   type PadronParser,

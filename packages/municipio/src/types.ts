@@ -37,5 +37,9 @@ export interface Municipality {
      * the portal still works: demographics falls back to the INE series.
      */
     padronFormat?: string;
+    /** Dataset id of the quarterly minor-contract listings */
+    minorContracts?: string;
+    /** Adapter name in `contractsParsers` (@municipio/datos) for those files */
+    minorContractsFormat?: string;
   };
 }

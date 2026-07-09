@@ -25,6 +25,12 @@ const sections = [
     text: "Cuántos somos, cómo ha crecido la población desde 1996 y cómo se reparte, con las cifras oficiales del INE y el padrón municipal.",
   },
   {
+    title: "Contratos menores",
+    href: "/contratos-menores",
+    state: "Disponible",
+    text: "A quién contrata el Ayuntamiento sin licitación, trimestre a trimestre: adjudicatarios, objeto e importe de cada contrato, con buscador.",
+  },
+  {
     title: "Clima y costa",
     state: "En preparación",
     text: "Temperaturas, avisos y estado del tiempo con datos oficiales de AEMET, para consultar en dos segundos.",
