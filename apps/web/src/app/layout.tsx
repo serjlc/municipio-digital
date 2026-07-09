@@ -47,13 +47,17 @@ const jsonLd = {
   },
 };
 
+/*
+ * Ordered by citizen intent: know the town first (Demografía, Turismo),
+ * watch the town hall next (Contratos), take part last (Proyectos). The
+ * style guide lives in the footer: its audience is contributors.
+ */
 const navItems = [
   { href: "/", label: "Inicio" },
   { href: "/demografia", label: "Demografía" },
-  { href: "/contratos-menores", label: "Contratos" },
   { href: "/turismo", label: "Turismo" },
+  { href: "/contratos-menores", label: "Contratos" },
   { href: "/#proyectos", label: "Proyectos" },
-  { href: "/diseno", label: "Diseño" },
 ];
 
 export default function RootLayout({
@@ -89,6 +93,7 @@ export default function RootLayout({
             {
               title: "Proyecto",
               links: [
+                { label: "Guía de diseño", href: "/diseno" },
                 {
                   label: "Código en GitHub",
                   href: "https://github.com/serjlc/municipio-digital",
