@@ -3,6 +3,7 @@ PLAN.md
 AGENTS.md
 CLAUDE.md
 *.local.md
+.plans/
 
 # --- Dependencias ---
 node_modules/

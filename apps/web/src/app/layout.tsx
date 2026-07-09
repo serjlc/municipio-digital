@@ -69,6 +69,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
       className={`${instrumentSans.variable} h-full antialiased`}
     >

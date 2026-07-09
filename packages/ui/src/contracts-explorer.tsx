@@ -95,7 +95,21 @@ export function ContractsExplorer({
         </div>
 
         {filtered.length > 0 ? (
-          <div className="overflow-x-auto">
+          <>
+            <ul className="sm:hidden divide-y divide-line" role="list">
+              {filtered.map((c, i) => (
+                <li key={`${c.contractor}-${i}`} className="p-4 flex flex-col gap-1">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <span className="font-medium text-ink">{c.contractor}</span>
+                    <span className="shrink-0 tabular-nums font-semibold text-ink">
+                      {euroExactFormat.format(c.amount)}
+                    </span>
+                  </div>
+                  <p className="text-sm text-ink-muted">{c.subject}</p>
+                </li>
+              ))}
+            </ul>
+            <div className="hidden sm:block overflow-x-auto">
             <table className="w-full text-left border-collapse text-sm">
               <thead>
                 <tr className="border-b border-line bg-surface-sunken/10 text-ink-muted font-medium">
@@ -116,7 +130,8 @@ export function ContractsExplorer({
                 ))}
               </tbody>
             </table>
-          </div>
+            </div>
+          </>
         ) : (
           <div className="p-8 text-center text-ink-muted text-sm">
             Ningún contrato de {active.label} encaja con esa búsqueda.

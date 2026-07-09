@@ -126,21 +126,21 @@ export function DistrictStats({
             <table className="w-full text-left border-collapse text-sm">
               <thead>
                 <tr className="border-b border-line bg-surface-sunken/10 text-ink-muted font-medium">
-                  <th scope="col" className="p-3 pl-6">Sección</th>
-                  <th scope="col" className="p-3">Hombres</th>
-                  <th scope="col" className="p-3">Mujeres</th>
-                  <th scope="col" className="p-3 pr-6 text-right">Población total</th>
+                  <th scope="col" className="p-2 pl-4 sm:p-3 sm:pl-6">Sección</th>
+                  <th scope="col" className="p-2 sm:p-3">Hombres</th>
+                  <th scope="col" className="p-2 sm:p-3">Mujeres</th>
+                  <th scope="col" className="p-2 pr-4 text-right sm:p-3 sm:pr-6">Población total</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line">
                 {filteredSections.map((s) => (
                   <tr key={s.section} className="hover:bg-surface-sunken/20 transition-colors">
-                    <th scope="row" className="p-3 pl-6 text-left font-semibold text-ink">
+                    <th scope="row" className="p-2 pl-4 text-left font-semibold text-ink sm:p-3 sm:pl-6">
                       Sección {s.section}
                     </th>
-                    <td className="p-3 tabular-nums text-ink-muted">{numberFormat.format(s.men)}</td>
-                    <td className="p-3 tabular-nums text-ink-muted">{numberFormat.format(s.women)}</td>
-                    <td className="p-3 pr-6 tabular-nums font-bold text-ink text-right">
+                    <td className="p-2 tabular-nums text-ink-muted sm:p-3">{numberFormat.format(s.men)}</td>
+                    <td className="p-2 tabular-nums text-ink-muted sm:p-3">{numberFormat.format(s.women)}</td>
+                    <td className="p-2 pr-4 tabular-nums font-bold text-ink text-right sm:p-3 sm:pr-6">
                       {numberFormat.format(s.total)}
                     </td>
                   </tr>
