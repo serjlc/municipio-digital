@@ -57,6 +57,10 @@ export interface Municipality {
     minorContracts?: string;
     /** Adapter name in `contractsParsers` (@municipio/datos) for those files */
     minorContractsFormat?: string;
+    /** Dataset id of the official street gazetteer */
+    streets?: string;
+    /** Adapter name in `streetsParsers` (@municipio/datos) for those files */
+    streetsFormat?: string;
     /** Local tourism datasets, parsed by the adapter named in `format` */
     tourism?: {
       /** Dataset id with hotel occupancy compiled by the town hall */

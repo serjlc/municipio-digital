@@ -7,6 +7,7 @@ import {
   fetchMigrationBalances,
   fetchPadronData,
   fetchPopulation,
+  fetchStreetGazetteer,
 } from "@municipio/datos";
 import {
   AgePyramid,
@@ -52,7 +53,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function DemografiaPage() {
-  const [population, padron, padronData, indicators, pyramid, education, migrations] =
+  const [population, padron, padronData, indicators, pyramid, education, migrations, gazetteer] =
     await Promise.all([
       fetchPopulation(municipality),
       getPadron(),
@@ -61,6 +62,7 @@ export default async function DemografiaPage() {
       fetchCensusPyramid(municipality),
       fetchEducationLevels(municipality),
       fetchMigrationBalances(municipality),
+      fetchStreetGazetteer(municipality),
     ]);
 
   const latest = population?.latest;
@@ -402,7 +404,12 @@ export default async function DemografiaPage() {
           description={`El único detalle que no publica el INE: población empadronada en cada distrito y sección electoral. Sale del portal de datos abiertos del Ayuntamiento y llega hasta ${padronData.year}, su último año publicado.`}
           className="bg-surface-sunken"
         >
-          <DistrictStats districts={padronData.districts} boundaries={municipality.sectionBoundaries} />
+          <DistrictStats
+            districts={padronData.districts}
+            boundaries={municipality.sectionBoundaries}
+            zonesByDistrict={gazetteer?.zonesByDistrict}
+            streetsEndpoint="/api/callejero"
+          />
           <SourceNote
             className="mt-8"
             sources={[
@@ -412,6 +419,15 @@ export default async function DemografiaPage() {
                 license: padron?.license,
               },
               ...(municipality.sectionBoundariesSource ? [municipality.sectionBoundariesSource] : []),
+              ...(gazetteer
+                ? [
+                    {
+                      name: "Callejero oficial por distritos y secciones",
+                      href: gazetteer.datasetUrl,
+                      license: gazetteer.license,
+                    },
+                  ]
+                : []),
             ]}
           />
         </Section>

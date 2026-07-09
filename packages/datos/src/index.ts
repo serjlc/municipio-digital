@@ -36,6 +36,13 @@ export {
   type VisitorOrigin,
 } from "./tourism";
 export {
+  fetchStreetGazetteer,
+  streetsParsers,
+  type StreetsParser,
+  type StreetGazetteer,
+  type Street,
+} from "./streets";
+export {
   fetchMinorContracts,
   contractsParsers,
   type ContractsParser,

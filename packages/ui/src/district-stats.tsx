@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "./cn";
 import { Card, CardTitle } from "./card";
 
@@ -66,18 +66,51 @@ const numberFormat = new Intl.NumberFormat("es-ES");
 
 const districtNumber = (name: string) => parseInt(name.replace(/\D/g, ""), 10);
 
+/** [name, district, section] tuples served by the street endpoint */
+type StreetTuple = [string, number, number];
+
+const normalize = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
 export function DistrictStats({
   districts,
   boundaries,
+  zonesByDistrict,
+  streetsEndpoint,
   className,
 }: {
   districts: DistrictPopulation[];
   /** Section outlines to draw the map; omit it and only the table shows */
   boundaries?: SectionBoundary[];
+  /** Zones (urbanizations, quarters) each district contains, by number */
+  zonesByDistrict?: Record<number, string[]>;
+  /** URL returning the street list, fetched only when the finder is used */
+  streetsEndpoint?: string;
   className?: string;
 }) {
   const [activeDistrictIdx, setActiveDistrictIdx] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [zonesExpanded, setZonesExpanded] = useState(false);
+  const [streetQuery, setStreetQuery] = useState("");
+  const [streets, setStreets] = useState<StreetTuple[] | "loading" | "error" | null>(null);
+  const streetsRequested = useRef(false);
+
+  const loadStreets = () => {
+    if (!streetsEndpoint || streetsRequested.current) return;
+    streetsRequested.current = true;
+    setStreets("loading");
+    fetch(streetsEndpoint)
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(String(res.status)))))
+      .then((data: { streets: StreetTuple[] }) => setStreets(data.streets))
+      .catch(() => setStreets("error"));
+  };
+
+  useEffect(() => {
+    setZonesExpanded(false);
+  }, [activeDistrictIdx]);
 
   if (!districts || districts.length === 0) return null;
 
@@ -113,6 +146,98 @@ export function DistrictStats({
           </button>
         ))}
       </div>
+
+      {zonesByDistrict?.[activeNumber]?.length ? (
+        <p className="text-sm text-ink-muted">
+          <span className="font-medium text-ink">{activeDistrict.name}</span> incluye, según el
+          callejero oficial:{" "}
+          {(zonesExpanded
+            ? zonesByDistrict[activeNumber]!
+            : zonesByDistrict[activeNumber]!.slice(0, 6)
+          ).join(" · ")}
+          {zonesByDistrict[activeNumber]!.length > 6 ? (
+            <button
+              onClick={() => setZonesExpanded(!zonesExpanded)}
+              className="ml-2 inline-flex min-h-8 items-center font-medium text-brand underline decoration-brand/40 underline-offset-4 hover:decoration-brand cursor-pointer"
+            >
+              {zonesExpanded
+                ? "ver menos"
+                : `y ${zonesByDistrict[activeNumber]!.length - 6} zonas más`}
+            </button>
+          ) : null}
+        </p>
+      ) : null}
+
+      {streetsEndpoint ? (
+        <div className="rounded-card border border-line bg-surface-raised p-4 shadow-card sm:p-5">
+          <label htmlFor="buscador-calle" className="block text-sm font-semibold text-ink">
+            ¿En qué distrito vives? Busca tu calle
+          </label>
+          <input
+            id="buscador-calle"
+            type="search"
+            placeholder="Escribe el nombre de tu calle..."
+            value={streetQuery}
+            onFocus={loadStreets}
+            onChange={(e) => {
+              loadStreets();
+              setStreetQuery(e.target.value);
+            }}
+            className="mt-2 w-full sm:w-96 px-3 py-2 pointer-coarse:min-h-11 text-sm rounded-field border border-line bg-surface-raised text-ink placeholder:text-ink-faint focus:border-brand"
+          />
+          {streets === "loading" && streetQuery ? (
+            <p className="mt-3 text-sm text-ink-faint">Cargando el callejero...</p>
+          ) : null}
+          {streets === "error" ? (
+            <p className="mt-3 text-sm text-ink-faint">
+              No se ha podido cargar el callejero. Vuelve a intentarlo en un rato.
+            </p>
+          ) : null}
+          {Array.isArray(streets) && streetQuery.trim().length >= 2 ? (
+            (() => {
+              const query = normalize(streetQuery.trim());
+              const matches = streets.filter(([name]) => normalize(name).includes(query));
+              return matches.length > 0 ? (
+                <ul className="mt-3 divide-y divide-line" role="list">
+                  {matches.slice(0, 8).map(([name, district, section]) => {
+                    const districtIdx = districts.findIndex(
+                      (d) => districtNumber(d.name) === district,
+                    );
+                    return (
+                      <li key={`${name}-${district}-${section}`}>
+                        <button
+                          onClick={() => {
+                            if (districtIdx >= 0) {
+                              setActiveDistrictIdx(districtIdx);
+                              setSearchQuery(String(section));
+                            }
+                          }}
+                          className="flex w-full items-baseline justify-between gap-3 py-2 pointer-coarse:min-h-11 text-left text-sm cursor-pointer hover:text-brand"
+                        >
+                          <span className="text-ink">{name}</span>
+                          <span className="shrink-0 text-ink-muted">
+                            Distrito {district}, sección {section}
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                  {matches.length > 8 ? (
+                    <li className="py-2 text-xs text-ink-faint">
+                      Y {matches.length - 8} resultados más: sigue escribiendo para afinar.
+                    </li>
+                  ) : null}
+                </ul>
+              ) : (
+                <p className="mt-3 text-sm text-ink-faint">
+                  Ninguna calle encaja con esa búsqueda. Si tu calle cruza varias secciones,
+                  prueba con el nombre completo.
+                </p>
+              );
+            })()
+          ) : null}
+        </div>
+      ) : null}
 
       <div className="grid gap-6 md:grid-cols-3">
         <Card className="bg-surface-raised">
