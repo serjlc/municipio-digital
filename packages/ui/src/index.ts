@@ -13,5 +13,6 @@ export { TrendChart, type TrendPoint } from "./trend-chart";
 export { Header, type NavItem } from "./header";
 export { ThemeToggle } from "./theme-toggle";
 export { Footer, type FooterGroup, type FooterLink } from "./footer";
+export { BarList, type BarListItem } from "./bar-list";
 export { AgePyramid, type AgeGroup } from "./age-pyramid";
 export { DistrictStats, type DistrictPopulation, type SectionPopulation } from "./district-stats";

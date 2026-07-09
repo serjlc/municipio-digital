@@ -1,18 +1,5 @@
 import type { Municipality } from "@municipio/config";
-import { z } from "zod";
-
-const tableSchema = z.array(
-  z.object({
-    Nombre: z.string(),
-    Data: z.array(
-      z.object({
-        Anyo: z.number(),
-        Valor: z.number().nullable(),
-        T3_TipoDato: z.string().nullish(),
-      }),
-    ),
-  }),
-);
+import { fetchTempusTable, tableUrl } from "./tempus";
 
 /*
  * INE publishes official municipal population in one Tempus3 table per
@@ -43,11 +30,8 @@ export async function fetchPopulation(m: Municipality): Promise<PopulationSeries
   if (!tableId) return null;
 
   try {
-    const res = await fetch(
-      `https://servicios.ine.es/wstempus/js/ES/DATOS_TABLA/${tableId}?nult=45&tip=AM`,
-    );
-    if (!res.ok) return null;
-    const table = tableSchema.parse(await res.json());
+    const table = await fetchTempusTable(tableId);
+    if (!table) return null;
 
     const seriesFor = (group: "Total" | "Hombres" | "Mujeres") =>
       table.find((s) => s.Nombre.startsWith(`${m.name}. ${group}`));
@@ -82,7 +66,7 @@ export async function fetchPopulation(m: Municipality): Promise<PopulationSeries
     return {
       years,
       latest,
-      tableUrl: `https://www.ine.es/jaxiT3/Tabla.htm?t=${tableId}`,
+      tableUrl: tableUrl(tableId),
     };
   } catch {
     return null;

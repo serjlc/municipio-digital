@@ -1,19 +1,24 @@
 import { municipality } from "@municipio/config";
-import { fetchCkanDataset, fetchPopulation, fetchPadronData } from "@municipio/datos";
 import {
+  fetchCensusPyramid,
+  fetchCkanDataset,
+  fetchDemographicIndicators,
+  fetchEducationLevels,
+  fetchMigrationBalances,
+  fetchPadronData,
+  fetchPopulation,
+} from "@municipio/datos";
+import {
+  AgePyramid,
   Alert,
-  Badge,
-  Card,
-  CardText,
-  CardTitle,
+  BarList,
   Container,
+  DistrictStats,
   Section,
   SourceNote,
   Stat,
   StatGroup,
   TrendChart,
-  AgePyramid,
-  DistrictStats,
 } from "@municipio/ui";
 import type { Metadata } from "next";
 
@@ -21,6 +26,11 @@ export const revalidate = 86400;
 
 const numberFormat = new Intl.NumberFormat("es-ES");
 const percentFormat = new Intl.NumberFormat("es-ES", {
+  maximumFractionDigits: 1,
+  signDisplay: "always",
+});
+const decimalFormat = new Intl.NumberFormat("es-ES", { maximumFractionDigits: 1 });
+const signedFormat = new Intl.NumberFormat("es-ES", {
   maximumFractionDigits: 1,
   signDisplay: "always",
 });
@@ -42,11 +52,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function DemografiaPage() {
-  const [population, padron, padronData] = await Promise.all([
-    fetchPopulation(municipality),
-    getPadron(),
-    fetchPadronData(municipality),
-  ]);
+  const [population, padron, padronData, indicators, pyramid, education, migrations] =
+    await Promise.all([
+      fetchPopulation(municipality),
+      getPadron(),
+      fetchPadronData(municipality),
+      fetchDemographicIndicators(municipality),
+      fetchCensusPyramid(municipality),
+      fetchEducationLevels(municipality),
+      fetchMigrationBalances(municipality),
+    ]);
 
   const latest = population?.latest;
   const first = population?.years[0];
@@ -56,6 +71,18 @@ export default async function DemografiaPage() {
     latest && previous
       ? percentFormat.format(((latest.total - previous.total) / previous.total) * 100)
       : null;
+
+  /* Some INE indicators lag a year behind the rest of the table */
+  const lastDeathRate = indicators
+    ? [...indicators.rates].reverse().find((r) => r.deathRate !== undefined)
+    : undefined;
+  const lastGrowthRate = indicators
+    ? [...indicators.rates].reverse().find((r) => r.naturalGrowthRate !== undefined)
+    : undefined;
+  const ratePoints = (key: "birthRate" | "deathRate" | "marriageRate") =>
+    (indicators?.rates ?? [])
+      .filter((r) => r[key] !== undefined)
+      .map((r) => ({ label: String(r.year), value: r[key]! }));
 
   const jsonLd = population
     ? {
@@ -184,164 +211,214 @@ export default async function DemografiaPage() {
         </Section>
       ) : null}
 
-      {padronData ? (
-        <>
-          <Section
-            id="piramide"
-            title="Pirámide de población"
-            description={`Distribución de los vecinos empadronados por sexo y tramos de edad. Datos del padrón municipal de ${padronData.year}.`}
-          >
-            <div className="max-w-3xl mx-auto">
-              <AgePyramid
-                data={padronData.agePyramid}
-                title="Pirámide de población"
-              />
-            </div>
-            <SourceNote
-              className="mt-8"
-              sources={[
-                {
-                  name: `Portal de datos abiertos del Ayuntamiento de ${municipality.name}`,
-                  href: municipality.sources.ckan,
-                  license: padron?.license,
-                },
-              ]}
-            />
-          </Section>
-
-          <Section
-            id="distritos"
-            title="Distribución por distritos y secciones"
-            description={`Detalle de la población empadronada en cada distrito y sección electoral. Datos de ${padronData.year}.`}
-            className="bg-surface-sunken"
-          >
-            <DistrictStats districts={padronData.districts} />
-            <SourceNote
-              className="mt-8"
-              sources={[
-                {
-                  name: `Portal de datos abiertos del Ayuntamiento de ${municipality.name}`,
-                  href: municipality.sources.ckan,
-                  license: padron?.license,
-                },
-              ]}
-            />
-          </Section>
-
-          {padronData.yearlySeries && padronData.yearlySeries.length > 0 ? (
-            <Section
-              id="movimientos"
-              title="Natalidad y mortalidad"
-              description="Evolución de los nacimientos y defunciones anuales registrados en el padrón municipal."
-            >
-              <div className="grid gap-8 xl:grid-cols-2">
-                <div>
-                  <h4 className="text-sm font-semibold text-ink-muted mb-4 text-center">Nacimientos por año</h4>
-                  <TrendChart
-                    points={padronData.yearlySeries.map((s) => ({
-                      label: String(s.year),
-                      value: s.births,
-                    }))}
-                    title="Nacimientos registrados"
-                    labelHeader="Año"
-                    valueHeader="Nacimientos"
-                  />
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-ink-muted mb-4 text-center">Defunciones por año</h4>
-                  <TrendChart
-                    points={padronData.yearlySeries.map((s) => ({
-                      label: String(s.year),
-                      value: s.deaths,
-                    }))}
-                    title="Defunciones registradas"
-                    labelHeader="Año"
-                    valueHeader="Defunciones"
-                  />
-                </div>
-              </div>
-              <SourceNote
-                className="mt-8"
-                sources={[
-                  {
-                    name: `Portal de datos abiertos del Ayuntamiento de ${municipality.name}`,
-                    href: municipality.sources.ckan,
-                    license: padron?.license,
-                  },
-                ]}
-              />
-            </Section>
-          ) : null}
-        </>
+      {pyramid ? (
+        <Section
+          id="piramide"
+          title="Pirámide de población"
+          description={`Población por sexo y tramos de edad a 1 de enero de ${pyramid.year}, según el Censo Anual de Población del INE.`}
+        >
+          <div className="max-w-3xl mx-auto">
+            <AgePyramid data={pyramid.groups} title="Pirámide de población" />
+          </div>
+          <SourceNote
+            className="mt-8"
+            sources={[
+              {
+                name: "INE, Censo Anual de Población",
+                href: pyramid.tableUrl,
+                license: "CC BY 4.0",
+              },
+            ]}
+          />
+        </Section>
       ) : null}
 
-      <Section
-        id="datos-abiertos"
-        title="Descarga de datos en bruto"
-        description="Si prefieres trabajar con los archivos originales del padrón municipal o automatizar tus propios análisis, puedes descargarlos directamente."
-        className={padronData ? "bg-surface-sunken" : undefined}
-      >
-        {padron ? (
-          <div className="grid gap-5 lg:grid-cols-2">
-            <Card>
-              <Badge tone="brand">{padron.license ?? "Datos abiertos"}</Badge>
-              <CardTitle>{padron.title}</CardTitle>
-              <CardText>
-                {padron.resources.length} recursos publicados
-                {padron.modified
-                  ? `, actualizado por última vez el ${new Date(padron.modified).toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" })}`
-                  : ""}
-                . Los archivos se descargan del portal municipal.
-              </CardText>
-              <a
-                href={padron.datasetUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium text-brand underline decoration-brand/40 underline-offset-4 hover:decoration-brand"
-              >
-                Ver el dataset completo
-              </a>
-            </Card>
-            <Card>
-              <CardTitle>Archivos del dataset</CardTitle>
-              <ul className="flex flex-col gap-2" role="list">
-                {padron.resources.map((resource) => (
-                  <li key={resource.url}>
-                    <a
-                      href={resource.url}
-                      className="inline-flex min-h-8 items-center gap-2 text-ink-muted underline decoration-line underline-offset-4 hover:text-ink"
-                    >
-                      {resource.name}
-                      {resource.format ? <Badge>{resource.format}</Badge> : null}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </Card>
+      {indicators ? (
+        <Section
+          id="movimiento-natural"
+          title="Nacimientos, defunciones y matrimonios"
+          description={`Tasas por cada mil habitantes según los Indicadores Demográficos Básicos del INE, con datos hasta ${indicators.latest.year}.`}
+          className="bg-surface-sunken"
+        >
+          <StatGroup>
+            {indicators.lifeExpectancy ? (
+              <Stat
+                label="Esperanza de vida al nacer"
+                value={`${decimalFormat.format(indicators.lifeExpectancy.total)} años`}
+                context={
+                  indicators.lifeExpectancy.men && indicators.lifeExpectancy.women
+                    ? `Hombres ${decimalFormat.format(indicators.lifeExpectancy.men)}, mujeres ${decimalFormat.format(indicators.lifeExpectancy.women)} (${indicators.lifeExpectancy.year})`
+                    : `Año ${indicators.lifeExpectancy.year}`
+                }
+              />
+            ) : null}
+            {indicators.latest.birthRate !== undefined ? (
+              <Stat
+                label="Natalidad"
+                value={`${decimalFormat.format(indicators.latest.birthRate)} ‰`}
+                context={`Nacimientos por mil habitantes en ${indicators.latest.year}`}
+              />
+            ) : null}
+            {lastDeathRate ? (
+              <Stat
+                label="Mortalidad"
+                value={`${decimalFormat.format(lastDeathRate.deathRate!)} ‰`}
+                context={`Defunciones por mil habitantes en ${lastDeathRate.year}`}
+              />
+            ) : null}
+            {lastGrowthRate ? (
+              <Stat
+                label="Saldo vegetativo"
+                value={`${signedFormat.format(lastGrowthRate.naturalGrowthRate!)} ‰`}
+                context={`Nacimientos menos defunciones por mil habitantes en ${lastGrowthRate.year}`}
+              />
+            ) : null}
+          </StatGroup>
+
+          <div className="mt-12 grid gap-8 xl:grid-cols-2">
+            <div>
+              <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
+                Tasa de natalidad (nacimientos por mil habitantes)
+              </h3>
+              <TrendChart
+                points={ratePoints("birthRate")}
+                title="Tasa bruta de natalidad"
+                labelHeader="Año"
+                valueHeader="Nacimientos por mil habitantes"
+              />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
+                Tasa de mortalidad (defunciones por mil habitantes)
+              </h3>
+              <TrendChart
+                points={ratePoints("deathRate")}
+                title="Tasa bruta de mortalidad"
+                labelHeader="Año"
+                valueHeader="Defunciones por mil habitantes"
+              />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
+                Tasa de nupcialidad (matrimonios por mil habitantes)
+              </h3>
+              <TrendChart
+                points={ratePoints("marriageRate")}
+                title="Tasa bruta de nupcialidad"
+                labelHeader="Año"
+                valueHeader="Matrimonios por mil habitantes"
+              />
+            </div>
           </div>
-        ) : (
-          <Alert tone="warning" title="Portal municipal no disponible">
-            No hemos podido conectar con el portal de datos abiertos del Ayuntamiento. Puedes
-            intentarlo directamente en{" "}
-            <a href={municipality.sources.ckan} className="underline">
-              {municipality.sources.ckan}
-            </a>
-            .
-          </Alert>
-        )}
-        {padron ? (
+          <SourceNote
+            className="mt-8"
+            sources={[
+              {
+                name: "INE, Indicadores Demográficos Básicos",
+                href: indicators.tableUrls.birthRate,
+                license: "CC BY 4.0",
+              },
+            ]}
+          />
+        </Section>
+      ) : null}
+
+      {migrations ? (
+        <Section
+          id="migraciones"
+          title="Quién llega y quién se va"
+          description={`Saldo migratorio: personas que fijan su residencia aquí menos las que se marchan, según la Estadística de Migraciones y Cambios de Residencia del INE. Datos hasta ${migrations.latest.year}.`}
+        >
+          <StatGroup>
+            <Stat
+              label="Saldo migratorio"
+              value={`${signedFormat.format(migrations.latest.total)} personas`}
+              context={`Año ${migrations.latest.year}`}
+            />
+            {migrations.latest.internal !== undefined ? (
+              <Stat
+                label="Con el resto de España"
+                value={`${signedFormat.format(migrations.latest.internal)}`}
+                context={`Saldo interior en ${migrations.latest.year}`}
+              />
+            ) : null}
+            {migrations.latest.external !== undefined ? (
+              <Stat
+                label="Con el extranjero"
+                value={`${signedFormat.format(migrations.latest.external)}`}
+                context={`Saldo exterior en ${migrations.latest.year}`}
+              />
+            ) : null}
+          </StatGroup>
+          <div className="mt-12 max-w-3xl">
+            <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
+              Saldo migratorio total por año
+            </h3>
+            <TrendChart
+              points={migrations.years.map((y) => ({ label: String(y.year), value: y.total }))}
+              title="Saldo migratorio total"
+              labelHeader="Año"
+              valueHeader="Saldo (personas)"
+            />
+          </div>
+          <SourceNote
+            className="mt-8"
+            sources={[
+              {
+                name: "INE, Estadística de Migraciones y Cambios de Residencia",
+                href: migrations.tableUrl,
+                license: "CC BY 4.0",
+              },
+            ]}
+          />
+        </Section>
+      ) : null}
+
+      {education ? (
+        <Section
+          id="estudios"
+          title="Nivel de estudios"
+          description={`Qué estudios ha completado la población de 15 y más años (${numberFormat.format(education.population)} personas), según el Censo Anual de Población del INE. Datos de ${education.year}.`}
+          className="bg-surface-sunken"
+        >
+          <div className="max-w-3xl">
+            <BarList
+              items={education.levels.map((l) => ({ label: l.label, value: l.count }))}
+              total={education.population}
+            />
+          </div>
+          <SourceNote
+            className="mt-8"
+            sources={[
+              {
+                name: "INE, Censo Anual de Población (nivel de estudios)",
+                href: education.tableUrl,
+                license: "CC BY 4.0",
+              },
+            ]}
+          />
+        </Section>
+      ) : null}
+
+      {padronData ? (
+        <Section
+          id="distritos"
+          title="Distribución por distritos y secciones"
+          description={`El único detalle que no publica el INE: población empadronada en cada distrito y sección electoral. Sale del portal de datos abiertos del Ayuntamiento y llega hasta ${padronData.year}, su último año publicado.`}
+        >
+          <DistrictStats districts={padronData.districts} />
           <SourceNote
             className="mt-8"
             sources={[
               {
                 name: `Portal de datos abiertos del Ayuntamiento de ${municipality.name}`,
-                href: municipality.sources.ckan,
-                license: padron.license,
+                href: padron?.datasetUrl ?? municipality.sources.ckan,
+                license: padron?.license,
               },
             ]}
           />
-        ) : null}
-      </Section>
+        </Section>
+      ) : null}
     </>
   );
 }

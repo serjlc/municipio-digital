@@ -91,7 +91,7 @@ export function AgePyramid({
               hasActive ? "text-brand" : "text-ink-muted",
             )}
           >
-            {activeItem ? `Tramo de ${activeItem.label} años` : "Población total empadronada"}
+            {activeItem ? `Tramo de ${activeItem.label} años` : "Población total"}
           </p>
           <p className="mt-1.5 text-2xl font-bold text-ink tabular-nums">
             {numberFormat.format(shownTotal)}

@@ -2,12 +2,6 @@ import type { Municipality } from "@municipio/config";
 import { fetchCkanDataset, type CkanDataset } from "./ckan";
 import { chiclanaPadron } from "./padron-chiclana";
 
-export interface AgeGroup {
-  label: string; // e.g. "0-4", "5-9"...
-  men: number;
-  women: number;
-}
-
 export interface SectionPopulation {
   section: number;
   men: number;
@@ -23,17 +17,9 @@ export interface DistrictPopulation {
   sections: SectionPopulation[];
 }
 
-export interface BirthsDeathsYearly {
-  year: number;
-  births: number;
-  deaths: number;
-}
-
 export interface PadronData {
   year: number;
-  agePyramid: AgeGroup[];
   districts: DistrictPopulation[];
-  yearlySeries: BirthsDeathsYearly[];
 }
 
 /**
