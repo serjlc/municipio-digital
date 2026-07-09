@@ -214,7 +214,7 @@ export function DistrictStats({
                           }}
                           className="flex w-full items-baseline justify-between gap-3 py-2 pointer-coarse:min-h-11 text-left text-sm cursor-pointer hover:text-brand"
                         >
-                          <span className="text-ink">{name}</span>
+                          <span className="min-w-0 break-words text-ink">{name}</span>
                           <span className="shrink-0 text-ink-muted">
                             Distrito {district}, sección {section}
                           </span>

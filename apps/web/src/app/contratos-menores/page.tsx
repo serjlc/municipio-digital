@@ -135,7 +135,7 @@ export default async function ContratosMenoresPage() {
         description="Cuánto suma cada trimestre lo adjudicado por contrato menor y cuántos contratos se firman."
       >
         <div className="grid gap-8 xl:grid-cols-2">
-          <div>
+          <div className="min-w-0">
             <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
               Importe total por trimestre (euros)
             </h3>
@@ -149,7 +149,7 @@ export default async function ContratosMenoresPage() {
               valueHeader="Importe (euros, IVA incluido)"
             />
           </div>
-          <div>
+          <div className="min-w-0">
             <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
               Número de contratos por trimestre
             </h3>

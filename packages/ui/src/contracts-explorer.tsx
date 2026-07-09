@@ -100,7 +100,7 @@ export function ContractsExplorer({
               {filtered.map((c, i) => (
                 <li key={`${c.contractor}-${i}`} className="p-4 flex flex-col gap-1">
                   <div className="flex items-baseline justify-between gap-3">
-                    <span className="font-medium text-ink">{c.contractor}</span>
+                    <span className="min-w-0 break-words font-medium text-ink">{c.contractor}</span>
                     <span className="shrink-0 tabular-nums font-semibold text-ink">
                       {euroExactFormat.format(c.amount)}
                     </span>

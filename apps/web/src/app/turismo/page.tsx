@@ -134,7 +134,7 @@ export default async function TurismoPage() {
             description="Pernoctaciones y viajeros de cada mes según el INE. La encuesta cambió de base en 2024, así que la serie municipal comparable empieza ahí. Los meses de invierno no aparecen: buena parte de la planta hotelera cierra y el INE no publica dato."
           >
             <div className="grid gap-8 xl:grid-cols-2">
-              <div>
+              <div className="min-w-0">
                 <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
                   Pernoctaciones por mes
                 </h3>
@@ -148,7 +148,7 @@ export default async function TurismoPage() {
                   valueHeader="Pernoctaciones"
                 />
               </div>
-              <div>
+              <div className="min-w-0">
                 <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
                   Viajeros alojados por mes
                 </h3>

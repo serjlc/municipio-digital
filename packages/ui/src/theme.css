@@ -94,6 +94,24 @@
     scroll-behavior: smooth;
   }
 
+  /* Headings never push the page sideways. break-word alone is invisible
+     unless a word exceeds the whole line; hyphenation reads better than a
+     bare break but browsers also use it to balance lines, so it only
+     activates on screens narrow enough for long words not to fit */
+  h1,
+  h2,
+  h3 {
+    overflow-wrap: break-word;
+  }
+
+  @media (max-width: 380px) {
+    h1,
+    h2,
+    h3 {
+      hyphens: auto;
+    }
+  }
+
   body {
     background-color: var(--color-surface);
     color: var(--color-ink);

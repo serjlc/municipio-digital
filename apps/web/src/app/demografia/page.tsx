@@ -273,7 +273,7 @@ export default async function DemografiaPage() {
           </StatGroup>
 
           <div className="mt-12 grid gap-8 xl:grid-cols-2">
-            <div>
+            <div className="min-w-0">
               <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
                 Tasa de natalidad (nacimientos por mil habitantes)
               </h3>
@@ -284,7 +284,7 @@ export default async function DemografiaPage() {
                 valueHeader="Nacimientos por mil habitantes"
               />
             </div>
-            <div>
+            <div className="min-w-0">
               <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
                 Tasa de mortalidad (defunciones por mil habitantes)
               </h3>
@@ -295,7 +295,7 @@ export default async function DemografiaPage() {
                 valueHeader="Defunciones por mil habitantes"
               />
             </div>
-            <div>
+            <div className="min-w-0">
               <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
                 Tasa de nupcialidad (matrimonios por mil habitantes)
               </h3>
