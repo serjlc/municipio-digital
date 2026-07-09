@@ -3,7 +3,7 @@ import { cn } from "./cn";
 
 export function StatGroup({ className, children }: { className?: string; children: ReactNode }) {
   return (
-    <dl className={cn("grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-4", className)}>
+    <dl className={cn("grid grid-cols-1 gap-x-6 gap-y-8 min-[480px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4", className)}>
       {children}
     </dl>
   );
@@ -24,7 +24,7 @@ export function Stat({
   return (
     <div className={cn("flex flex-col gap-1", className)}>
       <dt className="order-2 text-sm text-ink-muted">{label}</dt>
-      <dd className="order-1 text-3xl font-semibold tabular-nums tracking-tight text-ink sm:text-4xl">
+      <dd className="order-1 text-3xl font-semibold tabular-nums tracking-tight text-ink break-words sm:text-4xl">
         {value}
       </dd>
       {context ? <dd className="order-3 text-sm text-ink-faint">{context}</dd> : null}
