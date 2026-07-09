@@ -139,11 +139,7 @@ export default async function DemografiaPage() {
       </Container>
 
       {latest ? (
-        <Section
-          id="cifras"
-          title="Las cifras de un vistazo"
-          description={`Población oficial a 1 de enero de ${latest.year}, con la variación respecto al año anterior y el reparto por sexo.`}
-        >
+        <Section id="cifras" title="Las cifras de un vistazo" hideTitle className="bg-surface-sunken">
           <StatGroup>
             <Stat
               label="Habitantes"
@@ -190,7 +186,6 @@ export default async function DemografiaPage() {
           id="evolucion"
           title={`Así ha crecido ${municipality.shortName}`}
           description={`De ${numberFormat.format(first.total)} habitantes en ${first.year} a ${numberFormat.format(latest.total)} en ${latest.year}. Cada punto es la cifra oficial a 1 de enero.`}
-          className="bg-surface-sunken"
         >
           <TrendChart
             points={population.years.map((y) => ({ label: String(y.year), value: y.total }))}
@@ -216,6 +211,7 @@ export default async function DemografiaPage() {
           id="piramide"
           title="Pirámide de población"
           description={`Población por sexo y tramos de edad a 1 de enero de ${pyramid.year}, según el Censo Anual de Población del INE.`}
+          className="bg-surface-sunken"
         >
           <div className="max-w-3xl mx-auto">
             <AgePyramid data={pyramid.groups} title="Pirámide de población" />
@@ -238,7 +234,6 @@ export default async function DemografiaPage() {
           id="movimiento-natural"
           title="Nacimientos, defunciones y matrimonios"
           description={`Tasas por cada mil habitantes según los Indicadores Demográficos Básicos del INE, con datos hasta ${indicators.latest.year}.`}
-          className="bg-surface-sunken"
         >
           <StatGroup>
             {indicators.lifeExpectancy ? (
@@ -328,6 +323,7 @@ export default async function DemografiaPage() {
           id="migraciones"
           title="Quién llega y quién se va"
           description={`Saldo migratorio: personas que fijan su residencia aquí menos las que se marchan, según la Estadística de Migraciones y Cambios de Residencia del INE. Datos hasta ${migrations.latest.year}.`}
+          className="bg-surface-sunken"
         >
           <StatGroup>
             <Stat
@@ -379,7 +375,6 @@ export default async function DemografiaPage() {
           id="estudios"
           title="Nivel de estudios"
           description={`Qué estudios ha completado la población de 15 y más años (${numberFormat.format(education.population)} personas), según el Censo Anual de Población del INE. Datos de ${education.year}.`}
-          className="bg-surface-sunken"
         >
           <div className="max-w-3xl">
             <BarList
@@ -405,6 +400,7 @@ export default async function DemografiaPage() {
           id="distritos"
           title="Distribución por distritos y secciones"
           description={`El único detalle que no publica el INE: población empadronada en cada distrito y sección electoral. Sale del portal de datos abiertos del Ayuntamiento y llega hasta ${padronData.year}, su último año publicado.`}
+          className="bg-surface-sunken"
         >
           <DistrictStats districts={padronData.districts} />
           <SourceNote

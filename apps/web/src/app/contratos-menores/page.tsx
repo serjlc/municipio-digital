@@ -103,11 +103,7 @@ export default async function ContratosMenoresPage() {
         </p>
       </Container>
 
-      <Section
-        id="cifras"
-        title="Las cifras de un vistazo"
-        description={`Último trimestre publicado (${quarterLabel(latest)}) y acumulado desde ${quarterLabel(firstQuarter)}.`}
-      >
+      <Section id="cifras" title="Las cifras de un vistazo" hideTitle className="bg-surface-sunken">
         <StatGroup>
           <Stat
             label="Contratos del trimestre"
@@ -137,7 +133,6 @@ export default async function ContratosMenoresPage() {
         id="evolucion"
         title="Evolución trimestral"
         description="Cuánto suma cada trimestre lo adjudicado por contrato menor y cuántos contratos se firman."
-        className="bg-surface-sunken"
       >
         <div className="grid gap-8 xl:grid-cols-2">
           <div>
@@ -176,6 +171,7 @@ export default async function ContratosMenoresPage() {
         id="adjudicatarios"
         title="Mayores adjudicatarios"
         description={`Quiénes han acumulado más importe en contratos menores entre ${quarterLabel(firstQuarter)} y ${quarterLabel(latest)}, sumando todos los trimestres publicados.`}
+        className="bg-surface-sunken"
       >
         <div className="max-w-3xl">
           <BarList items={topContractors(data, 10)} total={totalAmount} />
@@ -187,7 +183,6 @@ export default async function ContratosMenoresPage() {
         id="explorar"
         title="Explora los contratos"
         description="Todos los contratos de cada trimestre, con buscador por adjudicatario y por objeto del contrato, tal y como los publica el Ayuntamiento."
-        className="bg-surface-sunken"
       >
         <ContractsExplorer
           quarters={[...data.quarters].reverse().map((q) => ({

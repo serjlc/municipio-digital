@@ -89,11 +89,7 @@ export default async function TurismoPage() {
 
       {hotels && latest ? (
         <>
-          <Section
-            id="cifras"
-            title="Las cifras de un vistazo"
-            description={`Turismo hotelero de ${latest.year}, el último año completo publicado por el INE.`}
-          >
+          <Section id="cifras" title="Las cifras de un vistazo" hideTitle className="bg-surface-sunken">
             <StatGroup>
               <Stat
                 label="Viajeros alojados"
@@ -136,7 +132,6 @@ export default async function TurismoPage() {
             id="evolucion"
             title="El turismo hotelero, mes a mes"
             description="Pernoctaciones y viajeros de cada mes según el INE. La encuesta cambió de base en 2024, así que la serie municipal comparable empieza ahí. Los meses de invierno no aparecen: buena parte de la planta hotelera cierra y el INE no publica dato."
-            className="bg-surface-sunken"
           >
             <div className="grid gap-8 xl:grid-cols-2">
               <div>
@@ -187,6 +182,7 @@ export default async function TurismoPage() {
           id="temporada"
           title="La temporada, mes a mes"
           description={`Porcentaje de ocupación media mensual que recopila el Ayuntamiento (${local.occupancy.scope?.toLowerCase()}), de ${local.occupancy.years[0]?.year} a ${local.occupancy.years[local.occupancy.years.length - 1]?.year}.`}
+          className="bg-surface-sunken"
         >
           <TrendChart
             points={occupancyPoints}
@@ -212,7 +208,6 @@ export default async function TurismoPage() {
           id="oficinas"
           title="Quién pregunta en las oficinas de turismo"
           description={`Las oficinas de turismo atendieron a ${numberFormat.format(local.visitors.total)} personas en ${local.visitors.year}, según el registro del propio Ayuntamiento. De dónde venían:`}
-          className="bg-surface-sunken"
         >
           <div className="max-w-3xl">
             <BarList
