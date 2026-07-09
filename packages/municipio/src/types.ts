@@ -41,5 +41,14 @@ export interface Municipality {
     minorContracts?: string;
     /** Adapter name in `contractsParsers` (@municipio/datos) for those files */
     minorContractsFormat?: string;
+    /** Local tourism datasets, parsed by the adapter named in `format` */
+    tourism?: {
+      /** Dataset id with hotel occupancy compiled by the town hall */
+      occupancy?: string;
+      /** Dataset id with visitors attended at the tourist offices */
+      visitors?: string;
+      /** Adapter name in `tourismParsers` (@municipio/datos) */
+      format?: string;
+    };
   };
 }

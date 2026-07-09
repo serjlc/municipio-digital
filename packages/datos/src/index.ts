@@ -20,6 +20,21 @@ export {
 } from "./ine-migrations";
 export { fetchCkanDataset, type CkanDataset, type CkanResource } from "./ckan";
 export {
+  fetchHotelTourism,
+  type HotelTourism,
+  type TourismYear,
+} from "./ine-tourism";
+export {
+  fetchLocalTourism,
+  tourismParsers,
+  type TourismParser,
+  type LocalTourismData,
+  type LocalOccupancy,
+  type OccupancyYear,
+  type LocalVisitors,
+  type VisitorOrigin,
+} from "./tourism";
+export {
   fetchMinorContracts,
   contractsParsers,
   type ContractsParser,

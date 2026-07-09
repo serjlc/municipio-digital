@@ -92,8 +92,8 @@ Sobre el código:
   (`demografia/`, `diseno/`)
 - Los conectores de `packages/datos` son genéricos: reciben la configuración del municipio y
   no contienen valores de Chiclana. La única excepción son los adaptadores de formatos
-  locales (`padron-chiclana.ts`), que llevan el municipio en el nombre y se eligen desde la
-  configuración, nunca desde el conector.
+  locales (`padron-chiclana.ts`, `contracts-chiclana.ts`, `tourism-chiclana.ts`), que llevan
+  el municipio en el nombre y se eligen desde la configuración, nunca desde el conector.
 - Mejor páginas estáticas o con ISR que peticiones en vivo: la web va más rápida y no
   machacamos las APIs públicas.
 - Comentarios solo cuando expliquen algo que el código no puede decir por sí mismo.
@@ -144,13 +144,29 @@ para cualquier portal municipal basado en CKAN, que es el estándar de facto en 
 
 Para adaptarlo: haz un fork, crea tu archivo en `packages/municipio/src/` y despliega.
 
-El padrón merece una mención aparte. Los ayuntamientos publican esos archivos cada uno a su
-manera, sin formato estándar, así que el repo los trata como adaptadores: el de Chiclana
-vive en `packages/datos/src/padron-chiclana.ts` y traduce sus excels a los tipos comunes
-(`PadronData`). Para usar los del tuyo, escribe un adaptador al lado, regístralo en
-`padronParsers` y decláralo en tu archivo de municipio con `datasets.padronFormat`. Y si no
-lo haces (o tu portal no publica el padrón), no se rompe nada: la página de demografía
-muestra la serie histórica del INE, que funciona para cualquier municipio español.
+Casi toda la página de demografía sale del INE, así que funciona para cualquier municipio
+sin tocar nada: cifras oficiales y evolución, pirámide de población (Censo Anual), tasas de
+natalidad, mortalidad y nupcialidad con esperanza de vida (Indicadores Demográficos
+Básicos), migraciones (EMCR) y nivel de estudios (Censo Anual). Dos matices: los
+indicadores demográficos solo existen para municipios de más de 75.000 habitantes, y dos
+tablas del INE van por provincia, con su id registrado en `packages/datos` (si falta el de
+la tuya, es una línea).
+
+La página de turismo también es del INE en su columna vertebral: la Encuesta de Ocupación
+Hotelera publica viajeros y pernoctaciones mensuales para los "puntos turísticos" que
+encuesta, sin configurar nada (si tu municipio no lo es, la sección no aparece).
+
+Del ayuntamiento salen solo las piezas que no existen en fuentes estatales: el detalle del
+padrón por distritos y secciones, los contratos menores (la página de transparencia) y los
+extras locales de turismo (ocupación mensual recopilada por el ayuntamiento y visitantes de
+las oficinas de turismo).
+Los ayuntamientos publican esos archivos cada uno a su manera, sin formato estándar, así
+que el repo los trata como adaptadores: el de Chiclana vive en
+`packages/datos/src/padron-chiclana.ts`. Para usar los del tuyo, escribe un adaptador al
+lado, regístralo en `padronParsers` y decláralo en tu archivo de municipio con
+`datasets.padronFormat`. Los contratos menores y el turismo local funcionan igual:
+adaptadores registrados en `contractsParsers` y `tourismParsers`, declarados en
+`datasets`. Sin adaptadores no se rompe nada: esas secciones simplemente no aparecen.
 
 ## Glosario
 

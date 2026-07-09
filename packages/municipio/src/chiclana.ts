@@ -19,5 +19,10 @@ export const chiclana: Municipality = {
     padronFormat: "chiclana",
     minorContracts: "contratos-menores",
     minorContractsFormat: "chiclana",
+    tourism: {
+      occupancy: "flujos-turisticos",
+      visitors: "visitantes-y-turismo-en-el-municipio",
+      format: "chiclana",
+    },
   },
 };

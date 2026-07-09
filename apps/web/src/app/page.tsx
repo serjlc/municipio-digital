@@ -31,6 +31,12 @@ const sections = [
     text: "A quién contrata el Ayuntamiento sin licitación, trimestre a trimestre: adjudicatarios, objeto e importe de cada contrato, con buscador.",
   },
   {
+    title: "Turismo",
+    href: "/turismo",
+    state: "Disponible",
+    text: "Cuántos viajeros y pernoctaciones registran los hoteles desde 2005 según el INE, la ocupación mes a mes y quién visita las oficinas de turismo.",
+  },
+  {
     title: "Clima y costa",
     state: "En preparación",
     text: "Temperaturas, avisos y estado del tiempo con datos oficiales de AEMET, para consultar en dos segundos.",
