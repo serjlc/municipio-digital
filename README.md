@@ -210,5 +210,10 @@ Protocolos y estándares que aparecen por el repositorio, por si alguno te pilla
 
 ## Licencia
 
-[MIT](LICENSE). Los datos consumidos conservan la licencia de su fuente original y los
-datasets generados por los proyectos de este repositorio se publican como datos abiertos.
+[AGPL-3.0-or-later](LICENSE): puedes usar, estudiar, modificar y redistribuir este
+software, incluso con fines comerciales, pero cualquier versión modificada que se
+distribuya u ofrezca como servicio por Internet debe publicar su código con esta misma
+licencia. Es deliberado: un ayuntamiento o cualquier vecino puede desplegar su propia
+versión sin pedir permiso, y nadie puede convertir el trabajo común en un producto
+cerrado. Los datos consumidos conservan la licencia de su fuente original y los datasets
+generados por los proyectos de este repositorio se publican como datos abiertos.

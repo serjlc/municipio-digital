@@ -129,7 +129,7 @@ export default function RootLayout({
               ],
             },
           ]}
-          note={`Proyecto ciudadano de software libre (licencia MIT), sin vinculación con el Ayuntamiento de ${municipality.name}. Los datos mostrados pertenecen a sus fuentes originales y se citan en cada página.`}
+          note={`Proyecto ciudadano de software libre (licencia AGPL-3.0), sin vinculación con el Ayuntamiento de ${municipality.name}. Los datos mostrados pertenecen a sus fuentes originales y se citan en cada página.`}
         />
       </body>
     </html>
