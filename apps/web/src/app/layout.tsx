@@ -57,6 +57,7 @@ const navItems = [
   { href: "/demografia", label: "Demografía" },
   { href: "/turismo", label: "Turismo" },
   { href: "/contratos-menores", label: "Contratos" },
+  { href: "/deuda", label: "Deuda" },
   { href: "/#proyectos", label: "Proyectos" },
 ];
 

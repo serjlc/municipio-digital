@@ -1,4 +1,5 @@
 export { fetchPopulation, type PopulationSeries, type PopulationYear } from "./ine";
+export { fetchMunicipalDebt, type MunicipalDebt, type DebtYear } from "./hacienda-debt";
 export {
   fetchDemographicIndicators,
   type DemographicIndicators,

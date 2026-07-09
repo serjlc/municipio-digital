@@ -152,6 +152,10 @@ indicadores demográficos solo existen para municipios de más de 75.000 habitan
 tablas del INE van por provincia, con su id registrado en `packages/datos` (si falta el de
 la tuya, es una línea).
 
+La deuda municipal sale del Ministerio de Hacienda y también funciona para cualquier
+ayuntamiento de España sin configurar nada: el conector localiza los archivos anuales de
+deuda viva y filtra por el código INE del municipio.
+
 La página de turismo también es del INE en su columna vertebral: la Encuesta de Ocupación
 Hotelera publica viajeros y pernoctaciones mensuales para los "puntos turísticos" que
 encuesta, sin configurar nada (si tu municipio no lo es, la sección no aparece).

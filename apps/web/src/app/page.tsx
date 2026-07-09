@@ -42,6 +42,12 @@ const sections = [
     text: "Temperaturas, avisos y estado del tiempo con datos oficiales de AEMET, para consultar en dos segundos.",
   },
   {
+    title: "Deuda municipal",
+    href: "/deuda",
+    state: "Disponible",
+    text: "Cuánto debe el Ayuntamiento, cuánto sale por habitante y cómo ha evolucionado desde 2010, con los datos del Ministerio de Hacienda.",
+  },
+  {
     title: "Presupuestos",
     state: "En preparación",
     text: "En qué se gasta el dinero del municipio, explicado sin necesidad de saber contabilidad pública.",
