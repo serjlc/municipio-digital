@@ -3,6 +3,14 @@
  * implementing this interface. The rest of the codebase must stay generic:
  * connectors and UI receive this config, they never hardcode local values.
  */
+/** Simplified outline of one census section, for the district map */
+export interface SectionBoundary {
+  district: number;
+  section: number;
+  /** Polygon rings as [longitude, latitude] pairs */
+  rings: [number, number][][];
+}
+
 export interface Municipality {
   /** Display name, e.g. "Chiclana de la Frontera" */
   name: string;
@@ -27,6 +35,14 @@ export interface Municipality {
     /** Reference AEMET weather station id */
     aemetStation?: string;
   };
+  /**
+   * Census section outlines, if the town publishes them (Chiclana does in
+   * its street-map dataset). Optional: without them the district section
+   * simply renders no map.
+   */
+  sectionBoundaries?: SectionBoundary[];
+  /** Where the section outlines come from, cited next to the map */
+  sectionBoundariesSource?: { name: string; href: string; license?: string };
   /** Ids of known datasets in the local CKAN portal */
   datasets?: {
     padron?: string;

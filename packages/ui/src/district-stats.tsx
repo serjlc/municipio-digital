@@ -19,13 +19,61 @@ export interface DistrictPopulation {
   sections: SectionPopulation[];
 }
 
+export interface SectionBoundary {
+  district: number;
+  section: number;
+  rings: [number, number][][];
+}
+
+/*
+ * Equirectangular projection is plenty for a single town: latitude
+ * flipped (SVG grows downwards) and longitude corrected by cos(latitude)
+ * so shapes keep their aspect.
+ */
+function projectSections(boundaries: SectionBoundary[]) {
+  const lats = boundaries.flatMap((b) => b.rings.flat().map(([, lat]) => lat));
+  const lons = boundaries.flatMap((b) => b.rings.flat().map(([lon]) => lon));
+  const minLat = Math.min(...lats);
+  const maxLat = Math.max(...lats);
+  const minLon = Math.min(...lons);
+  const maxLon = Math.max(...lons);
+  const stretch = Math.cos(((minLat + maxLat) / 2) * (Math.PI / 180));
+
+  const width = 100;
+  const scale = width / ((maxLon - minLon) * stretch);
+  const height = (maxLat - minLat) * scale;
+  const x = (lon: number) => (lon - minLon) * stretch * scale;
+  const y = (lat: number) => (maxLat - lat) * scale;
+
+  return {
+    width,
+    height,
+    paths: boundaries.map((b) => ({
+      district: b.district,
+      section: b.section,
+      d: b.rings
+        .map(
+          (ring) =>
+            ring.map(([lon, lat], i) => `${i === 0 ? "M" : "L"}${x(lon).toFixed(1)},${y(lat).toFixed(1)}`).join("") +
+            "Z",
+        )
+        .join(""),
+    })),
+  };
+}
+
 const numberFormat = new Intl.NumberFormat("es-ES");
+
+const districtNumber = (name: string) => parseInt(name.replace(/\D/g, ""), 10);
 
 export function DistrictStats({
   districts,
+  boundaries,
   className,
 }: {
   districts: DistrictPopulation[];
+  /** Section outlines to draw the map; omit it and only the table shows */
+  boundaries?: SectionBoundary[];
   className?: string;
 }) {
   const [activeDistrictIdx, setActiveDistrictIdx] = useState<number>(0);
@@ -40,6 +88,9 @@ export function DistrictStats({
     if (!searchQuery) return true;
     return String(s.section).includes(searchQuery);
   });
+
+  const activeNumber = districtNumber(activeDistrict.name);
+  const map = boundaries && boundaries.length > 0 ? projectSections(boundaries) : null;
 
   return (
     <div className={cn("flex flex-col gap-6", className)}>
@@ -98,6 +149,47 @@ export function DistrictStats({
           </p>
         </Card>
       </div>
+
+      {map ? (
+        <figure className="rounded-card border border-line bg-surface-raised p-4 shadow-card sm:p-6">
+          {/* The table below carries the accessible equivalent, so the map
+              itself stays decorative for assistive tech */}
+          <svg
+            viewBox={`-1 -1 ${map.width + 2} ${map.height + 2}`}
+            className="mx-auto h-auto w-full max-w-md"
+            aria-hidden="true"
+          >
+            {map.paths.map((path) => {
+              const isActive = path.district === activeNumber;
+              const districtIdx = districts.findIndex((d) => districtNumber(d.name) === path.district);
+              return (
+                <path
+                  key={`${path.district}-${path.section}`}
+                  d={path.d}
+                  className={cn(
+                    "cursor-pointer transition-[fill] duration-200",
+                    isActive ? "fill-brand hover:fill-brand-strong" : "fill-line/60 hover:fill-ink-faint/60",
+                  )}
+                  stroke="var(--color-surface-raised)"
+                  strokeWidth="0.4"
+                  onClick={() => {
+                    if (districtIdx >= 0) {
+                      setActiveDistrictIdx(districtIdx);
+                      setSearchQuery(String(path.section));
+                    }
+                  }}
+                >
+                  <title>{`Distrito ${path.district}, sección ${path.section}`}</title>
+                </path>
+              );
+            })}
+          </svg>
+          <figcaption className="mt-3 text-center text-xs text-ink-faint">
+            En verde, las secciones de {activeDistrict.name}. Toca una sección para verla en la
+            tabla; el detalle completo está debajo.
+          </figcaption>
+        </figure>
+      ) : null}
 
       <div className="rounded-card border border-line bg-surface-raised overflow-hidden shadow-card">
         <div className="p-4 border-b border-line bg-surface-sunken/40 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">

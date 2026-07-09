@@ -402,7 +402,7 @@ export default async function DemografiaPage() {
           description={`El único detalle que no publica el INE: población empadronada en cada distrito y sección electoral. Sale del portal de datos abiertos del Ayuntamiento y llega hasta ${padronData.year}, su último año publicado.`}
           className="bg-surface-sunken"
         >
-          <DistrictStats districts={padronData.districts} />
+          <DistrictStats districts={padronData.districts} boundaries={municipality.sectionBoundaries} />
           <SourceNote
             className="mt-8"
             sources={[
@@ -411,6 +411,7 @@ export default async function DemografiaPage() {
                 href: padron?.datasetUrl ?? municipality.sources.ckan,
                 license: padron?.license,
               },
+              ...(municipality.sectionBoundariesSource ? [municipality.sectionBoundariesSource] : []),
             ]}
           />
         </Section>

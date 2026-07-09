@@ -168,7 +168,12 @@ Los ayuntamientos publican esos archivos cada uno a su manera, sin formato está
 que el repo los trata como adaptadores: el de Chiclana vive en
 `packages/datos/src/padron-chiclana.ts`. Para usar los del tuyo, escribe un adaptador al
 lado, regístralo en `padronParsers` y decláralo en tu archivo de municipio con
-`datasets.padronFormat`. Los contratos menores y el turismo local funcionan igual:
+`datasets.padronFormat`. Si tu ayuntamiento publica los contornos de las secciones
+censales (Chiclana los trae en su callejero, en KMZ), conviértelos a JSON simplificado en
+`packages/municipio` y decláralos en `sectionBoundaries`: la página de demografía pintará
+el mapa de distritos sola. Sin contornos, la tabla funciona igual y no hay mapa.
+
+Los contratos menores y el turismo local funcionan igual:
 adaptadores registrados en `contractsParsers` y `tourismParsers`, declarados en
 `datasets`. Sin adaptadores no se rompe nada: esas secciones simplemente no aparecen.
 
