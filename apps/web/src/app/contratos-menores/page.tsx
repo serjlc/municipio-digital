@@ -50,7 +50,7 @@ export default async function ContratosMenoresPage() {
       <Container className="py-16 sm:py-20">
         <p className="text-sm font-semibold uppercase tracking-widest text-brand">Transparencia</p>
         <h1 className="mt-3 max-w-3xl text-display font-bold text-ink text-balance">
-          ¿A quién contrata el Ayuntamiento?
+          ¿A quién <em className="not-italic text-brand">contrata</em> el Ayuntamiento?
         </h1>
         <Alert tone="warning" className="mt-8 max-w-2xl" title="Datos no disponibles ahora mismo">
           No hemos podido cargar los contratos menores desde el portal de datos abiertos del
@@ -91,7 +91,7 @@ export default async function ContratosMenoresPage() {
       <Container className="pt-16 pb-6 sm:pt-20 sm:pb-8">
         <p className="text-sm font-semibold uppercase tracking-widest text-brand">Transparencia</p>
         <h1 className="mt-3 max-w-3xl text-display font-bold text-ink text-balance">
-          ¿A quién contrata el Ayuntamiento?
+          ¿A quién <em className="not-italic text-brand">contrata</em> el Ayuntamiento?
         </h1>
         <p className="mt-6 max-w-2xl text-lead text-ink-muted">
           Los contratos menores son los que el Ayuntamiento adjudica de forma directa, sin

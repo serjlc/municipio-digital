@@ -72,7 +72,7 @@ export default async function Home() {
           Un proyecto de vecinos de {municipality.name}
         </p>
         <h1 className="mt-5 max-w-4xl text-display font-bold text-ink text-balance">
-          Los datos públicos de {municipality.shortName}, reunidos y explicados
+          Los datos públicos de {municipality.shortName}, <em className="not-italic text-brand">reunidos y explicados</em>
         </h1>
         <p className="mt-6 max-w-2xl text-lead text-ink-muted">
           Lo que las administraciones ya publican sobre {municipality.shortName}, reunido y

@@ -110,7 +110,7 @@ export default async function DemografiaPage() {
       <Container className="pt-16 pb-6 sm:pt-20 sm:pb-8">
         <p className="text-sm font-semibold uppercase tracking-widest text-brand">Demografía</p>
         <h1 className="mt-3 max-w-3xl text-display font-bold text-ink text-balance">
-          ¿Cuántos habitantes tiene {municipality.shortName}?
+          ¿Cuántos <em className="not-italic text-brand">habitantes</em> tiene {municipality.shortName}?
         </h1>
         {latest ? (
           <>

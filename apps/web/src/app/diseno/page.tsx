@@ -85,7 +85,7 @@ export default function DesignPage() {
       >
         <div className="flex flex-col gap-8">
           <p className="text-display font-bold text-ink">
-            Titular grande, <span className="text-brand">con énfasis</span>
+            Titular grande, <em className="not-italic text-brand">con énfasis</em>
           </p>
           <p className="text-title font-semibold text-ink">Título de sección</p>
           <p className="text-subtitle font-semibold text-ink">Subtítulo o título de tarjeta</p>

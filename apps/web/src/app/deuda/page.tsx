@@ -69,7 +69,7 @@ export default async function DeudaPage() {
       <Container className="pt-16 pb-6 sm:pt-20 sm:pb-8">
         <p className="text-sm font-semibold uppercase tracking-widest text-brand">Transparencia</p>
         <h1 className="mt-3 max-w-3xl text-display font-bold text-ink text-balance">
-          ¿Cuánto debe el Ayuntamiento?
+          ¿Cuánto <em className="not-italic text-brand">debe</em> el Ayuntamiento?
         </h1>
         {latest ? (
           <p className="mt-6 max-w-2xl text-lead text-ink-muted">
