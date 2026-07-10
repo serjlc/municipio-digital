@@ -10,7 +10,7 @@ export { Alert } from "./alert";
 export { SourceNote, type DataSource } from "./source-note";
 export { Section } from "./section";
 export { TrendChart, type TrendPoint } from "./trend-chart";
-export { Header, type NavItem } from "./header";
+export { Header, type NavItem, type NavSection } from "./header";
 export { ThemeToggle } from "./theme-toggle";
 export { Footer, type FooterGroup, type FooterLink } from "./footer";
 export { BarList, type BarListItem } from "./bar-list";

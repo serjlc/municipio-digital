@@ -48,18 +48,41 @@ const jsonLd = {
 };
 
 /*
- * Ordered by citizen intent: know the town first (Demografía, Turismo),
- * watch the town hall next (Contratos), take part last (Proyectos). The
- * style guide lives in the footer: its audience is contributors.
+ * Grouped by citizen intent: know the town (Datos), watch the
+ * administrations (Transparencia), take part (Proyectos). Desktop shows
+ * the hubs; the mobile menu shows the full grouped tree. The style guide
+ * lives in the footer: its audience is contributors.
  */
 const navItems = [
   { href: "/", label: "Inicio" },
-  { href: "/demografia", label: "Demografía" },
-  { href: "/turismo", label: "Turismo" },
-  { href: "/contratos-menores", label: "Contratos" },
-  { href: "/deuda", label: "Deuda" },
-  { href: "/presupuestos", label: "Presupuestos" },
+  { href: "/datos", label: "Datos", match: ["/demografia", "/turismo"] },
+  {
+    href: "/transparencia",
+    label: "Transparencia",
+    match: ["/presupuestos", "/deuda", "/contratos-menores", "/boja"],
+  },
   { href: "/#proyectos", label: "Proyectos" },
+];
+
+const mobileSections = [
+  { items: [{ href: "/", label: "Inicio" }] },
+  {
+    title: "Datos del municipio",
+    items: [
+      { href: "/demografia", label: "Demografía" },
+      { href: "/turismo", label: "Turismo" },
+    ],
+  },
+  {
+    title: "Transparencia",
+    items: [
+      { href: "/presupuestos", label: "Presupuestos" },
+      { href: "/deuda", label: "Deuda municipal" },
+      { href: "/contratos-menores", label: "Contratos menores" },
+      { href: "/boja", label: "El BOJA y el municipio" },
+    ],
+  },
+  { items: [{ href: "/#proyectos", label: "Proyectos ciudadanos" }] },
 ];
 
 export default function RootLayout({
@@ -85,7 +108,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <SkipLink />
-        <Header siteName={siteName} items={navItems} />
+        <Header siteName={siteName} items={navItems} mobileSections={mobileSections} />
         <main id="contenido" className="flex-1">
           {children}
         </main>

@@ -12,54 +12,14 @@ import {
   StatGroup,
 } from "@municipio/ui";
 import Link from "next/link";
+import { PageList } from "../components/page-list";
+import { sitePages } from "../lib/site-pages";
 
 export const revalidate = 86400;
 
 const numberFormat = new Intl.NumberFormat("es-ES");
 
-const sections = [
-  {
-    title: "Demografía",
-    href: "/demografia",
-    state: "Disponible",
-    text: "Cuántos somos, cómo ha crecido la población desde 1996 y cómo se reparte, con las cifras oficiales del INE y el padrón municipal.",
-  },
-  {
-    title: "Contratos menores",
-    href: "/contratos-menores",
-    state: "Disponible",
-    text: "A quién contrata el Ayuntamiento sin licitación, trimestre a trimestre: adjudicatarios, objeto e importe de cada contrato, con buscador.",
-  },
-  {
-    title: "Turismo",
-    href: "/turismo",
-    state: "Disponible",
-    text: "Cuántos viajeros y pernoctaciones registran los hoteles desde 2005 según el INE, la ocupación mes a mes y quién visita las oficinas de turismo.",
-  },
-  {
-    title: "Clima y costa",
-    state: "En preparación",
-    text: "Temperaturas, avisos y estado del tiempo con datos oficiales de AEMET, para consultar en dos segundos.",
-  },
-  {
-    title: "Deuda municipal",
-    href: "/deuda",
-    state: "Disponible",
-    text: "Cuánto debe el Ayuntamiento, cuánto sale por habitante y cómo ha evolucionado desde 2010, con los datos del Ministerio de Hacienda.",
-  },
-  {
-    title: "Presupuestos",
-    href: "/presupuestos",
-    state: "Disponible",
-    text: "En qué se gasta el dinero del municipio y de dónde sale, capítulo a capítulo, sin necesidad de saber contabilidad pública.",
-  },
-  {
-    title: "El BOJA y el municipio",
-    href: "/boja",
-    state: "Disponible",
-    text: "Cada disposición del boletín de la Junta que menciona al municipio, del día: subvenciones, normativa, planeamiento y nombramientos.",
-  },
-];
+const sections = sitePages;
 
 export default async function Home() {
   const population = await fetchPopulation(municipality);
@@ -131,37 +91,7 @@ export default async function Home() {
         title="Las secciones"
         description="Cada una consume APIs públicas (municipales, andaluzas y estatales), cita su fuente y se actualiza sola."
       >
-        <ul className="border-y border-line" role="list">
-          {sections.map((section) => (
-            <li
-              key={section.title}
-              className="grid gap-2 border-b border-line py-6 last:border-b-0 sm:grid-cols-[14rem_1fr_auto] sm:gap-6"
-            >
-              <h3 className="text-subtitle font-semibold text-ink">
-                {section.href ? (
-                  <Link
-                    href={section.href}
-                    className="underline decoration-line underline-offset-4 hover:text-brand hover:decoration-brand"
-                  >
-                    {section.title}
-                  </Link>
-                ) : (
-                  section.title
-                )}
-              </h3>
-              <p className="max-w-xl text-ink-muted">{section.text}</p>
-              <p
-                className={
-                  section.href
-                    ? "text-sm font-semibold text-accent-strong"
-                    : "text-sm text-ink-faint"
-                }
-              >
-                {section.state}
-              </p>
-            </li>
-          ))}
-        </ul>
+        <PageList pages={sections} />
       </Section>
 
       <Section

@@ -11,12 +11,20 @@ import { VisuallyHidden } from "./visually-hidden";
 export interface NavItem {
   href: string;
   label: string;
+  /** Extra path prefixes that keep this item highlighted (hub children) */
+  match?: string[];
 }
 
-function isActive(pathname: string, href: string) {
-  if (href.includes("#")) return false;
-  if (href === "/") return pathname === "/";
-  return pathname === href || pathname.startsWith(`${href}/`);
+export interface NavSection {
+  title?: string;
+  items: NavItem[];
+}
+
+function isActive(pathname: string, item: NavItem) {
+  if (item.href.includes("#")) return false;
+  if (item.href === "/") return pathname === "/";
+  const prefixes = [item.href, ...(item.match ?? [])];
+  return prefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
 }
 
 function NavLink({ item, active, mobile }: { item: NavItem; active: boolean; mobile?: boolean }) {
@@ -37,7 +45,16 @@ function NavLink({ item, active, mobile }: { item: NavItem; active: boolean; mob
   );
 }
 
-export function Header({ siteName, items }: { siteName: string; items: NavItem[] }) {
+export function Header({
+  siteName,
+  items,
+  mobileSections,
+}: {
+  siteName: string;
+  items: NavItem[];
+  /** Full grouped page tree for the mobile menu; falls back to `items` */
+  mobileSections?: NavSection[];
+}) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const menuId = useId();
@@ -73,7 +90,7 @@ export function Header({ siteName, items }: { siteName: string; items: NavItem[]
             <ul className="flex items-center gap-1">
               {items.map((item) => (
                 <li key={item.href}>
-                  <NavLink item={item} active={isActive(pathname, item.href)} />
+                  <NavLink item={item} active={isActive(pathname, item)} />
                 </li>
               ))}
             </ul>
@@ -112,13 +129,22 @@ export function Header({ siteName, items }: { siteName: string; items: NavItem[]
       <div id={menuId} hidden={!open} className="border-t border-line md:hidden">
         <nav aria-label="Principal">
           <Container className="py-3">
-            <ul className="flex flex-col gap-1">
-              {items.map((item) => (
-                <li key={item.href}>
-                  <NavLink item={item} active={isActive(pathname, item.href)} mobile />
-                </li>
-              ))}
-            </ul>
+            {(mobileSections ?? [{ items }]).map((section, idx) => (
+              <div key={section.title ?? idx} className="not-first:mt-2">
+                {section.title ? (
+                  <p className="px-4 pt-3 pb-1 text-xs font-semibold uppercase tracking-widest text-ink-faint">
+                    {section.title}
+                  </p>
+                ) : null}
+                <ul className="flex flex-col gap-1">
+                  {section.items.map((item) => (
+                    <li key={item.href}>
+                      <NavLink item={item} active={isActive(pathname, item)} mobile />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </Container>
         </nav>
       </div>
