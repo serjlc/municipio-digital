@@ -13,6 +13,7 @@ export { TrendChart, type TrendPoint } from "./trend-chart";
 export { Header, type NavItem, type NavSection } from "./header";
 export { ThemeToggle } from "./theme-toggle";
 export { WeatherPill } from "./weather-pill";
+export { MunicipalMap, type MapCategory, type MapPoint } from "./municipal-map";
 export { Footer, type FooterGroup, type FooterLink } from "./footer";
 export { BarList, type BarListItem } from "./bar-list";
 export {

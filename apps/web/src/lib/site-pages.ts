@@ -34,6 +34,13 @@ export const sitePages: SitePage[] = [
     text: "El tiempo de ahora mismo, la predicción oficial de AEMET a siete días y el estado de la playa: agua, viento y oleaje.",
   },
   {
+    title: "El mapa",
+    href: "/mapa",
+    group: "municipio",
+    state: "Disponible",
+    text: "Los distritos y los equipamientos públicos (salud, educación, deporte y cultura) sobre el callejero, con datos de OpenStreetMap.",
+  },
+  {
     title: "Presupuestos",
     href: "/presupuestos",
     group: "transparencia",

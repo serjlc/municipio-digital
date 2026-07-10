@@ -55,7 +55,7 @@ const jsonLd = {
  */
 const navItems = [
   { href: "/", label: "Inicio" },
-  { href: "/datos", label: "Datos", match: ["/demografia", "/turismo", "/clima"] },
+  { href: "/datos", label: "Datos", match: ["/demografia", "/turismo", "/clima", "/mapa"] },
   {
     href: "/transparencia",
     label: "Transparencia",
@@ -72,6 +72,7 @@ const mobileSections = [
       { href: "/demografia", label: "Demografía" },
       { href: "/turismo", label: "Turismo" },
       { href: "/clima", label: "Clima y costa" },
+      { href: "/mapa", label: "El mapa" },
     ],
   },
   {

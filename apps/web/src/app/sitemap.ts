@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/presupuestos`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${siteUrl}/boja`, changeFrequency: "daily", priority: 0.8 },
     { url: `${siteUrl}/clima`, changeFrequency: "daily", priority: 0.8 },
+    { url: `${siteUrl}/mapa`, changeFrequency: "weekly", priority: 0.7 },
     { url: `${siteUrl}/datos`, changeFrequency: "weekly", priority: 0.6 },
     { url: `${siteUrl}/transparencia`, changeFrequency: "weekly", priority: 0.6 },
     { url: `${siteUrl}/diseno`, changeFrequency: "monthly", priority: 0.3 },

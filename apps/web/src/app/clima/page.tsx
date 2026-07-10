@@ -84,7 +84,7 @@ export default async function ClimaPage() {
                 <Stat
                   label="Viento ahora"
                   value={`${weather.now.windKmh} km/h`}
-                  context={`Humedad ${weather.now.humidity ?? "—"} %`}
+                  context={weather.now.humidity !== undefined ? `Humedad ${weather.now.humidity} %` : "Medido en la estación más cercana"}
                 />
               ) : null}
             </StatGroup>
@@ -106,8 +106,9 @@ export default async function ClimaPage() {
                     {dayFormat.format(new Date(day.date))}
                   </span>
                   <span className="text-ink-muted max-sm:col-span-2 max-sm:row-start-2">
-                    {day.sky ?? "—"}
-                    {day.rainChance ? ` · ${day.rainChance} % de lluvia` : ""}
+                    {[day.sky, day.rainChance ? `${day.rainChance} % de lluvia` : null]
+                      .filter(Boolean)
+                      .join(" · ")}
                   </span>
                   <span className="tabular-nums text-right">
                     <strong className="text-ink">{day.max}°</strong>

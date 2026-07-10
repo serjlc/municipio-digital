@@ -160,6 +160,11 @@ El clima funciona para cualquier municipio con la predicción oficial de AEMET (
 configuración declara estación y playa, el dato de ahora mismo y el estado del mar). Es la
 única página que necesita clave: gratuita, en dos minutos, explicado en `.env.example`.
 
+El mapa también es universal: los contornos de secciones salen de tu configuración (si los
+tienes) y los equipamientos públicos de OpenStreetMap, localizados por el código INE que
+los municipios españoles llevan etiquetado en OSM. El mapa base lo sirve OpenFreeMap, sin
+clave ni servicios de pago.
+
 Lo autonómico se activa según la comunidad declarada en la configuración: si tu municipio
 es andaluz (`region: "andalucia"`), la página del BOJA funciona sola, buscando cada día las
 disposiciones del boletín que mencionan al municipio.

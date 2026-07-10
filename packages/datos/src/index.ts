@@ -8,6 +8,7 @@ export {
 } from "./aemet";
 export { fetchMunicipalDebt, type MunicipalDebt, type DebtYear } from "./hacienda-debt";
 export { fetchBojaMentions, type BojaMentions, type BojaMention } from "./junta-boja";
+export { fetchEquipment, type EquipmentCategory } from "./osm-equipment";
 export {
   fetchDemographicIndicators,
   type DemographicIndicators,
