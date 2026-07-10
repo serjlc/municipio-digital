@@ -4,6 +4,7 @@ import { Alert, Panel, Section, SourceNote, Stat, StatGroup } from "@municipio/u
 import type { Metadata } from "next";
 import { PageHero } from "../../components/page-hero";
 
+export const maxDuration = 60;
 export const revalidate = 3600;
 
 const dayFormat = new Intl.DateTimeFormat("es-ES", { weekday: "long", day: "numeric", month: "short" });
@@ -13,6 +14,17 @@ export const metadata: Metadata = {
   title: `¿Qué tiempo hace en ${municipality.shortName}?`,
   description: `El tiempo en ${municipality.name} ahora y la predicción oficial de AEMET para los próximos siete días, con el estado de la playa.`,
 };
+
+/*
+ * AEMET sky states are sometimes noun phrases ("Intervalos nubosos",
+ * "Nubes altas") and sometimes bare adjectives ("Nuboso", "Despejado");
+ * the sentence needs "cielo" only before the adjectives.
+ */
+function skyPhrase(sky: string): string {
+  const lower = sky.toLowerCase();
+  const nounStart = /^(intervalos|nubes|niebla|bruma|calima|lluvia|chubascos|tormenta)/;
+  return nounStart.test(lower) ? `con ${lower}` : `con cielo ${lower}`;
+}
 
 const sources = [
   {
@@ -50,7 +62,7 @@ export default async function ClimaPage() {
             )}
             hoy se esperan entre <strong className="text-ink">{today.min}</strong> y{" "}
             <strong className="text-ink">{today.max} °C</strong>
-            {today.sky ? `, con ${today.sky.toLowerCase()}` : ""}.
+            {today.sky ? `, ${skyPhrase(today.sky)}` : ""}.
           </p>
         ) : (
           <Alert tone="warning" className="mt-6 max-w-2xl" title="Datos no disponibles ahora mismo">
