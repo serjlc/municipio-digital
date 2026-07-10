@@ -1,7 +1,8 @@
 import { municipality } from "@municipio/config";
 import { fetchMunicipalDebt, fetchPopulation } from "@municipio/datos";
-import { Alert, Container, Section, SourceNote, Stat, StatGroup, TrendChart } from "@municipio/ui";
+import { Alert, Section, SourceNote, Stat, StatGroup, TrendChart } from "@municipio/ui";
 import type { Metadata } from "next";
+import { PageHero } from "../../components/page-hero";
 
 export const revalidate = 86400;
 
@@ -66,11 +67,14 @@ export default async function DeudaPage() {
         />
       ) : null}
 
-      <Container className="pt-16 pb-6 sm:pt-20 sm:pb-8">
-        <p className="text-sm font-semibold uppercase tracking-widest text-brand">Transparencia</p>
-        <h1 className="mt-3 max-w-3xl text-display font-bold text-ink text-balance">
+      <PageHero
+        eyebrow="Transparencia"
+        title={
+          <>
           ¿Cuánto <em className="not-italic text-brand">debe</em> el Ayuntamiento?
-        </h1>
+          </>
+        }
+      >
         {latest ? (
           <p className="mt-6 max-w-2xl text-lead text-ink-muted">
             El Ayuntamiento de {municipality.shortName} debía{" "}
@@ -90,7 +94,7 @@ export default async function DeudaPage() {
             temporal: vuelve a intentarlo en un rato.
           </Alert>
         )}
-      </Container>
+      </PageHero>
 
       {debt && latest ? (
         <>

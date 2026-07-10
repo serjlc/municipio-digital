@@ -12,6 +12,10 @@ import {
   SourceNote,
   Stat,
   StatGroup,
+  BarList,
+  Chip,
+  SearchInput,
+  TrendChart,
 } from "@municipio/ui";
 import type { Metadata } from "next";
 
@@ -184,6 +188,80 @@ export default function DesignPage() {
               ]}
             />
           </div>
+        </div>
+      </Section>
+
+      <Section
+        id="chips"
+        title="Chips seleccionables"
+        description="El selector pequeño del portal: distritos, trimestres, capas del mapa. Verde cuando está activo. Para alternar capas lleva aria-pressed; para seleccionar uno entre varios, no."
+        className="bg-surface-sunken"
+      >
+        <div className="flex flex-wrap gap-2">
+          <Chip selected>Distrito 1</Chip>
+          <Chip>Distrito 2</Chip>
+          <Chip>Distrito 3</Chip>
+        </div>
+      </Section>
+
+      <Section
+        id="buscadores"
+        title="Buscadores"
+        description="Un único input de búsqueda en todo el portal (SearchInput), siempre con etiqueta accesible. Los resultados van en una lista bajo el campo, nunca en desplegables nativos."
+      >
+        <SearchInput aria-label="Ejemplo de buscador" placeholder="Busca tu calle..." className="w-full sm:w-96" />
+      </Section>
+
+      <Section
+        id="graficas"
+        title="Gráficas"
+        description="Serie temporal en SVG con los tokens del tema. Interactiva con puntero, tacto y flechas del teclado, y con su tabla equivalente oculta para lectores de pantalla. En pantallas estrechas se desliza dentro de su marco; la página nunca scrollea. El título visible entra por la prop caption."
+        className="bg-surface-sunken"
+      >
+        <TrendChart
+          caption="Ejemplo: población 2019-2025"
+          points={[
+            { label: "2019", value: 84568 },
+            { label: "2020", value: 85204 },
+            { label: "2021", value: 86086 },
+            { label: "2022", value: 87493 },
+            { label: "2023", value: 88537 },
+            { label: "2024", value: 89794 },
+            { label: "2025", value: 90864 },
+          ]}
+          title="Ejemplo de gráfica de tendencia"
+          labelHeader="Año"
+          valueHeader="Habitantes"
+        />
+      </Section>
+
+      <Section
+        id="barras"
+        title="Barras por categoría"
+        description="Para repartos (presupuesto por capítulos, visitantes por origen): BarList, renderizada en servidor, con el valor y su porcentaje siempre en texto."
+      >
+        <div className="max-w-2xl">
+          <BarList
+            items={[
+              { label: "Gastos de personal", value: 28738740 },
+              { label: "Bienes corrientes y servicios", value: 31119025 },
+              { label: "Inversiones reales", value: 5030229 },
+            ]}
+          />
+        </div>
+      </Section>
+
+      <Section
+        id="avisos"
+        title="Avisos"
+        description="Cuando una fuente no responde, la página lo dice con un aviso en su sitio: nada de huecos silenciosos ni datos fingidos."
+        className="bg-surface-sunken"
+      >
+        <div className="flex max-w-2xl flex-col gap-4">
+          <Alert title="Dato provisional">La fuente aún no ha publicado la cifra definitiva.</Alert>
+          <Alert tone="warning" title="Datos no disponibles ahora mismo">
+            No hemos podido consultar la fuente. Suele ser algo temporal.
+          </Alert>
         </div>
       </Section>
     </>

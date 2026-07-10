@@ -5,6 +5,8 @@ export { SkipLink } from "./skip-link";
 export { Button, ButtonLink, buttonClasses, type ButtonProps } from "./button";
 export { Card, CardLink, CardTitle, CardText } from "./card";
 export { Badge } from "./badge";
+export { Chip } from "./chip";
+export { SearchInput } from "./search-input";
 export { Stat, StatGroup } from "./stat";
 export { Alert } from "./alert";
 export { SourceNote, type DataSource } from "./source-note";

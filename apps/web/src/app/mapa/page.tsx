@@ -1,7 +1,8 @@
 import { municipality } from "@municipio/config";
 import { fetchEquipment, fetchPadronData } from "@municipio/datos";
-import { Alert, Container, MunicipalMap, Section, SourceNote } from "@municipio/ui";
+import { Alert, MunicipalMap, Section, SourceNote } from "@municipio/ui";
 import type { Metadata } from "next";
+import { PageHero } from "../../components/page-hero";
 
 export const revalidate = 86400;
 
@@ -23,13 +24,14 @@ export default async function MapaPage() {
 
   return (
     <>
-      <Container className="pt-16 pb-6 sm:pt-20 sm:pb-8">
-        <p className="text-sm font-semibold uppercase tracking-widest text-brand">
-          Datos del municipio
-        </p>
-        <h1 className="mt-3 max-w-3xl text-display font-bold text-ink text-balance">
+      <PageHero
+        eyebrow="Datos del municipio"
+        title={
+          <>
           El municipio, <em className="not-italic text-brand">en el mapa</em>
-        </h1>
+          </>
+        }
+      >
         <p className="mt-6 max-w-2xl text-lead text-ink-muted">
           Los distritos con sus secciones y{" "}
           {totalPoints > 0 ? (
@@ -42,9 +44,9 @@ export default async function MapaPage() {
           )}{" "}
           sobre el callejero. Toca cualquier cosa para ver qué es.
         </p>
-      </Container>
+      </PageHero>
 
-      <Section id="mapa" title="Mapa del municipio" hideTitle>
+      <Section id="mapa" title="Mapa del municipio" hideTitle className="bg-surface-sunken">
         {!equipment ? (
           <Alert tone="warning" className="mb-6" title="Los equipamientos no se han podido cargar">
             OpenStreetMap no ha respondido al generar esta página, así que de momento el mapa
@@ -76,7 +78,6 @@ export default async function MapaPage() {
           id="listado"
           title="Los equipamientos, en lista"
           description="Lo mismo que muestra el mapa, para consultarlo sin mapa. Los datos son de OpenStreetMap, el mapa libre que edita la comunidad: si falta algo o algo sobra, cualquiera puede corregirlo allí y esta página lo recogerá."
-          className="bg-surface-sunken"
         >
           <div className="grid gap-8 sm:grid-cols-2">
             {equipment.map((category) => (

@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "./cn";
 import { Card, CardTitle } from "./card";
+import { Chip } from "./chip";
+import { SearchInput } from "./search-input";
 
 export interface SectionPopulation {
   section: number;
@@ -129,21 +131,16 @@ export function DistrictStats({
     <div className={cn("flex flex-col gap-6", className)}>
       <div className="flex flex-wrap gap-2">
         {districts.map((d, idx) => (
-          <button
+          <Chip
             key={d.name}
+            selected={idx === activeDistrictIdx}
             onClick={() => {
               setActiveDistrictIdx(idx);
               setSearchQuery("");
             }}
-            className={cn(
-              "px-4 py-2 pointer-coarse:min-h-11 text-sm font-medium rounded-field border transition-all duration-200 cursor-pointer",
-              idx === activeDistrictIdx
-                ? "bg-brand border-brand text-on-brand shadow-sm font-semibold"
-                : "bg-surface-raised border-line text-ink-muted hover:text-ink hover:border-ink-faint",
-            )}
           >
             {d.name}
-          </button>
+          </Chip>
         ))}
       </div>
 
@@ -173,9 +170,8 @@ export function DistrictStats({
           <label htmlFor="buscador-calle" className="block text-sm font-semibold text-ink">
             ¿En qué distrito vives? Busca tu calle
           </label>
-          <input
+          <SearchInput
             id="buscador-calle"
-            type="search"
             placeholder="Escribe el nombre de tu calle..."
             value={streetQuery}
             onFocus={loadStreets}
@@ -183,7 +179,7 @@ export function DistrictStats({
               loadStreets();
               setStreetQuery(e.target.value);
             }}
-            className="mt-2 w-full sm:w-96 px-3 py-2 pointer-coarse:min-h-11 text-sm rounded-field border border-line bg-surface-raised text-ink placeholder:text-ink-faint focus:border-brand"
+            className="mt-2 w-full sm:w-96"
           />
           {streets === "loading" && streetQuery ? (
             <p className="mt-3 text-sm text-ink-faint">Cargando el callejero...</p>
@@ -327,13 +323,12 @@ export function DistrictStats({
             </p>
           </div>
           <div className="relative">
-            <input
-              type="search"
+            <SearchInput
               aria-label={`Buscar número de sección en ${activeDistrict.name}`}
               placeholder="Buscar número de sección..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full sm:w-64 px-3 py-1.5 pointer-coarse:min-h-11 text-sm rounded-field border border-line bg-surface-raised text-ink placeholder:text-ink-faint focus:border-brand"
+              className="w-full sm:w-64"
             />
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { Badge } from "@municipio/ui";
 import Link from "next/link";
 import type { SitePage } from "../lib/site-pages";
 
@@ -23,12 +24,8 @@ export function PageList({ pages }: { pages: SitePage[] }) {
             )}
           </h3>
           <p className="max-w-xl text-ink-muted">{page.text}</p>
-          <p
-            className={
-              page.href ? "text-sm font-semibold text-accent-strong" : "text-sm text-ink-faint"
-            }
-          >
-            {page.state}
+          <p>
+            <Badge tone={page.href ? "brand" : "neutral"}>{page.state}</Badge>
           </p>
         </li>
       ))}

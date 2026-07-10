@@ -1,7 +1,8 @@
 import { municipality } from "@municipio/config";
 import { fetchBojaMentions } from "@municipio/datos";
-import { Alert, Badge, Container, Section, SourceNote, Stat, StatGroup } from "@municipio/ui";
+import { Alert, Badge, Section, SourceNote, Stat, StatGroup } from "@municipio/ui";
 import type { Metadata } from "next";
+import { PageHero } from "../../components/page-hero";
 
 export const revalidate = 43200;
 
@@ -18,14 +19,15 @@ export default async function BojaPage() {
 
   return (
     <>
-      <Container className="pt-16 pb-6 sm:pt-20 sm:pb-8">
-        <p className="text-sm font-semibold uppercase tracking-widest text-brand">
-          Junta de Andalucía
-        </p>
-        <h1 className="mt-3 max-w-3xl text-display font-bold text-ink text-balance">
+      <PageHero
+        eyebrow="Junta de Andalucía"
+        title={
+          <>
           ¿Qué <em className="not-italic text-brand">publica la Junta</em> sobre{" "}
           {municipality.shortName}?
-        </h1>
+          </>
+        }
+      >
         {boja ? (
           <p className="mt-6 max-w-2xl text-lead text-ink-muted">
             El BOJA, el boletín oficial de la Junta, ha mencionado a {municipality.name} en{" "}
@@ -41,7 +43,7 @@ export default async function BojaPage() {
             rato.
           </Alert>
         )}
-      </Container>
+      </PageHero>
 
       {boja ? (
         <>

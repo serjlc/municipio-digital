@@ -3,7 +3,6 @@ import { fetchHotelTourism, fetchLocalTourism } from "@municipio/datos";
 import {
   Alert,
   BarList,
-  Container,
   Section,
   SourceNote,
   Stat,
@@ -11,6 +10,7 @@ import {
   TrendChart,
 } from "@municipio/ui";
 import type { Metadata } from "next";
+import { PageHero } from "../../components/page-hero";
 
 export const revalidate = 86400;
 
@@ -64,11 +64,14 @@ export default async function TurismoPage() {
         />
       ) : null}
 
-      <Container className="pt-16 pb-6 sm:pt-20 sm:pb-8">
-        <p className="text-sm font-semibold uppercase tracking-widest text-brand">Turismo</p>
-        <h1 className="mt-3 max-w-3xl text-display font-bold text-ink text-balance">
+      <PageHero
+        eyebrow="Turismo"
+        title={
+          <>
           ¿Cuánto <em className="not-italic text-brand">turismo</em> recibe {municipality.shortName}?
-        </h1>
+          </>
+        }
+      >
         {latest ? (
           <p className="mt-6 max-w-2xl text-lead text-ink-muted">
             En {latest.year} los hoteles de {municipality.shortName} alojaron a{" "}
@@ -85,7 +88,7 @@ export default async function TurismoPage() {
             temporal: vuelve a intentarlo en un rato.
           </Alert>
         )}
-      </Container>
+      </PageHero>
 
       {hotels && latest ? (
         <>
@@ -135,10 +138,8 @@ export default async function TurismoPage() {
           >
             <div className="grid gap-8 xl:grid-cols-2">
               <div className="min-w-0">
-                <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
-                  Pernoctaciones por mes
-                </h3>
                 <TrendChart
+                  caption="Pernoctaciones por mes"
                   points={hotels.months.map((m) => ({
                     label: `${MONTH_LABELS[m.month - 1]} ${String(m.year).slice(2)}`,
                     value: m.nights,
@@ -149,10 +150,8 @@ export default async function TurismoPage() {
                 />
               </div>
               <div className="min-w-0">
-                <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
-                  Viajeros alojados por mes
-                </h3>
                 <TrendChart
+                  caption="Viajeros alojados por mes"
                   points={hotels.months.map((m) => ({
                     label: `${MONTH_LABELS[m.month - 1]} ${String(m.year).slice(2)}`,
                     value: m.travelers,

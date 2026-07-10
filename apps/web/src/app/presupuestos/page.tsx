@@ -1,7 +1,8 @@
 import { municipality } from "@municipio/config";
 import { fetchMunicipalBudget, fetchPopulation } from "@municipio/datos";
-import { Alert, BarList, Container, Section, SourceNote, Stat, StatGroup } from "@municipio/ui";
+import { Alert, BarList, Section, SourceNote, Stat, StatGroup } from "@municipio/ui";
 import type { Metadata } from "next";
+import { PageHero } from "../../components/page-hero";
 
 export const revalidate = 86400;
 
@@ -61,11 +62,14 @@ export default async function PresupuestosPage() {
         />
       ) : null}
 
-      <Container className="pt-16 pb-6 sm:pt-20 sm:pb-8">
-        <p className="text-sm font-semibold uppercase tracking-widest text-brand">Transparencia</p>
-        <h1 className="mt-3 max-w-3xl text-display font-bold text-ink text-balance">
+      <PageHero
+        eyebrow="Transparencia"
+        title={
+          <>
           ¿En qué se <em className="not-italic text-brand">gasta</em> el dinero el Ayuntamiento?
-        </h1>
+          </>
+        }
+      >
         {budget ? (
           <p className="mt-6 max-w-2xl text-lead text-ink-muted">
             El presupuesto municipal de {budget.year} asciende a{" "}
@@ -85,7 +89,7 @@ export default async function PresupuestosPage() {
             Ayuntamiento. Suele ser algo temporal: vuelve a intentarlo en un rato.
           </Alert>
         )}
-      </Container>
+      </PageHero>
 
       {budget ? (
         <>

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { cn } from "./cn";
+import { Chip } from "./chip";
+import { SearchInput } from "./search-input";
 
 export interface ContractItem {
   contractor: string;
@@ -54,21 +56,16 @@ export function ContractsExplorer({
     <div className={cn("flex flex-col gap-6", className)}>
       <div className="flex flex-wrap gap-2">
         {quarters.map((q, idx) => (
-          <button
+          <Chip
             key={q.label}
+            selected={idx === activeIdx}
             onClick={() => {
               setActiveIdx(idx);
               setSearchQuery("");
             }}
-            className={cn(
-              "px-4 py-2 pointer-coarse:min-h-11 text-sm font-medium rounded-field border transition-all duration-200 cursor-pointer",
-              idx === activeIdx
-                ? "bg-brand border-brand text-on-brand shadow-sm font-semibold"
-                : "bg-surface-raised border-line text-ink-muted hover:text-ink hover:border-ink-faint",
-            )}
           >
             {q.label}
-          </button>
+          </Chip>
         ))}
       </div>
 
@@ -84,13 +81,12 @@ export function ContractsExplorer({
               {euroFormat.format(active.totalAmount)} en total
             </p>
           </div>
-          <input
-            type="search"
+          <SearchInput
             aria-label={`Buscar por adjudicatario u objeto en el trimestre ${active.label}`}
             placeholder="Buscar empresa u objeto..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full sm:w-72 px-3 py-1.5 pointer-coarse:min-h-11 text-sm rounded-field border border-line bg-surface-raised text-ink placeholder:text-ink-faint focus:border-brand"
+            className="w-full sm:w-72"
           />
         </div>
 

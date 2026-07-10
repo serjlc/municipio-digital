@@ -1,7 +1,8 @@
 import { municipality } from "@municipio/config";
 import { fetchWeather } from "@municipio/datos";
-import { Alert, Container, Section, SourceNote, Stat, StatGroup } from "@municipio/ui";
+import { Alert, Section, SourceNote, Stat, StatGroup } from "@municipio/ui";
 import type { Metadata } from "next";
+import { PageHero } from "../../components/page-hero";
 
 export const revalidate = 3600;
 
@@ -27,11 +28,14 @@ export default async function ClimaPage() {
 
   return (
     <>
-      <Container className="pt-16 pb-6 sm:pt-20 sm:pb-8">
-        <p className="text-sm font-semibold uppercase tracking-widest text-brand">Clima y costa</p>
-        <h1 className="mt-3 max-w-3xl text-display font-bold text-ink text-balance">
+      <PageHero
+        eyebrow="Clima y costa"
+        title={
+          <>
           ¿Qué <em className="not-italic text-brand">tiempo</em> hace en {municipality.shortName}?
-        </h1>
+          </>
+        }
+      >
         {weather && today ? (
           <p className="mt-6 max-w-2xl text-lead text-ink-muted">
             {weather.now ? (
@@ -55,7 +59,7 @@ export default async function ClimaPage() {
             suele ser algo temporal: vuelve a intentarlo en un rato.
           </Alert>
         )}
-      </Container>
+      </PageHero>
 
       {weather && today ? (
         <>

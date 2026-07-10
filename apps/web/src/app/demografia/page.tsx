@@ -13,7 +13,6 @@ import {
   AgePyramid,
   Alert,
   BarList,
-  Container,
   DistrictStats,
   Section,
   SourceNote,
@@ -22,6 +21,7 @@ import {
   TrendChart,
 } from "@municipio/ui";
 import type { Metadata } from "next";
+import { PageHero } from "../../components/page-hero";
 
 export const revalidate = 86400;
 
@@ -107,11 +107,14 @@ export default async function DemografiaPage() {
         />
       ) : null}
 
-      <Container className="pt-16 pb-6 sm:pt-20 sm:pb-8">
-        <p className="text-sm font-semibold uppercase tracking-widest text-brand">Demografía</p>
-        <h1 className="mt-3 max-w-3xl text-display font-bold text-ink text-balance">
+      <PageHero
+        eyebrow="Demografía"
+        title={
+          <>
           ¿Cuántos <em className="not-italic text-brand">habitantes</em> tiene {municipality.shortName}?
-        </h1>
+          </>
+        }
+      >
         {latest ? (
           <>
             <p className="mt-6 max-w-2xl text-lead text-ink-muted">
@@ -138,7 +141,7 @@ export default async function DemografiaPage() {
             en un rato.
           </Alert>
         )}
-      </Container>
+      </PageHero>
 
       {latest ? (
         <Section id="cifras" title="Las cifras de un vistazo" hideTitle className="bg-surface-sunken">
@@ -274,10 +277,8 @@ export default async function DemografiaPage() {
 
           <div className="mt-12 grid gap-8 xl:grid-cols-2">
             <div className="min-w-0">
-              <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
-                Tasa de natalidad (nacimientos por mil habitantes)
-              </h3>
               <TrendChart
+                caption="Tasa de natalidad (nacimientos por mil habitantes)"
                 points={ratePoints("birthRate")}
                 title="Tasa bruta de natalidad"
                 labelHeader="Año"
@@ -285,10 +286,8 @@ export default async function DemografiaPage() {
               />
             </div>
             <div className="min-w-0">
-              <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
-                Tasa de mortalidad (defunciones por mil habitantes)
-              </h3>
               <TrendChart
+                caption="Tasa de mortalidad (defunciones por mil habitantes)"
                 points={ratePoints("deathRate")}
                 title="Tasa bruta de mortalidad"
                 labelHeader="Año"
@@ -296,10 +295,8 @@ export default async function DemografiaPage() {
               />
             </div>
             <div className="min-w-0">
-              <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
-                Tasa de nupcialidad (matrimonios por mil habitantes)
-              </h3>
               <TrendChart
+                caption="Tasa de nupcialidad (matrimonios por mil habitantes)"
                 points={ratePoints("marriageRate")}
                 title="Tasa bruta de nupcialidad"
                 labelHeader="Año"
@@ -349,10 +346,8 @@ export default async function DemografiaPage() {
             ) : null}
           </StatGroup>
           <div className="mt-12 max-w-3xl">
-            <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">
-              Saldo migratorio total por año
-            </h3>
             <TrendChart
+              caption="Saldo migratorio total por año"
               points={migrations.years.map((y) => ({ label: String(y.year), value: y.total }))}
               title="Saldo migratorio total"
               labelHeader="Año"

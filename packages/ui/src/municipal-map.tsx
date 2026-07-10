@@ -3,6 +3,8 @@
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "./cn";
+import { Chip } from "./chip";
+import { SearchInput } from "./search-input";
 import type { SectionBoundary } from "./district-stats";
 
 export interface MapPoint {
@@ -100,9 +102,14 @@ export function MunicipalMap({
         const maplibre = (await import("maplibre-gl")).default;
         if (cancelled || !container.current) return;
 
+        /* Match the site theme at init; OpenFreeMap serves both looks */
+        const dark =
+          document.documentElement.dataset.theme === "dark" ||
+          (!document.documentElement.dataset.theme &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
         const map = new maplibre.Map({
           container: container.current,
-          style: "https://tiles.openfreemap.org/styles/liberty",
+          style: `https://tiles.openfreemap.org/styles/${dark ? "dark" : "liberty"}`,
           center: [center.lon, center.lat],
           zoom: 12,
           attributionControl: { compact: false },
@@ -263,18 +270,37 @@ export function MunicipalMap({
   return (
     <div className={cn("flex flex-col gap-4", className)}>
       {categories.length > 0 ? (
-        <div className="relative">
-          <input
-            type="search"
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Capas del mapa">
+            {categories.map((category) => (
+              <Chip
+                key={category.id}
+                selected={visible[category.id]}
+                aria-pressed={visible[category.id]}
+                onClick={() => toggle(category.id)}
+              >
+                <span
+                  aria-hidden="true"
+                  className="h-2.5 w-2.5 rounded-full"
+                  style={{
+                    backgroundColor: visible[category.id] ? "#ffffff" : categoryColor(category.id),
+                  }}
+                />
+                {category.label} ({category.points.length})
+              </Chip>
+            ))}
+          </div>
+          <div className="relative sm:w-80 sm:shrink-0">
+          <SearchInput
             aria-label="Buscar un equipamiento en el mapa"
             placeholder="Busca un colegio, centro de salud, biblioteca..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full sm:w-96 px-3 py-2 pointer-coarse:min-h-11 text-sm rounded-field border border-line bg-surface-raised text-ink placeholder:text-ink-faint focus:border-brand"
+            className="w-full"
           />
           {matches.length > 0 ? (
             <ul
-              className="absolute z-10 mt-1 w-full sm:w-96 divide-y divide-line overflow-hidden rounded-field border border-line bg-surface-raised shadow-card"
+              className="absolute z-10 mt-1 w-full divide-y divide-line overflow-hidden rounded-field border border-line bg-surface-raised shadow-card"
               role="list"
             >
               {matches.map((point) => (
@@ -294,35 +320,12 @@ export function MunicipalMap({
               ))}
             </ul>
           ) : null}
-        </div>
-      ) : null}
-      {categories.length > 0 ? (
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Capas del mapa">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => toggle(category.id)}
-              aria-pressed={visible[category.id]}
-              className={cn(
-                "inline-flex items-center gap-2 px-3 py-1.5 pointer-coarse:min-h-11 text-sm font-medium rounded-field border transition-colors cursor-pointer",
-                visible[category.id]
-                  ? "bg-surface-raised border-line text-ink"
-                  : "bg-surface-sunken border-transparent text-ink-faint",
-              )}
-            >
-              <span
-                aria-hidden="true"
-                className="h-2.5 w-2.5 rounded-full"
-                style={{ backgroundColor: categoryColor(category.id), opacity: visible[category.id] ? 1 : 0.35 }}
-              />
-              {category.label} ({category.points.length})
-            </button>
-          ))}
+          </div>
         </div>
       ) : null}
       <div
         ref={container}
-        className="h-[65vh] min-h-[420px] w-full overflow-hidden rounded-card border border-line shadow-card"
+        className="h-[65vh] min-h-[420px] w-full overflow-hidden rounded-card border border-line shadow-card pointer-coarse:[&_.maplibregl-ctrl_button]:h-11 pointer-coarse:[&_.maplibregl-ctrl_button]:w-11"
         aria-label="Mapa del municipio con distritos y equipamientos"
       />
     </div>

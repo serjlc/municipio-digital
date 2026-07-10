@@ -31,12 +31,15 @@ function niceTicks(min: number, max: number, count = 4): number[] {
 export function TrendChart({
   points,
   title,
+  caption,
   valueHeader,
   labelHeader,
   className,
 }: {
   points: TrendPoint[];
   title: string;
+  /** Visible heading above the chart; `title` stays the accessible name */
+  caption?: string;
   valueHeader: string;
   labelHeader: string;
   className?: string;
@@ -87,6 +90,9 @@ export function TrendChart({
 
   return (
     <figure className={className}>
+      {caption ? (
+        <h3 className="text-sm font-semibold text-ink-muted mb-4 text-center">{caption}</h3>
+      ) : null}
       <div className="overflow-x-auto">
         <div
           className="relative min-w-[450px]"
