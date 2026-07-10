@@ -16,8 +16,11 @@ import {
   Chip,
   SearchInput,
   TrendChart,
+  Panel,
+  TextLink,
 } from "@municipio/ui";
 import type { Metadata } from "next";
+import { PageHero } from "../../components/page-hero";
 
 export const metadata: Metadata = {
   title: "Sistema de diseño",
@@ -60,19 +63,22 @@ function Swatch({ token, usage }: { token: string; usage: string }) {
 export default function DesignPage() {
   return (
     <>
-      <Container className="pt-16 pb-6 sm:pt-20 sm:pb-8">
-        <h1 className="text-display font-bold text-ink text-balance">Sistema de diseño</h1>
-        <p className="mt-5 max-w-2xl text-lead text-ink-muted">
+      <PageHero
+        eyebrow="El proyecto"
+        title={<>Sistema de <em className="not-italic text-brand">diseño</em></>}
+      >
+        <p className="mt-6 max-w-2xl text-lead text-ink-muted">
           Guía viva de los tokens y componentes de @municipio/ui. Todo lo que se publica en este
           sitio, incluidos los proyectos ciudadanos, se construye con estas piezas. Los colores se
           adaptan solos al modo claro u oscuro del sistema.
         </p>
-      </Container>
+      </PageHero>
 
       <Section
         id="colores"
         title="Color"
         description="Los componentes usan solo tokens semánticos. Las escalas de base (verde de la bandera andaluza y albero, sobre blanco cal) quedan por debajo, así otro municipio puede cambiar la paleta entera tocando unas pocas variables. El selector de la cabecera fuerza tema claro u oscuro; por defecto se sigue el del sistema."
+        className="bg-surface-sunken"
       >
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3" role="list">
           {semanticColors.map(([token, usage]) => (
@@ -85,7 +91,6 @@ export default function DesignPage() {
         id="tipografia"
         title="Tipografía"
         description="Instrument Sans para todo: los titulares usan peso alto y tracking apretado, el texto corrido queda en peso normal. Los tamaños grandes son fluidos: crecen con la pantalla sin saltos."
-        className="bg-surface-sunken"
       >
         <div className="flex flex-col gap-8">
           <p className="text-display font-bold text-ink">
@@ -107,6 +112,7 @@ export default function DesignPage() {
         id="botones"
         title="Botones"
         description="Tres variantes y tres tamaños. Los tamaños medio y grande garantizan un objetivo táctil de al menos 44 píxeles."
+        className="bg-surface-sunken"
       >
         <div className="flex flex-col gap-6">
           <div className="flex flex-wrap items-center gap-3">
@@ -133,7 +139,6 @@ export default function DesignPage() {
         id="etiquetas"
         title="Etiquetas y avisos"
         description="Las etiquetas marcan estados y categorías. Los avisos comunican contexto sin interrumpir."
-        className="bg-surface-sunken"
       >
         <div className="flex flex-col gap-6">
           <div className="flex flex-wrap gap-3">
@@ -158,6 +163,7 @@ export default function DesignPage() {
         id="tarjetas"
         title="Tarjetas y cifras"
         description="La tarjeta es la pieza básica de composición. Cuando toda la tarjeta es un enlace, el título lleva el enlace real y el resto se hace clicable sin duplicar destinos para lectores de pantalla."
+        className="bg-surface-sunken"
       >
         <div className="flex flex-col gap-10">
           <div className="grid gap-5 sm:grid-cols-2">
@@ -173,6 +179,14 @@ export default function DesignPage() {
               <CardText>Para contenido que no lleva a ningún sitio.</CardText>
             </Card>
           </div>
+          <Panel className="max-w-md p-5">
+            <p className="text-sm text-ink-muted">
+              Panel: la misma superficie sin opiniones de relleno, para tablas, buscadores y
+              figuras. Los enlaces dentro del texto usan{" "}
+              <TextLink href="/diseno">TextLink</TextLink>, subrayado discreto que se vuelve
+              verde al pasar.
+            </p>
+          </Panel>
           <div>
             <StatGroup>
               <Stat label="Habitantes" value="87.493" context="Padrón 2024" />
@@ -195,7 +209,6 @@ export default function DesignPage() {
         id="chips"
         title="Chips seleccionables"
         description="El selector pequeño del portal: distritos, trimestres, capas del mapa. Verde cuando está activo. Para alternar capas lleva aria-pressed; para seleccionar uno entre varios, no."
-        className="bg-surface-sunken"
       >
         <div className="flex flex-wrap gap-2">
           <Chip selected>Distrito 1</Chip>
@@ -208,6 +221,7 @@ export default function DesignPage() {
         id="buscadores"
         title="Buscadores"
         description="Un único input de búsqueda en todo el portal (SearchInput), siempre con etiqueta accesible. Los resultados van en una lista bajo el campo, nunca en desplegables nativos."
+        className="bg-surface-sunken"
       >
         <SearchInput aria-label="Ejemplo de buscador" placeholder="Busca tu calle..." className="w-full sm:w-96" />
       </Section>
@@ -216,7 +230,6 @@ export default function DesignPage() {
         id="graficas"
         title="Gráficas"
         description="Serie temporal en SVG con los tokens del tema. Interactiva con puntero, tacto y flechas del teclado, y con su tabla equivalente oculta para lectores de pantalla. En pantallas estrechas se desliza dentro de su marco; la página nunca scrollea. El título visible entra por la prop caption."
-        className="bg-surface-sunken"
       >
         <TrendChart
           caption="Ejemplo: población 2019-2025"
@@ -239,6 +252,7 @@ export default function DesignPage() {
         id="barras"
         title="Barras por categoría"
         description="Para repartos (presupuesto por capítulos, visitantes por origen): BarList, renderizada en servidor, con el valor y su porcentaje siempre en texto."
+        className="bg-surface-sunken"
       >
         <div className="max-w-2xl">
           <BarList
@@ -255,7 +269,6 @@ export default function DesignPage() {
         id="avisos"
         title="Avisos"
         description="Cuando una fuente no responde, la página lo dice con un aviso en su sitio: nada de huecos silenciosos ni datos fingidos."
-        className="bg-surface-sunken"
       >
         <div className="flex max-w-2xl flex-col gap-4">
           <Alert title="Dato provisional">La fuente aún no ha publicado la cifra definitiva.</Alert>

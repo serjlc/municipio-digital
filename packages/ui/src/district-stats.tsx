@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "./cn";
 import { Card, CardTitle } from "./card";
 import { Chip } from "./chip";
+import { Panel, panelClasses } from "./panel";
 import { SearchInput } from "./search-input";
 
 export interface SectionPopulation {
@@ -166,7 +167,7 @@ export function DistrictStats({
       ) : null}
 
       {streetsEndpoint ? (
-        <div className="rounded-card border border-line bg-surface-raised p-4 shadow-card sm:p-5">
+        <Panel className="p-4 sm:p-5">
           <label htmlFor="buscador-calle" className="block text-sm font-semibold text-ink">
             ¿En qué distrito vives? Busca tu calle
           </label>
@@ -232,7 +233,7 @@ export function DistrictStats({
               );
             })()
           ) : null}
-        </div>
+        </Panel>
       ) : null}
 
       <div className="grid gap-6 md:grid-cols-3">
@@ -272,7 +273,7 @@ export function DistrictStats({
       </div>
 
       {map ? (
-        <figure className="rounded-card border border-line bg-surface-raised p-4 shadow-card sm:p-6">
+        <figure className={cn(panelClasses, "p-4 sm:p-6")}>
           {/* The table below carries the accessible equivalent, so the map
               itself stays decorative for assistive tech */}
           <svg
@@ -312,7 +313,7 @@ export function DistrictStats({
         </figure>
       ) : null}
 
-      <div className="rounded-card border border-line bg-surface-raised overflow-hidden shadow-card">
+      <Panel className="overflow-hidden">
         <div className="p-4 border-b border-line bg-surface-sunken/40 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
             <h4 className="text-sm font-semibold text-ink">
@@ -365,7 +366,7 @@ export function DistrictStats({
             No se ha encontrado ninguna sección electoral con el número "{searchQuery}".
           </div>
         )}
-      </div>
+      </Panel>
     </div>
   );
 }

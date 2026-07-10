@@ -1,6 +1,6 @@
 import { municipality } from "@municipio/config";
 import { fetchEquipment, fetchPadronData } from "@municipio/datos";
-import { Alert, MunicipalMap, Section, SourceNote } from "@municipio/ui";
+import { Alert, MunicipalMap, Section, SourceNote, cn, panelClasses } from "@municipio/ui";
 import type { Metadata } from "next";
 import { PageHero } from "../../components/page-hero";
 
@@ -79,9 +79,9 @@ export default async function MapaPage() {
           title="Los equipamientos, en lista"
           description="Lo mismo que muestra el mapa, para consultarlo sin mapa. Los datos son de OpenStreetMap, el mapa libre que edita la comunidad: si falta algo o algo sobra, cualquiera puede corregirlo allí y esta página lo recogerá."
         >
-          <div className="grid gap-8 sm:grid-cols-2">
+          <div className="grid items-start gap-8 sm:grid-cols-2">
             {equipment.map((category) => (
-              <details key={category.id} className="rounded-card border border-line bg-surface-raised p-5 shadow-card">
+              <details key={category.id} className={cn(panelClasses, "p-5")}>
                 <summary className="cursor-pointer font-semibold text-ink">
                   {category.label} ({category.points.length})
                 </summary>

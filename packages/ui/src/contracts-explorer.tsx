@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { cn } from "./cn";
 import { Chip } from "./chip";
+import { Panel } from "./panel";
 import { SearchInput } from "./search-input";
 
 export interface ContractItem {
@@ -69,7 +70,7 @@ export function ContractsExplorer({
         ))}
       </div>
 
-      <div className="rounded-card border border-line bg-surface-raised overflow-hidden shadow-card">
+      <Panel className="overflow-hidden">
         <div className="p-4 border-b border-line bg-surface-sunken/40 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
             <h4 className="text-sm font-semibold text-ink">
@@ -133,7 +134,7 @@ export function ContractsExplorer({
             Ningún contrato de {active.label} encaja con esa búsqueda.
           </div>
         )}
-      </div>
+      </Panel>
     </div>
   );
 }

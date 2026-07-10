@@ -1,6 +1,7 @@
 import { municipality } from "@municipio/config";
 import { Container } from "@municipio/ui";
 import type { Metadata } from "next";
+import { PageHero } from "../../components/page-hero";
 import { PageList } from "../../components/page-list";
 import { municipioPages } from "../../lib/site-pages";
 
@@ -11,20 +12,23 @@ export const metadata: Metadata = {
 
 export default function DatosPage() {
   return (
-    <Container className="py-16 sm:py-20">
-      <p className="text-sm font-semibold uppercase tracking-widest text-brand">
-        Datos del municipio
-      </p>
-      <h1 className="mt-3 max-w-3xl text-display font-bold text-ink text-balance">
+    <>
+    <PageHero
+      eyebrow="Datos del municipio"
+      title={
+        <>
         Cómo es {municipality.shortName}, <em className="not-italic text-brand">en datos</em>
-      </h1>
+        </>
+      }
+    >
       <p className="mt-6 max-w-2xl text-lead text-ink-muted">
         Las páginas que cuentan el municipio: quiénes lo habitan y de qué vive. Cada dato lleva
         su fuente oficial al lado.
       </p>
-      <div className="mt-12">
-        <PageList pages={municipioPages} />
-      </div>
+    </PageHero>
+    <Container className="pb-16 sm:pb-20">
+      <PageList pages={municipioPages} />
     </Container>
+    </>
   );
 }

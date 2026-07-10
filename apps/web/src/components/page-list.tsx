@@ -1,4 +1,4 @@
-import { Badge } from "@municipio/ui";
+import { Badge, textLinkClasses } from "@municipio/ui";
 import Link from "next/link";
 import type { SitePage } from "../lib/site-pages";
 
@@ -15,7 +15,7 @@ export function PageList({ pages }: { pages: SitePage[] }) {
             {page.href ? (
               <Link
                 href={page.href}
-                className="underline decoration-line underline-offset-4 hover:text-brand hover:decoration-brand"
+                className={textLinkClasses}
               >
                 {page.title}
               </Link>

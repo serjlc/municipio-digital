@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { cn } from "./cn";
+import { Panel } from "./panel";
 
 export interface AgeGroup {
   label: string;
@@ -82,7 +83,7 @@ export function AgePyramid({
 
   return (
     <figure className={cn("flex flex-col gap-6", className)}>
-      <div className="rounded-card border border-line bg-surface-raised p-6 shadow-card">
+      <Panel className="p-6">
         {/* Summary header: one fixed layout, only the values change on hover */}
         <div className="mb-6 max-w-xl mx-auto border-b border-line pb-5 text-center">
           <p
@@ -184,7 +185,7 @@ export function AgePyramid({
             })
             .reverse() /* Oldest at the top */}
         </div>
-      </div>
+      </Panel>
 
       <p className="sr-only" aria-live="polite">
         {activeItem

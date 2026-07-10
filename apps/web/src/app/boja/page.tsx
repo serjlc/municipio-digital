@@ -1,6 +1,6 @@
 import { municipality } from "@municipio/config";
 import { fetchBojaMentions } from "@municipio/datos";
-import { Alert, Badge, Section, SourceNote, Stat, StatGroup } from "@municipio/ui";
+import { Alert, Badge, Section, SourceNote, Stat, StatGroup, cn, textLinkClasses } from "@municipio/ui";
 import type { Metadata } from "next";
 import { PageHero } from "../../components/page-hero";
 
@@ -96,7 +96,7 @@ export default async function BojaPage() {
                     href={item.htmlUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-2 block max-w-3xl font-medium text-ink underline decoration-line underline-offset-4 hover:text-brand hover:decoration-brand"
+                    className={cn("mt-2 block max-w-3xl font-medium text-ink", textLinkClasses)}
                   >
                     {item.title}
                   </a>

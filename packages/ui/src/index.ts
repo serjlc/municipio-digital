@@ -4,6 +4,8 @@ export { VisuallyHidden } from "./visually-hidden";
 export { SkipLink } from "./skip-link";
 export { Button, ButtonLink, buttonClasses, type ButtonProps } from "./button";
 export { Card, CardLink, CardTitle, CardText } from "./card";
+export { Panel, panelClasses } from "./panel";
+export { TextLink, textLinkClasses } from "./text-link";
 export { Badge } from "./badge";
 export { Chip } from "./chip";
 export { SearchInput } from "./search-input";

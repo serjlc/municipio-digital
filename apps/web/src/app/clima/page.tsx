@@ -1,6 +1,6 @@
 import { municipality } from "@municipio/config";
 import { fetchWeather } from "@municipio/datos";
-import { Alert, Section, SourceNote, Stat, StatGroup } from "@municipio/ui";
+import { Alert, Panel, Section, SourceNote, Stat, StatGroup } from "@municipio/ui";
 import type { Metadata } from "next";
 import { PageHero } from "../../components/page-hero";
 
@@ -133,10 +133,7 @@ export default async function ClimaPage() {
             >
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {weather.beach.days.map((day) => (
-                  <div
-                    key={day.date}
-                    className="rounded-card border border-line bg-surface-raised p-5 shadow-card"
-                  >
+                  <Panel key={day.date} className="p-5">
                     <p className="font-semibold text-ink capitalize">
                       {dayFormat.format(new Date(day.date))}
                     </p>
@@ -172,7 +169,7 @@ export default async function ClimaPage() {
                         </div>
                       ) : null}
                     </dl>
-                  </div>
+                  </Panel>
                 ))}
               </div>
               <SourceNote className="mt-8" sources={sources} />

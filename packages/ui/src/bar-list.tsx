@@ -41,9 +41,9 @@ export function BarList({
               ) : null}
             </span>
           </div>
-          <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-surface-sunken">
+          <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-line/50">
             <div
-              className="h-full rounded-full bg-brand"
+              className={cn("h-full rounded-full bg-brand", item.value > 0 && "min-w-[3px]")}
               style={{ width: `${maxValue > 0 ? (item.value / maxValue) * 100 : 0}%` }}
             />
           </div>
