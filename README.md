@@ -156,6 +156,10 @@ La deuda municipal sale del Ministerio de Hacienda y también funciona para cual
 ayuntamiento de España sin configurar nada: el conector localiza los archivos anuales de
 deuda viva y filtra por el código INE del municipio.
 
+Lo autonómico se activa según la comunidad declarada en la configuración: si tu municipio
+es andaluz (`region: "andalucia"`), la página del BOJA funciona sola, buscando cada día las
+disposiciones del boletín que mencionan al municipio.
+
 La página de turismo también es del INE en su columna vertebral: la Encuesta de Ocupación
 Hotelera publica viajeros y pernoctaciones mensuales para los "puntos turísticos" que
 encuesta, sin configurar nada (si tu municipio no lo es, la sección no aparece).

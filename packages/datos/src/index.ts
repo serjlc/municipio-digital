@@ -1,5 +1,6 @@
 export { fetchPopulation, type PopulationSeries, type PopulationYear } from "./ine";
 export { fetchMunicipalDebt, type MunicipalDebt, type DebtYear } from "./hacienda-debt";
+export { fetchBojaMentions, type BojaMentions, type BojaMention } from "./junta-boja";
 export {
   fetchDemographicIndicators,
   type DemographicIndicators,

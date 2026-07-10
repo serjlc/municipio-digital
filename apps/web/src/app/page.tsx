@@ -54,9 +54,10 @@ const sections = [
     text: "En qué se gasta el dinero del municipio y de dónde sale, capítulo a capítulo, sin necesidad de saber contabilidad pública.",
   },
   {
-    title: "Agenda y BOJA",
-    state: "En preparación",
-    text: "Lo que publica la Junta de Andalucía y afecta al municipio: subvenciones, normativa y eventos.",
+    title: "El BOJA y el municipio",
+    href: "/boja",
+    state: "Disponible",
+    text: "Cada disposición del boletín de la Junta que menciona al municipio, del día: subvenciones, normativa, planeamiento y nombramientos.",
   },
 ];
 
