@@ -32,8 +32,10 @@ export interface Municipality {
     ckan?: string;
     /** Official town hall website, linked for attribution */
     townHall?: string;
-    /** Reference AEMET weather station id */
+    /** Nearest AEMET weather station id, for current readings */
     aemetStation?: string;
+    /** AEMET beach forecast code, if the town has a monitored beach */
+    aemetBeach?: string;
   };
   /**
    * Census section outlines, if the town publishes them (Chiclana does in

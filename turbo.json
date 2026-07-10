@@ -1,5 +1,6 @@
 {
   "$schema": "https://turborepo.com/schema.json",
+  "globalEnv": ["AEMET_API_KEY", "NEXT_PUBLIC_SITE_URL"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

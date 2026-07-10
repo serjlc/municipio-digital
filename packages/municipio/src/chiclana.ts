@@ -20,6 +20,9 @@ export const chiclana: Municipality = {
   sources: {
     ckan: "https://datosabiertos.chiclana.es",
     townHall: "https://www.chiclana.es",
+    /* AEMET has no station in Chiclana; San Fernando is the nearest (7 km) */
+    aemetStation: "5972X",
+    aemetBeach: "1101503",
   },
   datasets: {
     padron: "padron-municipal-de-habitantes",

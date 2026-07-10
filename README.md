@@ -156,6 +156,10 @@ La deuda municipal sale del Ministerio de Hacienda y también funciona para cual
 ayuntamiento de España sin configurar nada: el conector localiza los archivos anuales de
 deuda viva y filtra por el código INE del municipio.
 
+El clima funciona para cualquier municipio con la predicción oficial de AEMET (y, si la
+configuración declara estación y playa, el dato de ahora mismo y el estado del mar). Es la
+única página que necesita clave: gratuita, en dos minutos, explicado en `.env.example`.
+
 Lo autonómico se activa según la comunidad declarada en la configuración: si tu municipio
 es andaluz (`region: "andalucia"`), la página del BOJA funciona sola, buscando cada día las
 disposiciones del boletín que mencionan al municipio.

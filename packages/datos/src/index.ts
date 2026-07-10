@@ -1,4 +1,11 @@
 export { fetchPopulation, type PopulationSeries, type PopulationYear } from "./ine";
+export {
+  fetchWeather,
+  type Weather,
+  type WeatherNow,
+  type ForecastDay,
+  type BeachDay,
+} from "./aemet";
 export { fetchMunicipalDebt, type MunicipalDebt, type DebtYear } from "./hacienda-debt";
 export { fetchBojaMentions, type BojaMentions, type BojaMention } from "./junta-boja";
 export {

@@ -28,9 +28,10 @@ export const sitePages: SitePage[] = [
   },
   {
     title: "Clima y costa",
+    href: "/clima",
     group: "municipio",
-    state: "En preparación",
-    text: "Temperaturas, avisos y estado del tiempo con datos oficiales de AEMET, para consultar en dos segundos.",
+    state: "Disponible",
+    text: "El tiempo de ahora mismo, la predicción oficial de AEMET a siete días y el estado de la playa: agua, viento y oleaje.",
   },
   {
     title: "Presupuestos",

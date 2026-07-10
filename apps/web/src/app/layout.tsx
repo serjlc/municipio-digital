@@ -1,5 +1,5 @@
 import { municipality } from "@municipio/config";
-import { Footer, Header, SkipLink } from "@municipio/ui";
+import { Footer, Header, SkipLink, WeatherPill } from "@municipio/ui";
 import type { Metadata } from "next";
 import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
@@ -55,7 +55,7 @@ const jsonLd = {
  */
 const navItems = [
   { href: "/", label: "Inicio" },
-  { href: "/datos", label: "Datos", match: ["/demografia", "/turismo"] },
+  { href: "/datos", label: "Datos", match: ["/demografia", "/turismo", "/clima"] },
   {
     href: "/transparencia",
     label: "Transparencia",
@@ -71,6 +71,7 @@ const mobileSections = [
     items: [
       { href: "/demografia", label: "Demografía" },
       { href: "/turismo", label: "Turismo" },
+      { href: "/clima", label: "Clima y costa" },
     ],
   },
   {
@@ -108,7 +109,12 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <SkipLink />
-        <Header siteName={siteName} items={navItems} mobileSections={mobileSections} />
+        <Header
+          siteName={siteName}
+          items={navItems}
+          mobileSections={mobileSections}
+          accessory={<WeatherPill endpoint="/api/clima" href="/clima" />}
+        />
         <main id="contenido" className="flex-1">
           {children}
         </main>

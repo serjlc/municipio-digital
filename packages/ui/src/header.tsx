@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useState, type ReactNode } from "react";
 import { cn } from "./cn";
 import { Container } from "./container";
 import { ThemeToggle } from "./theme-toggle";
@@ -49,11 +49,14 @@ export function Header({
   siteName,
   items,
   mobileSections,
+  accessory,
 }: {
   siteName: string;
   items: NavItem[];
   /** Full grouped page tree for the mobile menu; falls back to `items` */
   mobileSections?: NavSection[];
+  /** Small utility rendered before the theme toggle (weather pill) */
+  accessory?: ReactNode;
 }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -96,6 +99,7 @@ export function Header({
             </ul>
           </nav>
 
+          {accessory}
           <ThemeToggle />
 
           <button
