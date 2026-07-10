@@ -49,8 +49,9 @@ const sections = [
   },
   {
     title: "Presupuestos",
-    state: "En preparación",
-    text: "En qué se gasta el dinero del municipio, explicado sin necesidad de saber contabilidad pública.",
+    href: "/presupuestos",
+    state: "Disponible",
+    text: "En qué se gasta el dinero del municipio y de dónde sale, capítulo a capítulo, sin necesidad de saber contabilidad pública.",
   },
   {
     title: "Agenda y BOJA",

@@ -26,6 +26,8 @@ export const chiclana: Municipality = {
     padronFormat: "chiclana",
     minorContracts: "contratos-menores",
     minorContractsFormat: "chiclana",
+    budget: "presupuestos",
+    budgetFormat: "chiclana",
     streets: "callejerp",
     streetsFormat: "chiclana",
     tourism: {

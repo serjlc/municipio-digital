@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/contratos-menores`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${siteUrl}/turismo`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${siteUrl}/deuda`, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${siteUrl}/presupuestos`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${siteUrl}/diseno`, changeFrequency: "monthly", priority: 0.3 },
   ];
 }

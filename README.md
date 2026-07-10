@@ -173,9 +173,12 @@ censales (Chiclana los trae en su callejero, en KMZ), conviértelos a JSON simpl
 `packages/municipio` y decláralos en `sectionBoundaries`: la página de demografía pintará
 el mapa de distritos sola. Sin contornos, la tabla funciona igual y no hay mapa.
 
-Los contratos menores, el turismo local y el callejero funcionan igual: adaptadores
-registrados en `contractsParsers`, `tourismParsers` y `streetsParsers`, declarados en
-`datasets`. Con el callejero, la página de demografía gana dos cosas: la descripción de qué
+Los contratos menores, el turismo local, el callejero y el presupuesto funcionan igual:
+adaptadores registrados en `contractsParsers`, `tourismParsers`, `streetsParsers` y
+`budgetParsers`, declarados en `datasets`. El presupuesto es la excepción a la regla de
+"universal primero" por necesidad: el Ministerio de Hacienda recopila las liquidaciones de
+todos los municipios pero solo las sirve tras una aplicación interactiva con sesión, sin
+formato reutilizable, así que la fuente practicable es el portal de cada ayuntamiento. Con el callejero, la página de demografía gana dos cosas: la descripción de qué
 zonas contiene cada distrito y el buscador "¿en qué distrito vives?", que responde por
 calle (servido desde un endpoint cacheado para no engordar la página). Sin adaptadores no
 se rompe nada: esas secciones simplemente no aparecen.

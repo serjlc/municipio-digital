@@ -57,6 +57,10 @@ export interface Municipality {
     minorContracts?: string;
     /** Adapter name in `contractsParsers` (@municipio/datos) for those files */
     minorContractsFormat?: string;
+    /** Dataset id of the yearly municipal budget tables */
+    budget?: string;
+    /** Adapter name in `budgetParsers` (@municipio/datos) for those files */
+    budgetFormat?: string;
     /** Dataset id of the official street gazetteer */
     streets?: string;
     /** Adapter name in `streetsParsers` (@municipio/datos) for those files */
