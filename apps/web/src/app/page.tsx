@@ -10,6 +10,7 @@ import {
   SourceNote,
   Stat,
   StatGroup,
+  Badge,
 } from "@municipio/ui";
 import Link from "next/link";
 import { PageList } from "../components/page-list";
@@ -101,33 +102,39 @@ export default async function Home() {
         description="Aquí no se consumen datos y ya está: también se generan. Cualquiera puede proponer un proyecto que aporte información nueva sobre el municipio. Se revisa, se publica y su dataset se libera con la metodología documentada."
         className="bg-surface-sunken"
       >
-        <div className="grid gap-5 lg:grid-cols-[1.2fr_1fr]">
+        <div className="grid items-start gap-5 lg:grid-cols-3">
           <Card>
-            <p className="text-sm font-semibold uppercase tracking-widest text-accent-strong">
-              Piloto
-            </p>
+            <Badge tone="sand">Busca impulso</Badge>
             <CardTitle>Termografía de fachadas</CardTitle>
             <CardText>
-              Medir con cámara térmica el calor que alcanzan las fachadas del municipio en verano,
-              cruzarlo con la temperatura oficial de AEMET y el año de construcción del Catastro, y
-              publicar el dataset completo. Una forma seria de mostrar lo poco preparados que están
-              nuestros edificios para el calor que viene.
+              Medir con cámara térmica el calor que alcanzan las fachadas en verano, cruzarlo con
+              la temperatura oficial de AEMET y el año de construcción del Catastro, y publicar el
+              dataset completo. La metodología ya está escrita; falta quien la lleve a la calle.
+            </CardText>
+          </Card>
+          <Card>
+            <Badge tone="sand">Busca impulso</Badge>
+            <CardTitle>Inventario del arbolado</CardTitle>
+            <CardText>
+              Censar a pie los árboles del municipio: especie, tamaño, estado y alcorques
+              vacíos. Cada árbol se publica en abierto y se devuelve a OpenStreetMap, donde
+              queda vivo para siempre. Basta un móvil, una cinta métrica y mañanas sueltas.
             </CardText>
           </Card>
           <Card className="justify-between gap-5">
             <div className="flex flex-col gap-3">
               <CardTitle>¿Tienes una idea?</CardTitle>
               <CardText>
-                Escribe una propuesta corta: qué es, qué datos usa o genera y quién la mantiene. Si
-                encaja con los criterios del proyecto, se incuba y se publica aquí.
+                Las dos propuestas de arriba son también la plantilla: copia su formato, cuenta
+                qué datos usa y genera tu idea y quién la mantiene, y abre un pull request.
               </CardText>
             </div>
             <ButtonLink
-              href="https://github.com/serjlc/municipio-digital"
+              href="https://github.com/serjlc/municipio-digital/tree/main/PROPOSALS"
               variant="secondary"
               external
             >
-              Proponer un proyecto
+              Ver las propuestas
             </ButtonLink>
           </Card>
         </div>
