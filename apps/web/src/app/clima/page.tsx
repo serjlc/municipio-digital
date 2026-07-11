@@ -30,7 +30,7 @@ const sources = [
   {
     name: "AEMET OpenData",
     href: "https://www.aemet.es",
-    license: "© AEMET",
+    license: "elaboración propia a partir de sus datos",
   },
 ];
 
