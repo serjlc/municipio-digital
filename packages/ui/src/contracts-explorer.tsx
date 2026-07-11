@@ -118,7 +118,7 @@ export function ContractsExplorer({
               <tbody className="divide-y divide-line">
                 {filtered.map((c, i) => (
                   <tr key={`${c.contractor}-${i}`} className="hover:bg-surface-sunken/20 transition-colors align-top">
-                    <td className="p-3 pl-6 font-medium text-ink max-w-56">{c.contractor}</td>
+                    <td className="p-3 pl-6 font-medium text-ink max-w-56 break-words">{c.contractor}</td>
                     <td className="p-3 text-ink-muted">{c.subject}</td>
                     <td className="p-3 pr-6 tabular-nums font-semibold text-ink text-right whitespace-nowrap">
                       {euroExactFormat.format(c.amount)}

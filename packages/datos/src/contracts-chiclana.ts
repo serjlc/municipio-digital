@@ -51,7 +51,9 @@ function parseQuarterSheet(sheet: XLSX.WorkSheet): MinorContract[] | null {
     const amount = toNumber(row[amountCol]);
     if (!contractor || /^total/i.test(contractor) || amount === null) continue;
     contracts.push({
-      contractor,
+      /* Person names arrive as "FERNANDEZ,CALVO,FRANCISCO": a space after
+         each comma lets them wrap and read like names */
+      contractor: contractor.replace(/,(?=\S)/g, ", "),
       subject: String(row[subjectCol] ?? "").trim(),
       amount,
     });
