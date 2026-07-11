@@ -4,6 +4,7 @@ import { Alert, MunicipalMap, Section, SourceNote, cn, panelClasses } from "@mun
 import type { Metadata } from "next";
 import { PageHero } from "../../components/page-hero";
 
+export const maxDuration = 60;
 export const revalidate = 86400;
 
 export const metadata: Metadata = {

@@ -4,6 +4,7 @@ import { Alert, Section, SourceNote, Stat, StatGroup, TrendChart } from "@munici
 import type { Metadata } from "next";
 import { PageHero } from "../../components/page-hero";
 
+export const maxDuration = 60;
 export const revalidate = 86400;
 
 const numberFormat = new Intl.NumberFormat("es-ES");
