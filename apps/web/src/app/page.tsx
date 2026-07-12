@@ -102,7 +102,7 @@ export default async function Home() {
         description="Aquí no se consumen datos y ya está: también se generan. Cualquiera puede proponer un proyecto que aporte información nueva sobre el municipio. Se revisa, se publica y su dataset se libera con la metodología documentada."
         className="bg-surface-sunken"
       >
-        <div className="grid items-start gap-5 lg:grid-cols-3">
+        <div className="grid gap-5 lg:grid-cols-3">
           <Card>
             <Badge tone="sand">Busca impulso</Badge>
             <CardTitle>Termografía de fachadas</CardTitle>
