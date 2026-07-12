@@ -82,6 +82,10 @@ Casi todos estos datasets se publican con licencia CC BY o equivalente: se puede
 citando la procedencia. Por eso cada página que muestra datos lleva su atribución, y por eso
 preferimos siempre la API oficial antes que el scraping.
 
+El inventario completo de qué dato sale de qué fuente, con el grado de reutilización de
+cada pieza (universal, autonómico, adaptador municipal), está en
+[docs/data-sources.md](docs/data-sources.md).
+
 ## Convenciones
 
 Sobre el código:
