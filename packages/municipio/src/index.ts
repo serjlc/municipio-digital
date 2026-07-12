@@ -1,6 +1,13 @@
 import { chiclana } from "./chiclana";
 
-export type { Municipality, RentPrices, RentYearValue, SectionBoundary } from "./types";
+export type {
+  HeatData,
+  HeatSection,
+  Municipality,
+  RentPrices,
+  RentYearValue,
+  SectionBoundary,
+} from "./types";
 export { chiclana };
 
 /**

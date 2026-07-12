@@ -103,29 +103,34 @@ export default async function Home() {
         className="bg-surface-sunken"
       >
         <div className="grid gap-5 lg:grid-cols-3">
-          <Card>
-            <Badge tone="sand">Busca impulso</Badge>
-            <CardTitle>Termografía de fachadas</CardTitle>
-            <CardText>
-              Medir con cámara térmica el calor que alcanzan las fachadas en verano, cruzarlo con
-              la temperatura oficial de AEMET y el año de construcción del Catastro, y publicar el
-              dataset completo. La metodología ya está escrita; falta quien la lleve a la calle.
-            </CardText>
+          <Card className="justify-between gap-5">
+            <div className="flex flex-col gap-3">
+              <Badge tone="brand">Primera fase publicada</Badge>
+              <CardTitle>Termografía de fachadas</CardTitle>
+              <CardText>
+                El mapa del calor por secciones ya está publicado: temperatura superficial de
+                satélite cruzada con el año de construcción del Catastro. Medir fachadas con
+                cámara térmica es su extensión.
+              </CardText>
+            </div>
+            <ButtonLink href="/proyectos/termografia-fachadas" variant="secondary">
+              Ver el mapa de calor
+            </ButtonLink>
           </Card>
           <Card>
             <Badge tone="sand">Busca impulso</Badge>
             <CardTitle>Inventario del arbolado</CardTitle>
             <CardText>
-              Censar a pie los árboles del municipio: especie, tamaño, estado y alcorques
-              vacíos. Cada árbol se publica en abierto y se devuelve a OpenStreetMap, donde
-              queda vivo para siempre. Basta un móvil, una cinta métrica y mañanas sueltas.
+              Censar a pie los árboles del municipio: ubicar cada árbol, con su especie,
+              estado y alcorques vacíos. Medir los troncos con cinta métrica es una
+              extensión opcional. Todo se publica en abierto y se devuelve a OpenStreetMap.
             </CardText>
           </Card>
           <Card className="justify-between gap-5">
             <div className="flex flex-col gap-3">
               <CardTitle>¿Tienes una idea?</CardTitle>
               <CardText>
-                Las dos propuestas de arriba son también la plantilla: copia su formato, cuenta
+                Las propuestas de arriba son también la plantilla: copia su formato, cuenta
                 qué datos usa y genera tu idea y quién la mantiene, y abre un pull request.
               </CardText>
             </div>

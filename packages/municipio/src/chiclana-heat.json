@@ -1,0 +1,422 @@
+{
+  "summer": 2025,
+  "generated": "2026-07-12",
+  "scenes": [
+    {
+      "id": "LC09_L2SP_201035_20250827_02_T1",
+      "date": "2025-08-27",
+      "cloudCover": 6.5
+    },
+    {
+      "id": "LC08_L2SP_201035_20250819_02_T1",
+      "date": "2025-08-19",
+      "cloudCover": 0.1
+    },
+    {
+      "id": "LC09_L2SP_201035_20250811_02_T1",
+      "date": "2025-08-11",
+      "cloudCover": 0.8
+    },
+    {
+      "id": "LC09_L2SP_202035_20250802_02_T1",
+      "date": "2025-08-02",
+      "cloudCover": 5.7
+    },
+    {
+      "id": "LC08_L2SP_202035_20250725_02_T1",
+      "date": "2025-07-25",
+      "cloudCover": 6.5
+    },
+    {
+      "id": "LC09_L2SP_202035_20250717_02_T1",
+      "date": "2025-07-17",
+      "cloudCover": 9.4
+    },
+    {
+      "id": "LC08_L2SP_201035_20250702_02_T1",
+      "date": "2025-07-02",
+      "cloudCover": 4
+    },
+    {
+      "id": "LC09_L2SP_201035_20250608_02_T1",
+      "date": "2025-06-08",
+      "cloudCover": 8
+    },
+    {
+      "id": "LC08_L2SP_202035_20250607_02_T1",
+      "date": "2025-06-07",
+      "cloudCover": 7.9
+    }
+  ],
+  "municipality": {
+    "tempC": 43.5,
+    "medianYear": 1994,
+    "buildings": 25677
+  },
+  "sections": [
+    {
+      "district": 1,
+      "section": 1,
+      "tempC": 43.8,
+      "medianYear": 1962,
+      "buildings": 358
+    },
+    {
+      "district": 1,
+      "section": 2,
+      "tempC": 43.8,
+      "medianYear": 1990,
+      "buildings": 453
+    },
+    {
+      "district": 1,
+      "section": 3,
+      "tempC": 37,
+      "medianYear": 2000,
+      "buildings": 597
+    },
+    {
+      "district": 1,
+      "section": 4,
+      "tempC": 43.7,
+      "medianYear": 1994,
+      "buildings": 302
+    },
+    {
+      "district": 1,
+      "section": 5,
+      "tempC": 43.7,
+      "medianYear": 1980,
+      "buildings": 37
+    },
+    {
+      "district": 1,
+      "section": 6,
+      "tempC": 43,
+      "medianYear": 1970,
+      "buildings": 245
+    },
+    {
+      "district": 1,
+      "section": 7,
+      "tempC": 43.3,
+      "medianYear": 1995,
+      "buildings": 585
+    },
+    {
+      "district": 1,
+      "section": 9,
+      "tempC": 39.3,
+      "medianYear": 1997,
+      "buildings": 338
+    },
+    {
+      "district": 2,
+      "section": 1,
+      "tempC": 44.2,
+      "medianYear": 1975,
+      "buildings": 239
+    },
+    {
+      "district": 2,
+      "section": 2,
+      "tempC": 43.2,
+      "medianYear": 1986,
+      "buildings": 346
+    },
+    {
+      "district": 2,
+      "section": 3,
+      "tempC": 44.4,
+      "medianYear": 1958,
+      "buildings": 274
+    },
+    {
+      "district": 2,
+      "section": 4,
+      "tempC": 42.5,
+      "medianYear": 1985,
+      "buildings": 145
+    },
+    {
+      "district": 2,
+      "section": 5,
+      "tempC": 44.6,
+      "medianYear": 1986,
+      "buildings": 362
+    },
+    {
+      "district": 2,
+      "section": 6,
+      "tempC": 44.4,
+      "medianYear": 1992,
+      "buildings": 245
+    },
+    {
+      "district": 2,
+      "section": 7,
+      "tempC": 43.3,
+      "medianYear": 1998,
+      "buildings": 424
+    },
+    {
+      "district": 3,
+      "section": 1,
+      "tempC": 44.8,
+      "medianYear": 1968,
+      "buildings": 347
+    },
+    {
+      "district": 3,
+      "section": 2,
+      "tempC": 45.1,
+      "medianYear": 1981,
+      "buildings": 257
+    },
+    {
+      "district": 3,
+      "section": 3,
+      "tempC": 45.6,
+      "medianYear": 1978,
+      "buildings": 305
+    },
+    {
+      "district": 3,
+      "section": 4,
+      "tempC": 44.6,
+      "medianYear": 1993,
+      "buildings": 418
+    },
+    {
+      "district": 3,
+      "section": 5,
+      "tempC": 44.9,
+      "medianYear": 1970,
+      "buildings": 103
+    },
+    {
+      "district": 3,
+      "section": 6,
+      "tempC": 44.4,
+      "medianYear": 1988,
+      "buildings": 254
+    },
+    {
+      "district": 3,
+      "section": 7,
+      "tempC": 45.1,
+      "medianYear": 1979,
+      "buildings": 116
+    },
+    {
+      "district": 4,
+      "section": 1,
+      "tempC": 45.2,
+      "medianYear": 1980,
+      "buildings": 193
+    },
+    {
+      "district": 4,
+      "section": 2,
+      "tempC": 44.8,
+      "medianYear": 1993,
+      "buildings": 584
+    },
+    {
+      "district": 4,
+      "section": 3,
+      "tempC": 45.1,
+      "medianYear": 1990,
+      "buildings": 603
+    },
+    {
+      "district": 4,
+      "section": 4,
+      "tempC": 45.3,
+      "medianYear": 1980,
+      "buildings": 365
+    },
+    {
+      "district": 4,
+      "section": 5,
+      "tempC": 45.3,
+      "medianYear": 1985,
+      "buildings": 304
+    },
+    {
+      "district": 4,
+      "section": 6,
+      "tempC": 44,
+      "medianYear": 1970,
+      "buildings": 342
+    },
+    {
+      "district": 4,
+      "section": 7,
+      "tempC": 44.6,
+      "medianYear": 1993,
+      "buildings": 291
+    },
+    {
+      "district": 4,
+      "section": 8,
+      "tempC": 45,
+      "medianYear": 1988,
+      "buildings": 279
+    },
+    {
+      "district": 4,
+      "section": 9,
+      "tempC": 45,
+      "medianYear": 1986,
+      "buildings": 462
+    },
+    {
+      "district": 4,
+      "section": 10,
+      "tempC": 45.2,
+      "medianYear": 1984,
+      "buildings": 458
+    },
+    {
+      "district": 4,
+      "section": 11,
+      "tempC": 43.8,
+      "medianYear": 1978,
+      "buildings": 158
+    },
+    {
+      "district": 4,
+      "section": 12,
+      "tempC": 45,
+      "medianYear": 1975,
+      "buildings": 217
+    },
+    {
+      "district": 4,
+      "section": 13,
+      "tempC": 44.3,
+      "medianYear": 1975,
+      "buildings": 190
+    },
+    {
+      "district": 4,
+      "section": 14,
+      "tempC": 45.9,
+      "medianYear": 1989,
+      "buildings": 145
+    },
+    {
+      "district": 4,
+      "section": 15,
+      "tempC": 44.6,
+      "medianYear": 2000,
+      "buildings": 89
+    },
+    {
+      "district": 4,
+      "section": 16,
+      "tempC": 44.9,
+      "medianYear": 1990,
+      "buildings": 325
+    },
+    {
+      "district": 5,
+      "section": 1,
+      "tempC": 38.6,
+      "medianYear": 1999,
+      "buildings": 1544
+    },
+    {
+      "district": 5,
+      "section": 2,
+      "tempC": 43.5,
+      "medianYear": 1996,
+      "buildings": 757
+    },
+    {
+      "district": 5,
+      "section": 3,
+      "tempC": 44.6,
+      "medianYear": 2000,
+      "buildings": 609
+    },
+    {
+      "district": 5,
+      "section": 4,
+      "tempC": 44,
+      "medianYear": 1999,
+      "buildings": 1350
+    },
+    {
+      "district": 5,
+      "section": 5,
+      "tempC": 43,
+      "medianYear": 2000,
+      "buildings": 855
+    },
+    {
+      "district": 5,
+      "section": 6,
+      "tempC": 39.1,
+      "medianYear": 1997,
+      "buildings": 1037
+    },
+    {
+      "district": 5,
+      "section": 7,
+      "tempC": 39.8,
+      "medianYear": 2000,
+      "buildings": 1352
+    },
+    {
+      "district": 5,
+      "section": 8,
+      "tempC": 40.3,
+      "medianYear": 1995,
+      "buildings": 516
+    },
+    {
+      "district": 5,
+      "section": 9,
+      "tempC": 34.2,
+      "medianYear": 1991,
+      "buildings": 1836
+    },
+    {
+      "district": 5,
+      "section": 11,
+      "tempC": 41.3,
+      "medianYear": 1997,
+      "buildings": 877
+    },
+    {
+      "district": 5,
+      "section": 12,
+      "tempC": 44.1,
+      "medianYear": 2003,
+      "buildings": 745
+    },
+    {
+      "district": 5,
+      "section": 13,
+      "tempC": 42.8,
+      "medianYear": 2000,
+      "buildings": 1014
+    },
+    {
+      "district": 5,
+      "section": 14,
+      "tempC": 43.6,
+      "medianYear": 2000,
+      "buildings": 665
+    },
+    {
+      "district": 5,
+      "section": 15,
+      "tempC": 44.1,
+      "medianYear": 1995,
+      "buildings": 765
+    }
+  ]
+}

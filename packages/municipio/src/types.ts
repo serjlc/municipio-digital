@@ -38,6 +38,35 @@ export interface RentPrices {
   sections: { district: number; section: number; flats: Record<string, RentYearValue> }[];
 }
 
+/** One census section in the urban heat dataset */
+export interface HeatSection {
+  district: number;
+  section: number;
+  /** Mean summer land surface temperature, degrees Celsius */
+  tempC: number | null;
+  /** Median construction year of the section's buildings */
+  medianYear: number | null;
+  /** Functional buildings with a construction date in the Catastro */
+  buildings: number;
+}
+
+/**
+ * Summer land surface temperature per census section (Landsat) crossed
+ * with building construction years (Catastro INSPIRE), extracted with
+ * `packages/datos/scripts/extract-heat.mjs`. The rasters and GML behind
+ * it weigh hundreds of MB, so each municipality commits this small
+ * extract instead of fetching live (same approach as `rentPrices`).
+ */
+export interface HeatData {
+  /** Year whose June-August scenes were averaged */
+  summer: number;
+  /** Extraction date, ISO */
+  generated: string;
+  scenes: { id: string; date: string; cloudCover: number }[];
+  municipality: { tempC: number | null; medianYear: number | null; buildings: number };
+  sections: HeatSection[];
+}
+
 export interface Municipality {
   /** Display name, e.g. "Chiclana de la Frontera" */
   name: string;
@@ -84,6 +113,8 @@ export interface Municipality {
   rentPrices?: RentPrices;
   /** Where the rental prices come from, cited on the housing page */
   rentPricesSource?: { name: string; href: string; license?: string };
+  /** Urban heat extract (Landsat + Catastro), if it exists */
+  heatData?: HeatData;
   /** Ids of known datasets in the local CKAN portal */
   datasets?: {
     padron?: string;

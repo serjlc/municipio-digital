@@ -49,6 +49,8 @@ Cada página cita además su fuente al pie (componente `SourceNote`), con enlace
 | /deuda | Deuda viva 2010-hoy | Ministerio de Hacienda | `hacienda-debt.ts` | Universal |
 | /contratos-menores | Contratos menores trimestrales | Ayuntamiento (CKAN) | `contracts.ts` + `contracts-chiclana.ts` | Adaptador municipal |
 | /boja | Disposiciones que mencionan al municipio | BOJA (contentapi de la Junta) | `junta-boja.ts` | Autonómico (Andalucía) |
+| /proyectos/termografia-fachadas | Temperatura superficial de verano por sección | Landsat Collection 2 Level-2 (USGS/NASA), vía Microsoft Planetary Computer | script `extract-heat.mjs` → `heatData` en config | Universal, con extracto (extracción anual) |
+| /proyectos/termografia-fachadas | Año mediano de construcción por sección | Catastro, descargas INSPIRE de edificios | script `extract-heat.mjs` → `heatData` en config | Universal, con extracto (salvo catastros forales: País Vasco y Navarra) |
 
 ## La regla que ordena todo esto
 

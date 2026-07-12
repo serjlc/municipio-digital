@@ -1,6 +1,7 @@
+import chiclanaHeat from "./chiclana-heat.json";
 import chiclanaRent from "./chiclana-rent.json";
 import chiclanaSections from "./chiclana-sections.json";
-import type { Municipality, RentPrices, SectionBoundary } from "./types";
+import type { HeatData, Municipality, RentPrices, SectionBoundary } from "./types";
 
 export const chiclana: Municipality = {
   name: "Chiclana de la Frontera",
@@ -18,6 +19,7 @@ export const chiclana: Municipality = {
     href: "https://datosabiertos.chiclana.es/dataset/callejerp",
     license: "Open Data Commons Attribution License",
   },
+  heatData: chiclanaHeat as HeatData,
   rentPrices: chiclanaRent as RentPrices,
   rentPricesSource: {
     name: "SERPAVI, Ministerio de Vivienda y Agenda Urbana",
