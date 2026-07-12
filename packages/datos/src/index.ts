@@ -7,8 +7,17 @@ export {
   type BeachDay,
 } from "./aemet";
 export { fetchMunicipalDebt, type MunicipalDebt, type DebtYear } from "./hacienda-debt";
+export {
+  fetchEmployment,
+  type MunicipalEmployment,
+  type EmploymentMonth,
+  type ContractsMonth,
+  type SexAgeGroup,
+  type SectorGroup,
+} from "./sepe-employment";
 export { fetchBojaMentions, type BojaMentions, type BojaMention } from "./junta-boja";
 export { fetchEquipment, type EquipmentCategory } from "./osm-equipment";
+export { fetchTransit, type TransitData, type TransitLine, type TransitStop } from "./gtfs";
 export {
   fetchDemographicIndicators,
   type DemographicIndicators,
@@ -28,6 +37,12 @@ export {
   type MigrationBalances,
   type MigrationYear,
 } from "./ine-migrations";
+export {
+  fetchIncomeDistribution,
+  type IncomeDistribution,
+  type IncomeUnit,
+  type IncomeYear,
+} from "./ine-income";
 export { fetchCkanDataset, type CkanDataset, type CkanResource } from "./ckan";
 export {
   fetchHotelTourism,

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@municipio/config": "workspace:*",
+    "fflate": "^0.8.3",
     "xlsx": "^0.18.5",
     "zod": "^3.24.0"
   },

@@ -20,6 +20,27 @@ export const sitePages: SitePage[] = [
     text: "Cuántos somos, cómo ha crecido la población desde 1996, pirámide de edades, migraciones, nivel de estudios y el detalle por distritos.",
   },
   {
+    title: "Empleo y paro",
+    href: "/paro",
+    group: "municipio",
+    state: "Disponible",
+    text: "Cuántas personas están en paro según el SEPE, mes a mes desde 2006, quiénes son por sexo y edad, y cuántos contratos se firman.",
+  },
+  {
+    title: "Renta",
+    href: "/renta",
+    group: "municipio",
+    state: "Disponible",
+    text: "Cuánto se gana de media por persona y por hogar según el Atlas de Renta del INE, cómo ha evolucionado desde 2015 y el mapa barrio a barrio.",
+  },
+  {
+    title: "Vivienda",
+    href: "/vivienda",
+    group: "municipio",
+    state: "Disponible",
+    text: "Cuánto cuesta alquilar un piso o una casa según las rentas declaradas a Hacienda, cómo ha subido desde 2011 y el detalle por zonas.",
+  },
+  {
     title: "Turismo",
     href: "/turismo",
     group: "municipio",
@@ -32,6 +53,13 @@ export const sitePages: SitePage[] = [
     group: "municipio",
     state: "Disponible",
     text: "El tiempo de ahora mismo, la predicción oficial de AEMET a siete días y el estado de la playa: agua, viento y oleaje.",
+  },
+  {
+    title: "Autobuses",
+    href: "/transporte",
+    group: "municipio",
+    state: "Disponible",
+    text: "Qué líneas de autobús paran en el municipio, cuántas salidas tienen cada día laborable y a qué hora pasan la primera y la última.",
   },
   {
     title: "El mapa",

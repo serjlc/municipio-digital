@@ -1,6 +1,6 @@
 import { chiclana } from "./chiclana";
 
-export type { Municipality, SectionBoundary } from "./types";
+export type { Municipality, RentPrices, RentYearValue, SectionBoundary } from "./types";
 export { chiclana };
 
 /**

@@ -12,7 +12,7 @@
 import { chromium } from "playwright";
 
 const BASE = process.env.AUDIT_BASE_URL ?? "http://localhost:3000";
-const ROUTES = ["/", "/demografia", "/turismo", "/contratos-menores", "/deuda", "/presupuestos", "/boja", "/clima", "/mapa", "/datos", "/transparencia", "/diseno"];
+const ROUTES = ["/", "/demografia", "/paro", "/renta", "/vivienda", "/transporte", "/turismo", "/contratos-menores", "/deuda", "/presupuestos", "/boja", "/clima", "/mapa", "/datos", "/transparencia", "/diseno"];
 const WIDTHS = [320, 375, 414, 768, 1024, 1440];
 
 const browser = await chromium.launch();

@@ -156,6 +156,28 @@ La deuda municipal sale del Ministerio de Hacienda y también funciona para cual
 ayuntamiento de España sin configurar nada: el conector localiza los archivos anuales de
 deuda viva y filtra por el código INE del municipio.
 
+El paro y los contratos salen del SEPE y funcionan igual para toda España sin
+configurar nada: los archivos mensuales por municipio se filtran por el código INE.
+
+La renta media sale del Atlas de Renta del INE, que cubre todos los municipios de
+España a nivel de distrito y sección censal. Como la población, la tabla va por
+provincia: si la tuya no está registrada en `packages/datos`, añadirla es una línea.
+Con los contornos de secciones declarados, la página pinta además el mapa de renta
+barrio a barrio.
+
+El precio del alquiler sale de SERPAVI (Ministerio de Vivienda), que cubre toda España,
+pero se publica como una única hoja de cálculo gigante que no se puede consultar en
+vivo. El repositorio incluye un script que extrae lo de tu municipio a un JSON pequeño
+(`packages/datos/scripts/extract-serpavi.mjs`, las instrucciones están dentro); se
+declara en la configuración como `rentPrices` y se refresca una vez al año, cuando sale
+la edición nueva.
+
+Los autobuses salen de cualquier feed GTFS abierto, el formato estándar de transporte
+público: declara en tu configuración la URL del feed que cubre tu municipio (en España
+están concentrados en el Punto de Acceso Nacional; los consorcios andaluces publican el
+suyo en abierto) y el conector filtra las paradas que caen dentro del término municipal
+usando los contornos de secciones, o un radio de 5 km si no los tienes.
+
 El clima funciona para cualquier municipio con la predicción oficial de AEMET (y, si la
 configuración declara estación y playa, el dato de ahora mismo y el estado del mar). Es la
 única página que necesita clave: gratuita, en dos minutos, explicado en `.env.example`.
