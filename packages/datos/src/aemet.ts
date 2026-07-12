@@ -17,26 +17,26 @@ async function aemetJson<T>(path: string): Promise<T | null> {
   const key = process.env.AEMET_API_KEY;
   if (!key) return null;
 
-  try {
-    const envelopeRes = await fetch(`${API}${path}`, { headers: { api_key: key } });
-    if (!envelopeRes.ok) return null;
-    const envelope = (await envelopeRes.json()) as { estado?: number; datos?: string };
-    if (envelope.estado !== 200 || !envelope.datos) return null;
+  /* Both steps fail randomly (Tomcat error pages, dropped sockets), so
+     the whole two-step dance retries together */
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (attempt > 0) await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const envelopeRes = await fetch(`${API}${path}`, { headers: { api_key: key } });
+      if (!envelopeRes.ok) continue;
+      const envelope = (await envelopeRes.json()) as { estado?: number; datos?: string };
+      if (envelope.estado !== 200 || !envelope.datos) continue;
 
-    for (let attempt = 0; attempt < 3; attempt++) {
       const dataRes = await fetch(envelope.datos);
-      if (dataRes.ok) {
-        const text = new TextDecoder("latin1").decode(await dataRes.arrayBuffer());
-        const first = text.trimStart().charAt(0);
-        if (first === "[" || first === "{") return JSON.parse(text) as T;
-      }
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      if (!dataRes.ok) continue;
+      const text = new TextDecoder("latin1").decode(await dataRes.arrayBuffer());
+      const first = text.trimStart().charAt(0);
+      if (first === "[" || first === "{") return JSON.parse(text) as T;
+    } catch (err) {
+      if (attempt === 2) console.error(`Error fetching AEMET ${path}:`, err);
     }
-    return null;
-  } catch (err) {
-    console.error(`Error fetching AEMET ${path}:`, err);
-    return null;
   }
+  return null;
 }
 
 export interface WeatherNow {
