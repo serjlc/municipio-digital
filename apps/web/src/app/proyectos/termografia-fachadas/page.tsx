@@ -58,7 +58,7 @@ export default function TermografiaPage() {
     description: `Temperatura superficial media del verano de ${heat.summer} (Landsat) y año mediano de construcción (Catastro) para cada sección censal de ${municipality.name}.`,
     creator: { "@type": "Organization", name: "USGS/NASA y Dirección General del Catastro" },
     license: "https://opendatacommons.org/licenses/by/1-0/",
-    url: "https://github.com/serjlc/municipio-digital/blob/main/packages/municipio/src/chiclana-heat.json",
+    url: sources[0].href,
   };
 
   return (
@@ -216,16 +216,16 @@ export default function TermografiaPage() {
           <div className="flex flex-col gap-4 text-ink-muted">
             <p>
               El dataset completo, con las {heat.sections.length} secciones y las escenas
-              usadas, está en{" "}
-              <TextLink href="https://github.com/serjlc/municipio-digital/blob/main/packages/municipio/src/chiclana-heat.json">
-                el repositorio
-              </TextLink>
-              , generado con el script universal{" "}
+              usadas, se genera con el script universal{" "}
               <TextLink href="https://github.com/serjlc/municipio-digital/blob/main/packages/datos/scripts/extract-heat.mjs">
                 extract-heat.mjs
               </TextLink>
               : cualquier municipio con contornos de secciones obtiene el suyo ejecutándolo con
-              su código INE.
+              su código INE, y su resultado se commitea en{" "}
+              <TextLink href="https://github.com/serjlc/municipio-digital/tree/main/packages/municipio/src">
+                packages/municipio
+              </TextLink>
+              .
             </p>
             <p>
               Maneras de extenderlo, en orden de exigencia: repetir la extracción cada verano
