@@ -57,6 +57,7 @@ export function TrendChart({
 
   const x = (i: number) => PAD.left + (i / (points.length - 1)) * (W - PAD.left - PAD.right);
   const y = (v: number) => PAD.top + (1 - (v - yMin) / (yMax - yMin)) * (H - PAD.top - PAD.bottom);
+  const pointTopPercent = (i: number) => (y(points[i]!.value) / H) * 100;
 
   const line = points
     .map((p, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)},${y(p.value).toFixed(1)}`)
@@ -65,6 +66,13 @@ export function TrendChart({
 
   const yTicks = niceTicks(yMin, yMax);
   const xEvery = Math.max(1, Math.round(points.length / 6));
+  const lastIndex = points.length - 1;
+  const xLabelIndices: number[] = [];
+  for (let i = 0; i < lastIndex; i += xEvery) xLabelIndices.push(i);
+  if (xLabelIndices.length && lastIndex - xLabelIndices[xLabelIndices.length - 1]! < xEvery / 2) {
+    xLabelIndices.pop();
+  }
+  xLabelIndices.push(lastIndex);
   const last = points[points.length - 1]!;
   const activePoint = active !== null ? points[active] : undefined;
 
@@ -147,20 +155,18 @@ export function TrendChart({
               strokeWidth="2.5"
               strokeLinejoin="round"
             />
-            {points.map((p, i) =>
-              i % xEvery === 0 || i === points.length - 1 ? (
-                <text
-                  key={p.label}
-                  x={x(i)}
-                  y={H - PAD.bottom + 24}
-                  textAnchor="middle"
-                  fontSize="13"
-                  fill="var(--color-ink-faint)"
-                >
-                  {p.label}
-                </text>
-              ) : null,
-            )}
+            {xLabelIndices.map((i) => (
+              <text
+                key={points[i]!.label}
+                x={x(i)}
+                y={H - PAD.bottom + 24}
+                textAnchor="middle"
+                fontSize="13"
+                fill="var(--color-ink-faint)"
+              >
+                {points[i]!.label}
+              </text>
+            ))}
             {active !== null && activePoint ? (
               <g>
                 <line
@@ -186,10 +192,12 @@ export function TrendChart({
           </svg>
           {active !== null && activePoint ? (
             <div
-              className="pointer-events-none absolute -translate-x-1/2 -translate-y-full rounded-field border border-line bg-surface-raised px-3 py-1.5 text-sm shadow-card"
+              className={`pointer-events-none absolute -translate-x-1/2 rounded-field border border-line bg-surface-raised px-3 py-1.5 text-sm shadow-card ${
+                pointTopPercent(active) < 30 ? "translate-y-2" : "-translate-y-full"
+              }`}
               style={{
                 left: `${Math.min(90, Math.max(10, (x(active) / W) * 100))}%`,
-                top: `${(y(activePoint.value) / H) * 100 - 3}%`,
+                top: `${pointTopPercent(active) + (pointTopPercent(active) < 30 ? 3 : -3)}%`,
               }}
             >
               <span className="font-semibold tabular-nums text-ink">

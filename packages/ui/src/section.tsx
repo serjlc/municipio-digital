@@ -28,7 +28,11 @@ export function Section({
     <section
       id={id}
       aria-labelledby={headingId}
-      className={cn(hideTitle ? "py-10 sm:py-14" : "py-14 sm:py-20", className)}
+      className={cn(
+        hideTitle ? "py-10 sm:py-14" : "py-14 sm:py-20",
+        id && "scroll-mt-20",
+        className,
+      )}
     >
       <Container>
         {eyebrow && !hideTitle ? (
