@@ -7,7 +7,10 @@ import {
   CardLink,
   CardText,
   CardTitle,
-  Container,
+  DataTable,
+  DataTableCell,
+  DataTableRow,
+  DataTableRowHeader,
   Section,
   SourceNote,
   Stat,
@@ -17,6 +20,7 @@ import {
   SearchInput,
   TrendChart,
   Panel,
+  SectionChoropleth,
   TextLink,
 } from "@municipio/ui";
 import type { Metadata } from "next";
@@ -43,6 +47,14 @@ const semanticColors = [
   ["accent-strong", "Acento sobre fondos claros"],
   ["accent-soft", "Fondos suaves de acento"],
 ] as const;
+
+/* Four made-up sections, just enough geometry for the specimen */
+const specimenBoundaries = [
+  { district: 1, section: 1, rings: [[[0, 0.6], [0.5, 0.62], [0.52, 0.3], [0.05, 0.28]]] },
+  { district: 1, section: 2, rings: [[[0.05, 0.28], [0.52, 0.3], [0.55, 0], [0.1, -0.02]]] },
+  { district: 2, section: 1, rings: [[[0.5, 0.62], [1, 0.58], [0.98, 0.32], [0.52, 0.3]]] },
+  { district: 2, section: 2, rings: [[[0.52, 0.3], [0.98, 0.32], [1.02, 0.02], [0.55, 0]]] },
+] as { district: number; section: number; rings: [number, number][][] }[];
 
 function Swatch({ token, usage }: { token: string; usage: string }) {
   return (
@@ -261,6 +273,58 @@ export default function DesignPage() {
               { label: "Bienes corrientes y servicios", value: 31119025 },
               { label: "Inversiones reales", value: 5030229 },
             ]}
+          />
+        </div>
+      </Section>
+
+      <Section
+        id="tablas"
+        title="Tablas de datos"
+        description="Toda tabla del portal sale de DataTable: panel con tabla semántica dentro (caption para lectores de pantalla, scope en las celdas de cabecera), cifras alineadas a la derecha con numerales tabulares, y scroll horizontal contenido en su marco en pantallas estrechas. Las filas de grupo usan emphasis y sus hijas indent."
+      >
+        <div className="max-w-2xl">
+          <DataTable
+            caption="Ejemplo: renta por distrito y sección"
+            columns={[{ label: "Zona" }, { label: "Por persona", align: "right" }]}
+          >
+            <DataTableRow emphasis>
+              <DataTableRowHeader className="font-semibold">Distrito 1</DataTableRowHeader>
+              <DataTableCell align="right" className="font-semibold text-ink">
+                12.122 €
+              </DataTableCell>
+            </DataTableRow>
+            <DataTableRow>
+              <DataTableRowHeader indent className="text-ink-muted">
+                Sección 1
+              </DataTableRowHeader>
+              <DataTableCell align="right">12.681 €</DataTableCell>
+            </DataTableRow>
+            <DataTableRow>
+              <DataTableRowHeader indent className="text-ink-muted">
+                Sección 2
+              </DataTableRowHeader>
+              <DataTableCell align="right">14.284 €</DataTableCell>
+            </DataTableRow>
+          </DataTable>
+        </div>
+      </Section>
+
+      <Section
+        id="coropletas"
+        title="Mapas de valor por sección"
+        description="Para pintar un dato sobre las secciones censales (renta, población): SectionChoropleth, renderizado en servidor, con escala del color de marca y leyenda con los extremos. El mapa es decorativo para lectores de pantalla: la misma información va siempre en una tabla al lado, como en las gráficas."
+        className="bg-surface-sunken"
+      >
+        <div className="max-w-md">
+          <SectionChoropleth
+            boundaries={specimenBoundaries}
+            values={[
+              { district: 1, section: 1, value: 12681 },
+              { district: 1, section: 2, value: 9200 },
+              { district: 2, section: 1, value: 18352 },
+            ]}
+            formatValue={(v) => `${new Intl.NumberFormat("es-ES").format(v)} €`}
+            caption="Ejemplo con tres secciones inventadas. Las grises no tienen dato publicado."
           />
         </div>
       </Section>

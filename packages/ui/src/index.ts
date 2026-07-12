@@ -27,3 +27,11 @@ export {
 } from "./contracts-explorer";
 export { AgePyramid, type AgeGroup } from "./age-pyramid";
 export { DistrictStats, type DistrictPopulation, type SectionPopulation } from "./district-stats";
+export { SectionChoropleth, type ChoroplethValue } from "./section-choropleth";
+export {
+  DataTable,
+  DataTableRow,
+  DataTableRowHeader,
+  DataTableCell,
+  type DataTableColumn,
+} from "./data-table";
